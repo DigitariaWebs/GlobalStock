@@ -44,7 +44,7 @@ export function HeroSection() {
         />
 
         <div className="absolute inset-0 flex items-start justify-center pt-16">
-          <h1 className="text-center text-5xl font-bold tracking-tight text-white drop-shadow-lg">
+          <h1 className="text-center text-5xl font-bold tracking-tight text-white drop-shadow-lg mt-10">
             L&apos;Énergie à Votre Service
           </h1>
         </div>

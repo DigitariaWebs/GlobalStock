@@ -16,7 +16,7 @@ export function InspirationsSection() {
           </p>
           <Link
             href="/inspirations"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#196a76] px-7 py-3 text-[14px] font-semibold text-white shadow-md transition-all hover:bg-[#13535d] hover:shadow-lg"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-[14px] font-semibold text-white shadow-md transition-all hover:bg-primary/90 hover:shadow-lg"
           >
             Découvrir
             <ArrowRight size={16} weight="bold" />
@@ -28,7 +28,7 @@ export function InspirationsSection() {
           <div className="flex gap-6 overflow-hidden">
             
             {/* Main Active Card */}
-            <div className="relative w-[280px] sm:w-[340px] h-[420px] shrink-0 rounded-[2rem] bg-gradient-to-br from-[#196a76]/80 to-[#114b56] shadow-lg flex flex-col items-center justify-center">
+            <div className="relative w-[280px] sm:w-[340px] h-[420px] shrink-0 rounded-[2rem] bg-gradient-to-br from-primary/80 to-primary shadow-lg flex flex-col items-center justify-center">
               {/* Internal Placeholder Graphic */}
               <ImageIcon size={72} weight="duotone" className="text-white/20 absolute" />
 
@@ -44,18 +44,18 @@ export function InspirationsSection() {
 
               {/* Circular Action Button */}
               <button className="absolute bottom-6 right-6 w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-md hover:scale-105 transition-transform">
-                <ArrowUpRight size={20} weight="bold" className="text-[#196a76]" />
+                <ArrowUpRight size={20} weight="bold" className="text-primary" />
               </button>
             </div>
 
             {/* Second Card (Dimmed/Inactive Placeholder) */}
             <div className="relative w-[280px] sm:w-[340px] h-[420px] shrink-0 rounded-[2rem] bg-[#e8f1f2] flex items-center justify-center">
-              <ImageIcon size={64} weight="duotone" className="text-[#196a76]/20" />
+              <ImageIcon size={64} weight="duotone" className="text-primary/20" />
             </div>
 
             {/* Third Card (Partial View Placeholder) */}
             <div className="relative w-[280px] sm:w-[340px] h-[420px] shrink-0 rounded-[2rem] bg-[#f0f4f5] flex items-center justify-center">
-              <ImageIcon size={64} weight="duotone" className="text-[#196a76]/10" />
+              <ImageIcon size={64} weight="duotone" className="text-primary/10" />
             </div>
             
           </div>
@@ -64,8 +64,8 @@ export function InspirationsSection() {
           <div className="flex items-center justify-between mt-8 lg:pr-12">
             {/* Pagination Dots */}
             <div className="flex items-center gap-2 pl-4">
-              <div className="w-[18px] h-[18px] rounded-full border-2 border-[#196a76] flex items-center justify-center">
-                <div className="w-2 h-2 rounded-full bg-[#196a76]"></div>
+              <div className="w-[18px] h-[18px] rounded-full border-2 border-primary flex items-center justify-center">
+                <div className="w-2 h-2 rounded-full bg-primary"></div>
               </div>
               <div className="w-1.5 h-1.5 rounded-full bg-[#a1a1aa]/60"></div>
               <div className="w-1.5 h-1.5 rounded-full bg-[#a1a1aa]/60"></div>
@@ -76,7 +76,7 @@ export function InspirationsSection() {
               <button className="w-10 h-10 rounded-full border border-[#e4e4e7] flex items-center justify-center text-[#a1a1aa] hover:bg-gray-50 transition-colors">
                 <CaretLeft size={16} weight="bold" />
               </button>
-              <button className="w-10 h-10 rounded-full bg-[#196a76] flex items-center justify-center text-white shadow-md hover:bg-[#13535d] transition-colors">
+              <button className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shadow-md hover:bg-primary/90 transition-colors">
                 <CaretRight size={16} weight="bold" />
               </button>
             </div>

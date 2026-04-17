@@ -65,8 +65,8 @@ export function ProductsSection() {
               key={cat}
               className={`whitespace-nowrap pb-2 text-[15px] font-medium transition-colors ${
                 index === 1
-                  ? "text-[#196a76] border-b-2 border-[#196a76]"
-                  : "text-[#71717a] hover:text-[#196a76]"
+                  ? "text-primary border-b-2 border-primary"
+                  : "text-[#71717a] hover:text-primary"
               }`}
             >
               {cat}
@@ -85,7 +85,7 @@ export function ProductsSection() {
               <div className="relative bg-[#f8f9fa] h-[280px] w-full flex items-center justify-center p-6">
                 
                 {/* Discount Badge */}
-                <div className="absolute top-5 left-5 w-10 h-10 rounded-full bg-[#196a76] text-white flex items-center justify-center text-[11px] font-bold shadow-sm">
+                <div className="absolute top-5 left-5 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold shadow-sm">
                   {product.discount}
                 </div>
 
@@ -99,7 +99,7 @@ export function ProductsSection() {
                 </button>
 
                 {/* Placeholder Image */}
-                <div className="flex flex-col items-center gap-3 text-[#196a76]/30">
+                <div className="flex flex-col items-center gap-3 text-primary/30">
                   <ImageIcon size={52} weight="duotone" />
                   <span className="text-sm font-medium text-center px-4">
                      Placeholder<br/>{product.name}
@@ -109,7 +109,7 @@ export function ProductsSection() {
               </div>
 
               {/* Bottom Info Area */}
-              <div className="bg-[#196a76] p-6 lg:p-7 flex items-center justify-between">
+              <div className="bg-primary p-6 lg:p-7 flex items-center justify-between">
                 <div className="flex flex-col gap-1.5 shrink min-w-0 pr-4">
                   <h4 className="text-[15px] font-medium text-white truncate">
                     {product.name}
@@ -119,7 +119,7 @@ export function ProductsSection() {
                   </span>
                 </div>
 
-                <button className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-[#196a76] shrink-0 transition-transform hover:scale-105 shadow-sm">
+                <button className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-primary shrink-0 transition-transform hover:scale-105 shadow-sm">
                   <ShoppingCart size={20} weight="fill" />
                 </button>
               </div>

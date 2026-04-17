@@ -9,7 +9,7 @@ export function CategoriesSection() {
         {/* Table Card (Spans 2 columns on desktop) */}
         <div className="lg:col-span-2 rounded-[2.5rem] bg-[#f8f9fa] p-8 lg:p-10 flex flex-col sm:flex-row items-center justify-between relative overflow-hidden min-h-[340px]">
           <div className="flex flex-col items-start w-full sm:w-1/2 z-10">
-            <span className="bg-white px-3.5 py-1 rounded-full text-[11px] font-bold text-[#196a76] shadow-sm mb-4">
+            <span className="bg-white px-3.5 py-1 rounded-full text-[11px] font-bold text-primary shadow-sm mb-4">
               1230+ Item
             </span>
             
@@ -24,7 +24,7 @@ export function CategoriesSection() {
             
             <Link
               href="/category/table"
-              className="text-[13px] font-bold text-[#196a76] flex items-center gap-1.5 border-b-2 border-[#196a76]/30 pb-0.5 hover:border-[#196a76] transition-colors"
+              className="text-[13px] font-bold text-primary flex items-center gap-1.5 border-b-2 border-primary/30 pb-0.5 hover:border-primary transition-colors"
             >
               View All <ArrowRight size={14} weight="bold" />
             </Link>
@@ -39,7 +39,7 @@ export function CategoriesSection() {
         {/* Chairs Card (Tall, spans 2 rows) */}
         <div className="lg:col-span-1 lg:row-span-2 rounded-[2.5rem] bg-[#f0f4f5] p-8 lg:p-10 flex flex-col relative overflow-hidden">
           <div className="flex flex-col items-start z-10 shrink-0">
-            <span className="bg-white px-3.5 py-1 rounded-full text-[11px] font-bold text-[#196a76] shadow-sm mb-4">
+            <span className="bg-white px-3.5 py-1 rounded-full text-[11px] font-bold text-primary shadow-sm mb-4">
               2000+ Item
             </span>
             
@@ -54,7 +54,7 @@ export function CategoriesSection() {
             
             <Link
               href="/category/chairs"
-              className="text-[13px] font-bold text-[#196a76] flex items-center gap-1.5 border-b-2 border-[#196a76]/30 pb-0.5 hover:border-[#196a76] transition-colors"
+              className="text-[13px] font-bold text-primary flex items-center gap-1.5 border-b-2 border-primary/30 pb-0.5 hover:border-primary transition-colors"
             >
               View All <ArrowRight size={14} weight="bold" />
             </Link>
@@ -69,7 +69,7 @@ export function CategoriesSection() {
         {/* Light Card */}
         <div className="lg:col-span-1 rounded-[2.5rem] bg-[#fdf3eb] p-8 lg:p-10 flex flex-col sm:flex-row items-center justify-between relative overflow-hidden min-h-[320px]">
           <div className="flex flex-col items-start w-full sm:w-1/2 z-10">
-            <span className="bg-white px-3.5 py-1 rounded-full text-[11px] font-bold text-[#196a76] shadow-sm mb-4">
+            <span className="bg-white px-3.5 py-1 rounded-full text-[11px] font-bold text-primary shadow-sm mb-4">
               678+ Item
             </span>
             
@@ -84,7 +84,7 @@ export function CategoriesSection() {
             
             <Link
               href="/category/light"
-              className="text-[13px] font-bold text-[#196a76] flex items-center gap-1.5 border-b-2 border-[#196a76]/30 pb-0.5 hover:border-[#196a76] transition-colors"
+              className="text-[13px] font-bold text-primary flex items-center gap-1.5 border-b-2 border-primary/30 pb-0.5 hover:border-primary transition-colors"
             >
               View All <ArrowRight size={14} weight="bold" />
             </Link>
@@ -97,7 +97,7 @@ export function CategoriesSection() {
         </div>
 
         {/* Discount Card */}
-        <div className="lg:col-span-1 rounded-[2.5rem] bg-gradient-to-b from-[#1d7a8c] to-[#114b56] p-8 lg:p-10 flex flex-col items-center justify-center gap-4 relative overflow-hidden text-center min-h-[320px]">
+        <div className="lg:col-span-1 rounded-[2.5rem] bg-gradient-to-b from-primary/80 to-primary p-8 lg:p-10 flex flex-col items-center justify-center gap-4 relative overflow-hidden text-center min-h-[320px]">
           <span className="bg-[#f2a74c] px-5 py-2 rounded-full text-[12px] font-bold text-white uppercase tracking-wider">
             Get Discount
           </span>

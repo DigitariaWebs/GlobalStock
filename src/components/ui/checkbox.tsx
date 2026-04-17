@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { CheckIcon } from "lucide-react";
+import { Check } from "@phosphor-icons/react/dist/ssr";
 import * as React from "react";
 
 function Checkbox({
@@ -22,7 +22,7 @@ function Checkbox({
         data-slot="checkbox-indicator"
         className="grid place-content-center text-current transition-none"
       >
-        <CheckIcon className="size-3.5" />
+        <Check className="size-3.5" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   );

@@ -35,28 +35,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { LucideIcon } from "lucide-react";
+import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
 import {
   ArrowDown,
   ArrowUp,
-  ChevronRight,
+  CaretRight,
   Columns,
-  Filter,
-  Search,
-} from "lucide-react";
+  Funnel,
+  MagnifyingGlass,
+} from "@phosphor-icons/react/dist/ssr";
 import { Fragment, useState } from "react";
 
 export interface ColumnDef<T> {
   key: string;
   label: string;
-  icon?: LucideIcon;
+  icon?: PhosphorIcon;
   render?: (item: T) => React.ReactNode;
   defaultVisible?: boolean;
   sortable?: boolean;
   sortValue?: (item: T) => unknown;
 }
 
-export interface FilterDef {
+export interface FunnelDef {
   key: string;
   label: string;
   options: { value: string; label: string }[];
@@ -65,7 +65,7 @@ export interface FilterDef {
 interface DataTableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
-  filters?: FilterDef[];
+  filters?: FunnelDef[];
   searchKey?: keyof T;
   searchKeys?: (keyof T)[];
   getSearchValue?: (item: T) => string;
@@ -106,11 +106,11 @@ export function DataTable<T extends object>({
   onGroupByChange,
 }: DataTableProps<T>) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterValues, setFilterValues] = useState<Record<string, string>>(
+  const [filterValues, setFunnelValues] = useState<Record<string, string>>(
     filters.reduce((acc, filter) => ({ ...acc, [filter.key]: "all" }), {}),
   );
   const [currentPage, setCurrentPage] = useState(1);
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFunnels, setShowFunnels] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>(
     columns.reduce(
       (acc, col) => ({
@@ -319,11 +319,11 @@ export function DataTable<T extends object>({
 
   return (
     <div className="w-full max-w-full space-y-4 overflow-x-hidden">
-      {/* Filters */}
+      {/* Funnels */}
       <div className="flex flex-wrap items-center space-x-2 gap-y-2">
         {(searchKey || searchKeys || getSearchValue) && (
           <div className="relative max-w-sm flex-1">
-            <Search className="text-muted-foreground absolute top-2.5 left-2 h-4 w-4" />
+            <MagnifyingGlass className="text-muted-foreground absolute top-2.5 left-2 h-4 w-4" />
             <Input
               placeholder={searchPlaceholder}
               className="pl-8"
@@ -335,14 +335,14 @@ export function DataTable<T extends object>({
             />
           </div>
         )}
-        {showFilters && (
+        {showFunnels && (
           <>
             {filters.map((filter) => (
               <Select
                 key={filter.key}
                 value={filterValues[filter.key]}
                 onValueChange={(value) => {
-                  setFilterValues((prev) => ({ ...prev, [filter.key]: value }));
+                  setFunnelValues((prev) => ({ ...prev, [filter.key]: value }));
                   setCurrentPage(1);
                 }}
               >
@@ -362,11 +362,11 @@ export function DataTable<T extends object>({
         )}
         {filters.length > 0 && (
           <Button
-            variant={showFilters ? "default" : "outline"}
+            variant={showFunnels ? "default" : "outline"}
             size="icon"
-            onClick={() => setShowFilters(!showFilters)}
+            onClick={() => setShowFunnels(!showFunnels)}
           >
-            <Filter className="h-4 w-4" />
+            <Funnel className="h-4 w-4" />
           </Button>
         )}
         {columns.length > 1 && (
@@ -377,7 +377,7 @@ export function DataTable<T extends object>({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="space-y-1">
-              <DropdownMenuLabel>Filter</DropdownMenuLabel>
+              <DropdownMenuLabel>Funnel</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {columns.map((col) => (
                 <DropdownMenuItem
@@ -559,7 +559,7 @@ export function DataTable<T extends object>({
                                 className="h-8 w-8"
                                 onClick={() => toggleRowExpansion(itemId)}
                               >
-                                <ChevronRight
+                                <CaretRight
                                   className={`h-4 w-4 transition-transform ${
                                     isExpanded ? "rotate-90" : ""
                                   }`}
@@ -650,7 +650,7 @@ export function DataTable<T extends object>({
                             className="h-8 w-8"
                             onClick={() => toggleRowExpansion(itemId)}
                           >
-                            <ChevronRight
+                            <CaretRight
                               className={`h-4 w-4 transition-transform ${
                                 isExpanded ? "rotate-90" : ""
                               }`}

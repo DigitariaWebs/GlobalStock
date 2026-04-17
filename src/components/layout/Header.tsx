@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Heart, Search, ShoppingCart, User, X } from "lucide-react";
+import { CaretDown, Heart, MagnifyingGlass, ShoppingCart, User, X } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -113,7 +113,7 @@ export function Header() {
                     )}
                   >
                     {item.label}
-                    <ChevronDown className="size-3.5 transition-transform duration-200 group-hover:rotate-180" />
+                    <CaretDown size={14} className="transition-transform duration-200 group-hover:rotate-180" />
                     {isActive(item) && (
                       <span className="absolute bottom-0 left-[5%] right-[5%] h-1 rounded-full bg-primary" />
                     )}
@@ -159,7 +159,7 @@ export function Header() {
             )}
           >
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+              <MagnifyingGlass size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
               <input
                 ref={inputRef}
                 type="text"
@@ -172,7 +172,7 @@ export function Header() {
               className="flex size-9 shrink-0 items-center justify-center rounded-full text-foreground/60 transition-colors hover:bg-secondary hover:text-foreground"
               aria-label="Fermer la recherche"
             >
-              <X className="size-4" />
+              <X size={16} />
             </button>
           </div>
 
@@ -188,18 +188,18 @@ export function Header() {
             className="text-foreground/75 hover:bg-secondary hover:text-primary"
             onClick={() => setSearchOpen((v) => !v)}
           >
-            <Search className="size-5" />
+            <MagnifyingGlass size={20} />
           </Button>
 
           <Button variant="ghost" size="icon" aria-label="Favoris" className="text-foreground/75 hover:bg-secondary hover:text-primary" asChild>
             <Link href="/wishlist">
-              <Heart className="size-5" />
+              <Heart size={20} />
             </Link>
           </Button>
 
           <Button variant="ghost" size="icon" aria-label="Panier" className="relative text-foreground/75 hover:bg-secondary hover:text-primary" asChild>
             <Link href="/cart">
-              <ShoppingCart className="size-5" />
+              <ShoppingCart size={20} />
               <span className="absolute right-1 top-1 flex size-3.5 items-center justify-center rounded-full bg-destructive text-[9px] font-bold text-white">
                 0
               </span>
@@ -207,7 +207,7 @@ export function Header() {
           </Button>
 
           <Link href="/account" aria-label="Mon compte" className="ml-1 flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground transition-opacity hover:opacity-90">
-            <User className="size-4" />
+            <User size={16} />
           </Link>
         </div>
 

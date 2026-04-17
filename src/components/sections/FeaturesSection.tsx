@@ -42,7 +42,7 @@ export function FeaturesSection() {
                 <Icon
                   weight="fill"
                   size={26}
-                  className="text-[#196a76] relative z-10"
+                  className="text-primary relative z-10"
                 />
               </div>
               <p className="text-[15px] font-semibold text-[#4a4a4a] whitespace-nowrap mt-2">
@@ -56,34 +56,34 @@ export function FeaturesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {/* Image */}
           <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#e8f1f2] to-[#c7e5e9] h-[400px] w-full flex items-center justify-center">
-            <span className="text-xl font-medium text-[#196a76]/60 tracking-wider">
+            <span className="text-xl font-medium text-primary/60 tracking-wider">
               IMAGE PLACEHOLDER
             </span>
 
             {/* Hotspots */}
-            <div className="absolute top-[30%] left-[25%] w-5 h-5 rounded-full bg-[#196a76]/30 backdrop-blur-md shadow-[0_0_0_4px_rgba(25,106,118,0.2)] flex items-center justify-center">
-              <div className="w-2 h-2 rounded-full bg-[#196a76]"></div>
+            <div className="absolute top-[30%] left-[25%] w-5 h-5 rounded-full bg-primary/30 backdrop-blur-md shadow-[0_0_0_4px_rgba(25,106,118,0.2)] flex items-center justify-center">
+              <div className="w-2 h-2 rounded-full bg-primary"></div>
             </div>
-            <div className="absolute top-[60%] left-[15%] w-5 h-5 rounded-full bg-[#196a76]/30 backdrop-blur-md shadow-[0_0_0_4px_rgba(25,106,118,0.2)] flex items-center justify-center">
-              <div className="w-2 h-2 rounded-full bg-[#196a76]"></div>
+            <div className="absolute top-[60%] left-[15%] w-5 h-5 rounded-full bg-primary/30 backdrop-blur-md shadow-[0_0_0_4px_rgba(25,106,118,0.2)] flex items-center justify-center">
+              <div className="w-2 h-2 rounded-full bg-primary"></div>
             </div>
 
             {/* Price hotspot */}
             <div className="absolute top-[65%] left-[55%] flex items-center gap-2">
-              <div className="w-10 h-[1px] bg-[#196a76]/60"></div>
-              <div className="rounded-full bg-white/60 border border-[#196a76]/20 backdrop-blur-md px-4 py-1.5 text-sm font-semibold text-[#196a76] shadow-sm">
+              <div className="w-10 h-[1px] bg-primary/60"></div>
+              <div className="rounded-full bg-white/60 border border-primary/20 backdrop-blur-md px-4 py-1.5 text-sm font-semibold text-primary shadow-sm">
                 20.$
               </div>
             </div>
 
-            <div className="absolute bottom-[15%] right-[25%] w-5 h-5 rounded-full bg-[#196a76]/30 backdrop-blur-md shadow-[0_0_0_4px_rgba(25,106,118,0.2)] flex items-center justify-center">
-              <div className="w-2 h-2 rounded-full bg-[#196a76]"></div>
+            <div className="absolute bottom-[15%] right-[25%] w-5 h-5 rounded-full bg-primary/30 backdrop-blur-md shadow-[0_0_0_4px_rgba(25,106,118,0.2)] flex items-center justify-center">
+              <div className="w-2 h-2 rounded-full bg-primary"></div>
             </div>
           </div>
 
           {/* Text card */}
           <div className="flex flex-col justify-center rounded-[2rem] bg-white px-10 py-12 md:px-14 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
-            <span className="mb-6 inline-flex w-fit items-center rounded-full bg-[#e8f1f2] px-5 py-2 text-xs font-bold uppercase tracking-widest text-[#196a76]">
+            <span className="mb-6 inline-flex w-fit items-center rounded-full bg-[#e8f1f2] px-5 py-2 text-xs font-bold uppercase tracking-widest text-primary">
               FURNITURE DESIGN IDEAS
             </span>
 
@@ -98,14 +98,14 @@ export function FeaturesSection() {
             <div className="flex items-center gap-8">
               <Link
                 href="/shop"
-                className="inline-flex items-center gap-2 rounded-full bg-[#196a76] px-8 py-3.5 text-[15px] font-semibold text-white transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-[15px] font-semibold text-white transition-opacity hover:opacity-90"
               >
                 Shop Now
                 <ArrowRight size={16} weight="bold" />
               </Link>
               <Link
                 href="/instagram"
-                className="text-[15px] font-semibold text-[#52525b] underline decoration-[#a1a1aa] underline-offset-4 hover:text-[#196a76] hover:decoration-[#196a76] transition-colors"
+                className="text-[15px] font-semibold text-[#52525b] underline decoration-[#a1a1aa] underline-offset-4 hover:text-primary hover:decoration-primary transition-colors"
               >
                 Follow Instagram
               </Link>

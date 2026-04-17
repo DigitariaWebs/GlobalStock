@@ -10,7 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { AlertTriangle, CheckCircle2, Info } from "lucide-react";
+import { Warning, CheckCircle, Info } from "@phosphor-icons/react/dist/ssr";
 import * as React from "react";
 
 export interface ModalAction {
@@ -61,8 +61,8 @@ const defaultSizes: Record<ModalProps["type"], keyof typeof sizeClasses> = {
 
 const defaultIcons: Record<ModalProps["type"], React.ReactNode> = {
   confirmation: <Info className="h-6 w-6 text-blue-500" />,
-  warning: <AlertTriangle className="h-6 w-6 text-amber-500" />,
-  details: <CheckCircle2 className="h-6 w-6 text-primary" />,
+  warning: <Warning className="h-6 w-6 text-amber-500" />,
+  details: <CheckCircle className="h-6 w-6 text-primary" />,
   form: null,
 };
 

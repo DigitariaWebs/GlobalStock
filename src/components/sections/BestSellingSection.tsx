@@ -69,7 +69,7 @@ export function BestSellingSection() {
               <div className="relative bg-[#f4f5f7] rounded-[1.5rem] h-[260px] p-4 flex flex-col items-center justify-center transition-transform group-hover:scale-[1.02]">
                 {/* Top Left Badge */}
                 <div className="absolute top-4 left-4">
-                  <span className="bg-[#196a76] text-white text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wide">
+                  <span className="bg-primary text-white text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wide">
                     {product.discount}
                   </span>
                 </div>
@@ -89,7 +89,7 @@ export function BestSellingSection() {
                 </div>
 
                 {/* Placeholder Image */}
-                <div className="flex flex-col items-center gap-2 text-[#196a76]/20">
+                <div className="flex flex-col items-center gap-2 text-primary/20">
                   <ImageIcon size={64} weight="duotone" />
                   <span className="text-xs font-semibold">Image Produit</span>
                 </div>
@@ -121,8 +121,8 @@ export function BestSellingSection() {
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5 opacity-80">
-                    <div className="w-[3px] h-[3px] rounded-full bg-[#196a76]"></div>
-                    <span className="text-[11px] font-medium text-[#196a76]">
+                    <div className="w-[3px] h-[3px] rounded-full bg-primary"></div>
+                    <span className="text-[11px] font-medium text-primary">
                       {product.delivery}
                     </span>
                   </div>
@@ -151,7 +151,7 @@ export function BestSellingSection() {
             <button className="w-9 h-9 rounded-full border border-[#e4e4e7] flex items-center justify-center text-[#a1a1aa] hover:bg-gray-50 transition-colors">
               <CaretLeft size={16} weight="bold" />
             </button>
-            <button className="w-9 h-9 rounded-full bg-[#196a76] flex items-center justify-center text-white shadow-md hover:bg-[#13535d] transition-colors">
+            <button className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white shadow-md hover:bg-primary/90 transition-colors">
               <CaretRight size={16} weight="bold" />
             </button>
           </div>

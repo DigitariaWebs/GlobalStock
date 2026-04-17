@@ -4,7 +4,7 @@ import { MapPin, Phone, EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
 
 export function Footer() {
   return (
-    <footer className="bg-[#114b56] text-white pt-20 pb-10">
+    <footer className="bg-primary text-white pt-20 pb-10">
       <div className="mx-auto max-w-[1200px] px-6 lg:px-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
           
@@ -13,7 +13,7 @@ export function Footer() {
             <div className="flex items-center gap-2 mb-6">
               {/* Logo Placeholder */}
               <div className="w-10 h-10 bg-[#f2a74c] rounded-[12px] flex items-center justify-center">
-                <span className="text-[#114b56] font-bold text-xl leading-none">G</span>
+                <span className="text-primary font-bold text-xl leading-none">G</span>
               </div>
               <span className="text-2xl font-bold tracking-tight">GlobalStock</span>
             </div>
@@ -21,16 +21,16 @@ export function Footer() {
               Votre partenaire de confiance pour des équipements industriels, solutions solaires, et outillage professionnel de haute qualité.
             </p>
             <div className="flex items-center gap-4">
-              <Link href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-colors hover:bg-[#f2a74c] hover:text-[#114b56]">
+              <Link href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-colors hover:bg-[#f2a74c] hover:text-primary">
                 <FacebookLogo size={20} weight="fill" />
               </Link>
-              <Link href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-colors hover:bg-[#f2a74c] hover:text-[#114b56]">
+              <Link href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-colors hover:bg-[#f2a74c] hover:text-primary">
                 <InstagramLogo size={20} weight="fill" />
               </Link>
-              <Link href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-colors hover:bg-[#f2a74c] hover:text-[#114b56]">
+              <Link href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-colors hover:bg-[#f2a74c] hover:text-primary">
                 <TwitterLogo size={20} weight="fill" />
               </Link>
-              <Link href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-colors hover:bg-[#f2a74c] hover:text-[#114b56]">
+              <Link href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-colors hover:bg-[#f2a74c] hover:text-primary">
                 <LinkedinLogo size={20} weight="fill" />
               </Link>
             </div>
@@ -105,7 +105,7 @@ export function Footer() {
                 placeholder="Votre adresse email" 
                 className="w-full bg-white/10 border border-white/20 rounded-full h-12 pl-5 pr-14 text-[14px] text-white placeholder-white/40 focus:outline-none focus:border-[#f2a74c] transition-colors"
               />
-              <button className="absolute right-1 top-1 w-10 h-10 rounded-full bg-[#f2a74c] flex items-center justify-center text-[#114b56] hover:bg-white transition-colors">
+              <button className="absolute right-1 top-1 w-10 h-10 rounded-full bg-[#f2a74c] flex items-center justify-center text-primary hover:bg-white transition-colors">
                 <PaperPlaneRight size={18} weight="fill" />
               </button>
             </div>

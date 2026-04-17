@@ -53,16 +53,16 @@ export function SuperSaleSection() {
           </div>
 
           {/* Product Placeholder */}
-          <div className="flex-1 w-full bg-gradient-to-br from-[#e8f1f2]/50 to-[#c7e5e9]/50 rounded-[2rem] mt-8 flex flex-col items-center justify-center border-2 border-dashed border-[#196a76]/20 relative z-10">
-            <ImageIcon size={64} weight="duotone" className="text-[#196a76]/30 mb-4" />
-            <span className="text-[#196a76]/40 font-semibold text-lg">Image du Groupe Électrogène</span>
+          <div className="flex-1 w-full bg-gradient-to-br from-[#e8f1f2]/50 to-[#c7e5e9]/50 rounded-[2rem] mt-8 flex flex-col items-center justify-center border-2 border-dashed border-primary/20 relative z-10">
+            <ImageIcon size={64} weight="duotone" className="text-primary/30 mb-4" />
+            <span className="text-primary/40 font-semibold text-lg">Image du Groupe Électrogène</span>
           </div>
 
           {/* CTA Button */}
           <div className="absolute bottom-10 right-10 z-30">
             <Link
               href="/shop/sale"
-              className="bg-[#196a76] text-white px-8 py-3 rounded-full text-[14px] font-semibold shadow-md hover:bg-[#13535d] transition-colors"
+              className="bg-primary text-white px-8 py-3 rounded-full text-[14px] font-semibold shadow-md hover:bg-primary/90 transition-colors"
             >
               Acheter
             </Link>
@@ -78,8 +78,8 @@ export function SuperSaleSection() {
             <div className="absolute inset-[10px] border-[1.5px] border-white/70 rounded-[2.5rem] z-20 pointer-events-none"></div>
             
             <div className="relative z-10 flex flex-col items-center">
-              <ImageIcon size={42} weight="duotone" className="text-[#196a76]/40 mb-3" />
-              <span className="text-xs font-semibold text-[#196a76]/50 text-center px-4">Installation Industrielle</span>
+              <ImageIcon size={42} weight="duotone" className="text-primary/40 mb-3" />
+              <span className="text-xs font-semibold text-primary/50 text-center px-4">Installation Industrielle</span>
             </div>
           </div>
 
@@ -89,8 +89,8 @@ export function SuperSaleSection() {
             <div className="absolute inset-[10px] border-[1.5px] border-white/70 rounded-[2.5rem] z-20 pointer-events-none"></div>
             
             <div className="relative z-10 flex flex-col items-center">
-              <ImageIcon size={42} weight="duotone" className="text-[#196a76]/40 mb-3" />
-              <span className="text-xs font-semibold text-[#196a76]/50 text-center px-4">Atelier Pro</span>
+              <ImageIcon size={42} weight="duotone" className="text-primary/40 mb-3" />
+              <span className="text-xs font-semibold text-primary/50 text-center px-4">Atelier Pro</span>
             </div>
           </div>
 

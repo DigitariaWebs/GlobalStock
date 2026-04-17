@@ -86,13 +86,13 @@ export function TestimonialsSection() {
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={prevTestimonial}
-              className="w-12 h-12 rounded-full flex items-center justify-center transition-all focus:outline-none border border-[#196a76] text-[#196a76] hover:bg-[#196a76] hover:text-white"
+              className="w-12 h-12 rounded-full flex items-center justify-center transition-all focus:outline-none border border-primary text-primary hover:bg-primary hover:text-white"
             >
               <CaretLeft size={20} weight="bold" />
             </button>
             <button
               onClick={nextTestimonial}
-              className="w-12 h-12 rounded-full flex items-center justify-center transition-all focus:outline-none border border-[#196a76] text-[#196a76] hover:bg-[#196a76] hover:text-white"
+              className="w-12 h-12 rounded-full flex items-center justify-center transition-all focus:outline-none border border-primary text-primary hover:bg-primary hover:text-white"
             >
               <CaretRight size={20} weight="bold" />
             </button>
@@ -117,7 +117,7 @@ export function TestimonialsSection() {
                   <div
                     className={`relative w-full h-auto sm:h-[280px] rounded-[2.5rem] p-8 sm:p-10 sm:pl-[280px] flex flex-col justify-center mt-[100px] sm:mt-0 transition-all duration-500 ease-out ${
                       isActive
-                        ? "bg-[#114b56] text-white shadow-[0_20px_40px_-15px_rgba(17,75,86,0.3)] scale-100"
+                        ? "bg-primary text-white shadow-[0_20px_40px_-15px_rgba(17,75,86,0.3)] scale-100"
                         : "bg-white text-[#1a202c] shadow-[0_8px_30px_-10px_rgba(0,0,0,0.05)] border border-[#f0f4f5] scale-95 opacity-60 hover:opacity-100"
                     }`}
                   >
@@ -133,9 +133,9 @@ export function TestimonialsSection() {
                       <UserFocus
                         size={48}
                         weight="duotone"
-                        className="text-[#196a76]/40 mb-2 relative z-10"
+                        className="text-primary/40 mb-2 relative z-10"
                       />
-                      <span className="text-[10px] font-bold text-[#196a76]/50 uppercase tracking-widest text-center px-4 relative z-10">
+                      <span className="text-[10px] font-bold text-primary/50 uppercase tracking-widest text-center px-4 relative z-10">
                         Portrait Client {item.id}
                       </span>
                     </div>
@@ -146,7 +146,7 @@ export function TestimonialsSection() {
                       <Quotes
                         size={80}
                         weight="fill"
-                        className={`absolute -top-4 right-0 sm:right-4 z-0 transition-colors ${isActive ? "text-white/5" : "text-[#196a76]/5"}`}
+                        className={`absolute -top-4 right-0 sm:right-4 z-0 transition-colors ${isActive ? "text-white/5" : "text-primary/5"}`}
                       />
 
                       <div className="relative z-10">
@@ -179,7 +179,7 @@ export function TestimonialsSection() {
                             {item.name}
                           </h4>
                           <p
-                            className={`text-[12px] font-bold tracking-wider uppercase ${isActive ? "text-[#f2a74c]/90" : "text-[#196a76]"}`}
+                            className={`text-[12px] font-bold tracking-wider uppercase ${isActive ? "text-[#f2a74c]/90" : "text-primary"}`}
                           >
                             {item.role}
                           </p>
@@ -201,8 +201,8 @@ export function TestimonialsSection() {
               onClick={() => setActiveIndex(index)}
               className={`transition-all duration-300 rounded-full ${
                 index === activeIndex
-                  ? "w-8 h-2 bg-[#196a76]"
-                  : "w-2 h-2 bg-[#196a76]/30 hover:bg-[#196a76]/60"
+                  ? "w-8 h-2 bg-primary"
+                  : "w-2 h-2 bg-primary/30 hover:bg-primary/60"
               }`}
             />
           ))}

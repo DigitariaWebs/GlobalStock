@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { ChevronDown } from "lucide-react";
+import { CaretDown } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
@@ -120,7 +120,7 @@ export function ModuleNavigationBar({
                     {!isCollapsed && (
                       <>
                         <span>{item.label}</span>
-                        <ChevronDown className="h-3 w-3" />
+                        <CaretDown className="h-3 w-3" />
                       </>
                     )}
                   </DropdownMenuTrigger>
