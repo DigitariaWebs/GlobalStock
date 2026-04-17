@@ -11,7 +11,7 @@ export function CategoriesSection() {
         <div className="lg:col-span-2 rounded-[2.5rem] bg-[#f8f9fa] p-8 lg:p-10 flex items-center relative overflow-hidden min-h-85">
           {/* Image — background layer */}
           <div className="absolute right-0 bottom-0 w-[50%] h-[90%] z-0">
-            <Image src="/CategoriesSection/GroupeElectrogene.png" alt="Groupe Électrogène" fill className="object-contain object-right-bottom" />
+            <Image src="/CategoriesSection/GroupeElectrogene.png" alt="Groupe Électrogène" fill className="object-contain object-bottom-right" />
           </div>
 
           {/* Text — foreground */}

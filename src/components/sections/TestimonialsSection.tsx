@@ -91,13 +91,13 @@ export function TestimonialsSection() {
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={prevTestimonial}
-              className="w-[56px] h-[36px] rounded-full flex items-center justify-center text-[#a1a1aa] border border-[#e4e4e7] bg-white hover:text-primary hover:border-primary transition-colors shadow-sm"
+              className="w-14 h-9 rounded-full flex items-center justify-center text-[#a1a1aa] border border-[#e4e4e7] bg-white hover:text-primary hover:border-primary transition-colors shadow-sm"
             >
               <ArrowRight size={18} weight="bold" className="rotate-180" />
             </button>
             <button
               onClick={nextTestimonial}
-              className="w-[56px] h-[36px] rounded-full bg-primary flex items-center justify-center text-white shadow-md hover:bg-primary/90 transition-colors"
+              className="w-14 h-9 rounded-full bg-primary flex items-center justify-center text-white shadow-md hover:bg-primary/90 transition-colors"
             >
               <ArrowRight size={18} weight="bold" />
             </button>

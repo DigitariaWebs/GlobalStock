@@ -1,21 +1,51 @@
-import { ArrowRight, ArrowUpRight, CaretLeft, CaretRight, Image as ImageIcon } from "@phosphor-icons/react/dist/ssr";
+"use client";
+
+import { ArrowRight, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useRef, useEffect } from "react";
 
-
-
-
-
-
-
-
-
-
-
-
-
+const products = [
+  {
+    id: 1,
+    title: "Palette de 4 Groupes Électrogènes Inverter KRAFTPOWER 7600W",
+    price: "5 990,00 €",
+    image: "/AchatEnGrosSection/gemini_generated_image_mbttxmbttxmbttxm-high-uth4w1.png",
+    href: "/achat-en-gros",
+  },
+  {
+    id: 2,
+    title: "Palette de 4 Groupes Électrogènes Diesel Daewoo 8,1 kVA DDAE10500DSE-3G – Dual Power Silencieux",
+    price: "5 990,00 €",
+    image: "/AchatEnGrosSection/gemini_generated_image_gsub2ogsub2ogsub-high.png",
+    href: "/achat-en-gros",
+    badge: "Épuisé",
+  },
+  {
+    id: 3,
+    title: "Palette de 4 GE Diesel Insonorisés 8.5kW – Moteur 10CV",
+    price: "4 990,00 €",
+    image: "/AchatEnGrosSection/whatsapp-image-2025-11-09-12-36-30_66ac7cba-high.png",
+    href: "/achat-en-gros",
+  },
+];
 
 export function AchatEnGrosSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  const mainProduct = products[activeIndex];
+  const secondaryProducts = products.filter((_, i) => i !== activeIndex);
+
+  useEffect(() => {
+    if (trackRef.current) {
+      trackRef.current.scrollTo({ left: 0, behavior: "smooth" });
+    }
+  }, [activeIndex]);
+
+  const prev = () => setActiveIndex((p) => (p === 0 ? products.length - 1 : p - 1));
+  const next = () => setActiveIndex((p) => (p === products.length - 1 ? 0 : p + 1));
+
   return (
     <section className="px-6 py-12 lg:px-10 lg:py-24 overflow-hidden bg-white">
       <div className="mx-auto max-w-300 flex flex-col lg:flex-row items-center gap-12 lg:gap-14">
@@ -41,83 +71,111 @@ export function AchatEnGrosSection() {
         {/* Right Carousel Area */}
         <div className="w-full lg:w-[60%] flex gap-8">
           {/* Main Active Card (Taller) */}
-          <div className="relative w-[340px] sm:w-[400px] h-[520px] shrink-0 rounded-[2.5rem] bg-gradient-to-b from-primary/90 to-primary shadow-xl flex flex-col items-center justify-center overflow-hidden">
-            <Image
-              src="/AchatEnGrosSection/gemini_generated_image_mbttxmbttxmbttxm-high-uth4w1.png"
-              alt="Palette Groupes Électrogènes"
-              fill
-              className="object-cover"
+          <div className="relative w-85 sm:w-100 h-130 shrink-0 rounded-[2.5rem] bg-linear-to-b from-primary/90 to-primary shadow-xl flex flex-col items-center justify-center overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={mainProduct.image}
+              alt={mainProduct.title}
+              className="absolute inset-0 w-full h-full object-cover"
             />
+
+            {mainProduct.badge && (
+              <span className="absolute top-5 right-5 z-10 bg-[#f2a74c] text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">
+                {mainProduct.badge}
+              </span>
+            )}
 
             <div className="absolute flex gap-3 bottom-6 left-6 right-6">
               <div className="flex-1 bg-white/95 backdrop-blur-md rounded-[1.2rem] p-4 shadow-sm flex flex-col justify-center">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-[12px] font-medium text-[#71717a]">
-                    01
+                    {String(activeIndex + 1).padStart(2, "0")}
                   </span>
-                  <div className="w-8 h-[2px] bg-[#d4d4d8]"></div>
+                  <div className="w-8 h-0.5 bg-[#d4d4d8]"></div>
                   <span className="text-[12px] font-medium text-[#71717a] uppercase tracking-wider">
-                    4 990,00 €
+                    {mainProduct.price}
                   </span>
                 </div>
                 <h3 className="text-[16px] sm:text-[17px] font-bold text-[#1a202c] leading-snug line-clamp-2">
-                  Palette de 4 GE Diesel Insonorisés 8.5kW – Moteur 10CV
+                  {mainProduct.title}
                 </h3>
               </div>
 
-              <button className="w-14 h-14 sm:w-[60px] sm:h-[60px] shrink-0 self-end rounded-full bg-white flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
-                <ArrowUpRight
-                  size={24}
-                  weight="bold"
-                  className="text-primary"
-                />
-              </button>
+              <Link
+                href={mainProduct.href}
+                className="w-14 h-14 sm:w-15 sm:h-15 shrink-0 self-end rounded-full bg-white flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors"
+              >
+                <ArrowUpRight size={24} weight="bold" className="text-primary" />
+              </Link>
             </div>
           </div>
 
           {/* Secondary Cards & Navigation Column */}
           <div className="flex flex-col gap-6 w-full overflow-hidden">
             {/* Smaller Cards Track */}
-            <div className="flex gap-6 overflow-x-auto pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-              {/* Second Card (Shorter) */}
-              <div className="relative w-[280px] sm:w-[320px] h-[380px] shrink-0 rounded-[2rem] bg-[#f8f9fa] overflow-hidden">
-                <Image
-                  src="/AchatEnGrosSection/gemini_generated_image_gsub2ogsub2ogsub-high.png"
-                  alt="Achat en gros solaire"
-                  fill
-                  className="object-cover"
-                />
-              </div>
+            <div
+              ref={trackRef}
+              className="flex gap-6 overflow-x-auto pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            >
+              {secondaryProducts.map((item) => {
+                const realIndex = products.findIndex((p) => p.id === item.id);
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => setActiveIndex(realIndex)}
+                    className="relative w-70 sm:w-80 h-95 shrink-0 rounded-[2rem] bg-[#f8f9fa] overflow-hidden cursor-pointer group"
+                  >
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
 
-              {/* Third Card (Shorter) */}
-              <div className="relative w-[280px] sm:w-[320px] h-[380px] shrink-0 rounded-[2rem] bg-[#f8f9fa] flex flex-col items-center justify-center overflow-hidden">
-                <ImageIcon
-                  size={64}
-                  weight="duotone"
-                  className="text-gray-300"
-                />
-                <div className="absolute flex gap-3 bottom-0 left-0 right-0 p-6 opacity-40"></div>
-              </div>
+                    {item.badge && (
+                      <span className="absolute top-4 right-4 z-10 bg-[#f2a74c] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md">
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             {/* Navigation Controls (Below smaller cards) */}
             <div className="flex items-center gap-10 mt-6 pl-4">
               {/* Pagination Dots */}
               <div className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full border-[1.5px] border-primary flex items-center justify-center">
-                  <div className="w-2 h-2 rounded-full bg-primary"></div>
-                </div>
-                <div className="w-2 h-2 rounded-full bg-[#d4d4d8]"></div>
-                <div className="w-2 h-2 rounded-full bg-[#d4d4d8]"></div>
+                {products.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveIndex(i)}
+                    className={
+                      i === activeIndex
+                        ? "w-6 h-6 rounded-full border-[1.5px] border-primary flex items-center justify-center"
+                        : "w-2 h-2 rounded-full bg-[#d4d4d8] hover:bg-primary/60 transition-colors"
+                    }
+                  >
+                    {i === activeIndex && (
+                      <div className="w-2 h-2 rounded-full bg-primary"></div>
+                    )}
+                  </button>
+                ))}
               </div>
 
               {/* Arrows */}
-              <div className="flex items-center gap-3">
-                <button className="w-[56px] h-[36px] rounded-full flex items-center justify-center text-[#a1a1aa] border border-[#e4e4e7] bg-white hover:text-primary hover:border-primary transition-colors shadow-sm">
-                  <ArrowRight size={18} weight="bold" className="rotate-180" />
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={prev}
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-[#a1a1aa] border border-[#e4e4e7] hover:text-primary transition-colors"
+                >
+                  <ArrowRight size={20} weight="bold" className="rotate-180" />
                 </button>
-                <button className="w-[56px] h-[36px] rounded-full bg-primary flex items-center justify-center text-white shadow-md hover:bg-primary/90 transition-colors">
-                  <ArrowRight size={18} weight="bold" />
+                <button
+                  onClick={next}
+                  className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shadow-md hover:bg-primary/90 transition-colors"
+                >
+                  <ArrowRight size={20} weight="bold" />
                 </button>
               </div>
             </div>

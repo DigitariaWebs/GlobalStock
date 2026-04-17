@@ -153,10 +153,10 @@ export function BestSellingSection() {
 
           {/* Right Navigation Arrows */}
           <div className="ml-auto flex items-center gap-3">
-            <button className="w-[56px] h-[36px] rounded-full flex items-center justify-center text-[#a1a1aa] border border-[#e4e4e7] bg-white hover:text-primary hover:border-primary transition-colors shadow-sm">
+            <button className="w-14 h-9 rounded-full flex items-center justify-center text-[#a1a1aa] border border-[#e4e4e7] bg-white hover:text-primary hover:border-primary transition-colors shadow-sm">
               <ArrowRight size={18} weight="bold" className="rotate-180" />
             </button>
-            <button className="w-[56px] h-[36px] rounded-full bg-primary flex items-center justify-center text-white shadow-md hover:bg-primary/90 transition-colors">
+            <button className="w-14 h-9 rounded-full bg-primary flex items-center justify-center text-white shadow-md hover:bg-primary/90 transition-colors">
               <ArrowRight size={18} weight="bold" />
             </button>
           </div>
