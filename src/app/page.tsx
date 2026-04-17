@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/layout/HeroSection";
+import { BestSellingSection } from "@/components/sections/BestSellingSection";
 import { CategoriesSection } from "@/components/sections/CategoriesSection";
 import { FeaturesSection } from "@/components/sections/FeaturesSection";
 import { ProductsSection } from "@/components/sections/ProductsSection";
@@ -9,6 +10,7 @@ export default function Home() {
     <main>
       <HeroSection />
       <FeaturesSection />
+      <BestSellingSection />
       <CategoriesSection />
       <SuperSaleSection />
       <ProductsSection />
