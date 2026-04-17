@@ -68,7 +68,7 @@ export function TestimonialsSection() {
   };
 
   return (
-    <section className="px-6 py-12 lg:px-10 lg:py-24 bg-gradient-to-b from-white to-[#f8f9fa] overflow-hidden">
+    <section className="px-6 py-12 lg:px-10 lg:py-24 bg-white overflow-hidden">
       <div className="mx-auto max-w-[1200px]">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 sm:mb-12 z-20 relative">

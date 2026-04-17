@@ -1,17 +1,17 @@
 import {
   ArrowRight,
   Headset,
-  ShoppingBagOpen,
-  ArrowUUpLeft,
   Truck,
+  ShieldCheck,
+  Globe,
 } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 
 const features = [
-  { icon: ShoppingBagOpen, label: "Easy For Shopping" },
-  { icon: Truck, label: "Fast & Free Shipping" },
-  { icon: Headset, label: "24/7 Support" },
-  { icon: ArrowUUpLeft, label: "Money Back Guarantee" },
+  { icon: Globe, label: "Livraison France & Europe" },
+  { icon: Truck, label: "Expédition en 5 Jours" },
+  { icon: Headset, label: "Support Technique 6j/7" },
+  { icon: ShieldCheck, label: "Garantie 2 Ans" },
 ];
 
 export function FeaturesSection() {
@@ -72,7 +72,7 @@ export function FeaturesSection() {
             <div className="absolute top-[65%] left-[55%] flex items-center gap-2">
               <div className="w-10 h-[1px] bg-primary/60"></div>
               <div className="rounded-full bg-white/60 border border-primary/20 backdrop-blur-md px-4 py-1.5 text-sm font-semibold text-primary shadow-sm">
-                20.$
+                9.5 kVA
               </div>
             </div>
 
@@ -84,30 +84,29 @@ export function FeaturesSection() {
           {/* Text card */}
           <div className="flex flex-col justify-center rounded-[2rem] bg-white px-10 py-12 md:px-14 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
             <span className="mb-6 inline-flex w-fit items-center rounded-full bg-[#e8f1f2] px-5 py-2 text-xs font-bold uppercase tracking-widest text-primary">
-              FURNITURE DESIGN IDEAS
+              SPÉCIALISTE DEPUIS 2010
             </span>
 
             <p className="mb-10 text-lg leading-relaxed text-[#52525b]">
-              Explore furnish's curated collection of classic contemporary
-              pieces designed to create luxury and functional living spaces. Our
-              designers meticulously source high-quality, sustainable materials
-              to bring timeless elegance and modern aesthetics directly to your
-              home.
+              GlobalStock met à votre disposition plus de 1 000 modèles de groupes
+              électrogènes, solutions solaires et machines professionnelles. Nos
+              équipes sélectionnent les meilleures marques du marché pour vous
+              garantir fiabilité, performance et durabilité sur chaque chantier.
             </p>
 
             <div className="flex items-center gap-8">
               <Link
-                href="/shop"
+                href="/groupes-electrogenes"
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-[15px] font-semibold text-white transition-opacity hover:opacity-90"
               >
-                Shop Now
+                Découvrir nos produits
                 <ArrowRight size={16} weight="bold" />
               </Link>
               <Link
-                href="/instagram"
+                href="/catalogue"
                 className="text-[15px] font-semibold text-[#52525b] underline decoration-[#a1a1aa] underline-offset-4 hover:text-primary hover:decoration-primary transition-colors"
               >
-                Follow Instagram
+                Voir le catalogue
               </Link>
             </div>
           </div>

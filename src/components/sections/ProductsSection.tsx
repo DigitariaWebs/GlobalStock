@@ -11,43 +11,43 @@ const categories = [
 const products = [
   {
     id: 1,
-    name: "Groupe Électrogène 5kVA",
-    price: "850.00 €",
+    name: "Groupe Électrogène 9.5 kVA Mono",
+    price: "1 990.00 €",
     discount: "-10%",
     isFavorite: false,
   },
   {
     id: 2,
-    name: "Panneau Solaire 400W",
-    price: "145.00 €",
-    discount: "-15%",
+    name: "Groupe Électrogène 12 kVA Tri",
+    price: "2 490.00 €",
+    discount: "-8%",
     isFavorite: true,
   },
   {
     id: 3,
-    name: "Perceuse Sans Fil 18V",
-    price: "95.00 €",
-    discount: "-5%",
+    name: "Groupe Électrogène Inverter 4300W",
+    price: "899.00 €",
+    discount: "-12%",
     isFavorite: false,
   },
   {
     id: 4,
-    name: "Projecteur LED 50W",
-    price: "45.00 €",
+    name: "Nettoyeur Haute Pression Diesel",
+    price: "1 990.00 €",
     discount: "-10%",
     isFavorite: true,
   },
   {
     id: 5,
-    name: "Pompe de Surface Pro",
-    price: "230.00 €",
-    discount: "-10%",
+    name: "Panneau Solaire 400W",
+    price: "145.00 €",
+    discount: "-15%",
     isFavorite: false,
   },
   {
     id: 6,
-    name: "Batterie Solaire 12V",
-    price: "120.00 €",
+    name: "Batterie Lithium 200Ah",
+    price: "320.00 €",
     discount: "-10%",
     isFavorite: false,
   },
@@ -55,7 +55,7 @@ const products = [
 
 export function ProductsSection() {
   return (
-    <section className="px-6 py-12 lg:px-10 lg:py-16">
+    <section className="bg-white px-6 py-12 lg:px-10 lg:py-16">
       <div className="mx-auto max-w-[1200px]">
         
         {/* Navigation Tabs */}

@@ -47,8 +47,8 @@ export function SuperSaleSection() {
 
             {/* Pricing */}
             <div className="text-right flex flex-col items-end">
-              <span className="text-[#a1a1aa] line-through text-[15px] font-medium mb-1">1 190.00 €</span>
-              <span className="text-[26px] font-bold text-[#1a202c] tracking-tight">799.00 €</span>
+              <span className="text-[#a1a1aa] line-through text-[15px] font-medium mb-1">2 490.00 €</span>
+              <span className="text-[26px] font-bold text-[#1a202c] tracking-tight">1 790.00 €</span>
             </div>
           </div>
 

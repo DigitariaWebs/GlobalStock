@@ -49,6 +49,14 @@ const navItems: NavItem[] = [
     ],
   },
   { label: "Achat en gros", href: "/achat-en-gros" },
+  {
+    label: "Conseils & Expertise",
+    href: "/conseils-expertise",
+    children: [
+      { label: "Guide d'achat", href: "/conseils-expertise/guide-dachat" },
+      { label: "FAQ", href: "/conseils-expertise/faq" },
+    ],
+  },
   { label: "Contact", href: "/contact" },
 ];
 

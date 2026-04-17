@@ -9,16 +9,16 @@ export function InspirationsSection() {
         {/* Left Content Area */}
         <div className="w-full lg:w-[35%] flex flex-col items-start z-10 shrink-0">
           <h2 className="text-[32px] lg:text-[40px] font-bold text-[#2d3748] leading-[1.25] tracking-tight">
-            70+ Inspirations d'Aménagement
+            500+ Produits Professionnels
           </h2>
           <p className="text-[15px] text-[#71717a] mt-5 leading-relaxed">
-            Robustes et performants, nos équipements professionnels sont conçus pour allier puissance et fiabilité sur tous vos chantiers.
+            Robustes et performants, nos équipements sont sélectionnés pour allier puissance et fiabilité sur tous vos chantiers et installations industrielles.
           </p>
           <Link
-            href="/inspirations"
+            href="/catalogue"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-[14px] font-semibold text-white shadow-md transition-all hover:bg-primary/90 hover:shadow-lg"
           >
-            Découvrir
+            Voir le catalogue
             <ArrowRight size={16} weight="bold" />
           </Link>
         </div>

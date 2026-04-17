@@ -10,49 +10,49 @@ import {
 const bestSellers = [
   {
     id: 1,
-    name: "Générateur Pro 3kW",
-    currentPrice: "450.00 €",
-    oldPrice: "500.00 €",
-    discount: "-10% OFF",
+    name: "GE Honda 5500W Monophasé",
+    currentPrice: "1 290.00 €",
+    oldPrice: "1 490.00 €",
+    discount: "-13% OFF",
     rating: "4.9",
-    delivery: "2 jours ouvré",
+    delivery: "Expédié sous 5j",
     liked: true,
   },
   {
     id: 2,
-    name: "Lampe de Chantier",
-    currentPrice: "70.00 €",
-    oldPrice: "90.00 €",
-    discount: "-10% OFF",
+    name: "Nettoyeur HP 200 bar Diesel",
+    currentPrice: "1 590.00 €",
+    oldPrice: "1 790.00 €",
+    discount: "-11% OFF",
     rating: "5.0",
-    delivery: "2 jours ouvré",
+    delivery: "Expédié sous 5j",
     liked: false,
   },
   {
     id: 3,
-    name: "Perforateur 18V",
-    currentPrice: "90.00 €",
-    oldPrice: "110.00 €",
-    discount: "-10% OFF",
-    rating: "5.0",
-    delivery: "2 jours ouvré",
+    name: "Panneau Solaire 400W Monocristallin",
+    currentPrice: "145.00 €",
+    oldPrice: "175.00 €",
+    discount: "-17% OFF",
+    rating: "4.8",
+    delivery: "Expédié sous 5j",
     liked: false,
   },
   {
     id: 4,
-    name: "Souffleur Sans Fil",
-    currentPrice: "130.00 €",
-    oldPrice: "150.00 €",
+    name: "Onduleur Hybride Solaire 5kW",
+    currentPrice: "890.00 €",
+    oldPrice: "990.00 €",
     discount: "-10% OFF",
     rating: "4.9",
-    delivery: "2 jours ouvré",
+    delivery: "Expédié sous 5j",
     liked: false,
   },
 ];
 
 export function BestSellingSection() {
   return (
-    <section className="px-6 py-12 lg:px-10 lg:py-16">
+    <section className="bg-white px-6 py-12 lg:px-10 lg:py-16">
       <div className="mx-auto max-w-[1200px]">
         {/* Header */}
         <div className="mb-10">

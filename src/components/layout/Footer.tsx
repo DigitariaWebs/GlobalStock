@@ -1,6 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FacebookLogo, InstagramLogo, LinkedinLogo, TwitterLogo, PaperPlaneRight } from "@phosphor-icons/react/dist/ssr";
-import { MapPin, Phone, EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
+import { Phone, EnvelopeSimple, WhatsappLogo, Clock } from "@phosphor-icons/react/dist/ssr";
 
 export function Footer() {
   return (
@@ -10,12 +11,14 @@ export function Footer() {
           
           {/* Brand Info */}
           <div className="lg:col-span-4">
-            <div className="flex items-center gap-2 mb-6">
-              {/* Logo Placeholder */}
-              <div className="w-10 h-10 bg-[#f2a74c] rounded-[12px] flex items-center justify-center">
-                <span className="text-primary font-bold text-xl leading-none">G</span>
-              </div>
-              <span className="text-2xl font-bold tracking-tight">GlobalStock</span>
+            <div className="mb-6">
+              <Image
+                src="/LogoWhite.png"
+                alt="GlobalStock"
+                width={180}
+                height={48}
+                className="h-10 w-auto"
+              />
             </div>
             <p className="text-white/70 mb-8 max-w-sm leading-relaxed text-[15px]">
               Votre partenaire de confiance pour des équipements industriels, solutions solaires, et outillage professionnel de haute qualité.
@@ -41,19 +44,19 @@ export function Footer() {
             <h4 className="text-[18px] font-bold mb-6 tracking-wide">Liens Rapides</h4>
             <ul className="space-y-4">
               <li>
-                <Link href="/" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">À Propos</Link>
+                <Link href="/a-propos" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">À Propos</Link>
               </li>
               <li>
-                <Link href="/" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Nos Services</Link>
+                <Link href="/livraison" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Livraison</Link>
               </li>
               <li>
-                <Link href="/" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Promotions</Link>
+                <Link href="/paiement" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Paiement</Link>
               </li>
               <li>
-                <Link href="/" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Nouveautés</Link>
+                <Link href="/conseils-expertise" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Conseils & Expertise</Link>
               </li>
               <li>
-                <Link href="/" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Contact</Link>
+                <Link href="/contact" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Contact</Link>
               </li>
             </ul>
           </div>
@@ -63,52 +66,44 @@ export function Footer() {
             <h4 className="text-[18px] font-bold mb-6 tracking-wide">Catégories</h4>
             <ul className="space-y-4">
               <li>
-                <Link href="/" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Groupes Électrogènes</Link>
+                <Link href="/groupes-electrogenes" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Groupes Électrogènes</Link>
               </li>
               <li>
-                <Link href="/" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Équipements Solaires</Link>
+                <Link href="/solaire" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Solutions Solaires</Link>
               </li>
               <li>
-                <Link href="/" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Outillage BTP</Link>
+                <Link href="/machines-outillage-pro" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Machines & Outillage Pro</Link>
               </li>
               <li>
-                <Link href="/" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Climatisation</Link>
+                <Link href="/achat-en-gros" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Achat en Gros</Link>
               </li>
               <li>
-                <Link href="/" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Jardinage & Motoculture</Link>
+                <Link href="/machines-outillage-pro/jardin" className="text-white/70 hover:text-[#f2a74c] transition-colors text-[15px]">Jardinage & Motoculture</Link>
               </li>
             </ul>
           </div>
 
-          {/* Contact Info & Newsletter */}
+          {/* Contact Info */}
           <div className="lg:col-span-3">
             <h4 className="text-[18px] font-bold mb-6 tracking-wide">Contactez-nous</h4>
             <ul className="space-y-4 mb-8">
-              <li className="flex items-start gap-3 text-white/70 text-[15px]">
-                <MapPin size={20} className="w-5 shrink-0 text-[#f2a74c] mt-0.5" weight="fill" />
-                <span>Zone Industrielle de Rouiba, Casablanca, Algérie</span>
+              <li className="flex items-center gap-3 text-white/70 text-[15px]">
+                <Phone size={20} className="text-[#f2a74c] shrink-0" weight="fill" />
+                <span>+33 01 87 66 21 39</span>
               </li>
               <li className="flex items-center gap-3 text-white/70 text-[15px]">
-                <Phone size={20} className="text-[#f2a74c]" weight="fill" />
-                <span>+213 (0) 555 12 34 56</span>
+                <WhatsappLogo size={20} className="text-[#f2a74c] shrink-0" weight="fill" />
+                <span>+33 6 01 88 51 73</span>
               </li>
               <li className="flex items-center gap-3 text-white/70 text-[15px]">
-                <EnvelopeSimple size={20} className="text-[#f2a74c]" weight="fill" />
-                <span>contact@globalstock.dz</span>
+                <EnvelopeSimple size={20} className="text-[#f2a74c] shrink-0" weight="fill" />
+                <span>contact@globalstock.fr</span>
+              </li>
+              <li className="flex items-center gap-3 text-white/70 text-[15px]">
+                <Clock size={20} className="text-[#f2a74c] shrink-0" weight="fill" />
+                <span>6j/7 — 9h00 à 20h00</span>
               </li>
             </ul>
-
-            <h4 className="text-[15px] font-bold mb-4 tracking-wide">Newsletter</h4>
-            <div className="relative">
-              <input 
-                type="email" 
-                placeholder="Votre adresse email" 
-                className="w-full bg-white/10 border border-white/20 rounded-full h-12 pl-5 pr-14 text-[14px] text-white placeholder-white/40 focus:outline-none focus:border-[#f2a74c] transition-colors"
-              />
-              <button className="absolute right-1 top-1 w-10 h-10 rounded-full bg-[#f2a74c] flex items-center justify-center text-primary hover:bg-white transition-colors">
-                <PaperPlaneRight size={18} weight="fill" />
-              </button>
-            </div>
           </div>
 
         </div>
@@ -117,8 +112,9 @@ export function Footer() {
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-white/50 text-[14px]">
           <p>© {new Date().getFullYear()} GlobalStock. Tous droits réservés.</p>
           <div className="flex items-center gap-6">
-            <Link href="/" className="hover:text-white transition-colors">Politique de Confidentialité</Link>
-            <Link href="/" className="hover:text-white transition-colors">Conditions Générales</Link>
+            <Link href="/politique-de-confidentialite" className="hover:text-white transition-colors">Politique de Confidentialité</Link>
+            <Link href="/cgv" className="hover:text-white transition-colors">CGV</Link>
+            <Link href="/cgu" className="hover:text-white transition-colors">CGU</Link>
           </div>
         </div>
       </div>
