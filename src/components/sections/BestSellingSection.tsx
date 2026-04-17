@@ -1,9 +1,8 @@
 import {
-  CaretLeft,
-  CaretRight,
   Heart,
   ShoppingBag,
   Star,
+  ArrowRight,
 } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 
@@ -154,11 +153,11 @@ export function BestSellingSection() {
 
           {/* Right Navigation Arrows */}
           <div className="ml-auto flex items-center gap-3">
-            <button className="w-9 h-9 rounded-full border border-[#e4e4e7] flex items-center justify-center text-[#a1a1aa] hover:bg-gray-50 transition-colors">
-              <CaretLeft size={16} weight="bold" />
+            <button className="w-[56px] h-[36px] rounded-full flex items-center justify-center text-[#a1a1aa] border border-[#e4e4e7] bg-white hover:text-primary hover:border-primary transition-colors shadow-sm">
+              <ArrowRight size={18} weight="bold" className="rotate-180" />
             </button>
-            <button className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white shadow-md hover:bg-primary/90 transition-colors">
-              <CaretRight size={16} weight="bold" />
+            <button className="w-[56px] h-[36px] rounded-full bg-primary flex items-center justify-center text-white shadow-md hover:bg-primary/90 transition-colors">
+              <ArrowRight size={18} weight="bold" />
             </button>
           </div>
         </div>

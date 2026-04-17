@@ -5,6 +5,7 @@ import {
   ShieldCheck,
   Globe,
 } from "@phosphor-icons/react/dist/ssr";
+import Image from "next/image";
 import Link from "next/link";
 
 const features = [
@@ -55,30 +56,14 @@ export function FeaturesSection() {
         {/* Bottom: image + text */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {/* Image */}
-          <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-[#e8f1f2] to-[#c7e5e9] h-100 w-full flex items-center justify-center">
-            <span className="text-xl font-medium text-primary/60 tracking-wider">
-              IMAGE PLACEHOLDER
-            </span>
+          <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-[#e8f1f2] to-[#c7e5e9] h-100 w-full">
+            <Image
+              src="/FeaturesSection/ChatGPT Image Apr 17, 2026, 09_35_36 PM.png"
+              alt="Groupe Électrogène 9.5 kVA"
+              fill
+              className="object-cover"
+            />
 
-            {/* Hotspots */}
-            <div className="absolute top-[30%] left-[25%] w-5 h-5 rounded-full bg-primary/30 backdrop-blur-md shadow-[0_0_0_4px_rgba(25,106,118,0.2)] flex items-center justify-center">
-              <div className="w-2 h-2 rounded-full bg-primary"></div>
-            </div>
-            <div className="absolute top-[60%] left-[15%] w-5 h-5 rounded-full bg-primary/30 backdrop-blur-md shadow-[0_0_0_4px_rgba(25,106,118,0.2)] flex items-center justify-center">
-              <div className="w-2 h-2 rounded-full bg-primary"></div>
-            </div>
-
-            {/* Price hotspot */}
-            <div className="absolute top-[65%] left-[55%] flex items-center gap-2">
-              <div className="w-10 h-px bg-primary/60"></div>
-              <div className="rounded-full bg-white/60 border border-primary/20 backdrop-blur-md px-4 py-1.5 text-sm font-semibold text-primary shadow-sm">
-                9.5 kVA
-              </div>
-            </div>
-
-            <div className="absolute bottom-[15%] right-[25%] w-5 h-5 rounded-full bg-primary/30 backdrop-blur-md shadow-[0_0_0_4px_rgba(25,106,118,0.2)] flex items-center justify-center">
-              <div className="w-2 h-2 rounded-full bg-primary"></div>
-            </div>
           </div>
 
           {/* Text card */}

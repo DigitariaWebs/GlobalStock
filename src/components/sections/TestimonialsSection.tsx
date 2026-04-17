@@ -1,6 +1,6 @@
 "use client";
 
-import { CaretLeft, CaretRight, Star, Quotes } from "@phosphor-icons/react/dist/ssr";
+import { CaretLeft, CaretRight, Star, Quotes, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
@@ -91,15 +91,15 @@ export function TestimonialsSection() {
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={prevTestimonial}
-              className="w-12 h-12 rounded-full flex items-center justify-center transition-all focus:outline-none border border-primary text-primary hover:bg-primary hover:text-white"
+              className="w-[56px] h-[36px] rounded-full flex items-center justify-center text-[#a1a1aa] border border-[#e4e4e7] bg-white hover:text-primary hover:border-primary transition-colors shadow-sm"
             >
-              <CaretLeft size={20} weight="bold" />
+              <ArrowRight size={18} weight="bold" className="rotate-180" />
             </button>
             <button
               onClick={nextTestimonial}
-              className="w-12 h-12 rounded-full flex items-center justify-center transition-all focus:outline-none border border-primary text-primary hover:bg-primary hover:text-white"
+              className="w-[56px] h-[36px] rounded-full bg-primary flex items-center justify-center text-white shadow-md hover:bg-primary/90 transition-colors"
             >
-              <CaretRight size={20} weight="bold" />
+              <ArrowRight size={18} weight="bold" />
             </button>
           </div>
         </div>

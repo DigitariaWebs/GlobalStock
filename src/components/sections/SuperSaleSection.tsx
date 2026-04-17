@@ -1,5 +1,6 @@
 import React from "react";
-import { Clock, Image as ImageIcon } from "@phosphor-icons/react/dist/ssr";
+import { Clock } from "@phosphor-icons/react/dist/ssr";
+import Image from "next/image";
 import Link from "next/link";
 
 export function SuperSaleSection() {
@@ -13,8 +14,8 @@ export function SuperSaleSection() {
           {/* Header Row: Title & Price */}
           <div className="flex justify-between items-start w-full relative z-20">
             <div>
-              <h2 className="text-[32px] font-medium text-[#1a202c] mb-2 tracking-tight">Super Promo !</h2>
-              <p className="text-[14px] text-[#a1a1aa] font-medium">Jusqu&apos;à -50%. Offre Limitée !</p>
+              <h2 className="text-[32px] font-medium text-[#1a202c] mb-2 tracking-tight">Tronçonneuse Daewoo DCS6524</h2>
+              <p className="text-[14px] text-[#a1a1aa] font-medium">Lame 60 cm — Promotion !</p>
               
               {/* Event Badge */}
               <div className="mt-6 mb-4">
@@ -47,15 +48,19 @@ export function SuperSaleSection() {
 
             {/* Pricing */}
             <div className="text-right flex flex-col items-end">
-              <span className="text-[#a1a1aa] line-through text-[15px] font-medium mb-1">2 490.00 €</span>
-              <span className="text-[26px] font-bold text-[#1a202c] tracking-tight">1 790.00 €</span>
+              <span className="text-[#a1a1aa] line-through text-[15px] font-medium mb-1">399,00 €</span>
+              <span className="text-[26px] font-bold text-[#1a202c] tracking-tight">299,00 €</span>
             </div>
           </div>
 
-          {/* Product Placeholder */}
-          <div className="flex-1 w-full bg-linear-to-br from-[#e8f1f2]/50 to-[#c7e5e9]/50 rounded-[2rem] mt-8 flex flex-col items-center justify-center border-2 border-dashed border-primary/20 relative z-10">
-            <ImageIcon size={64} weight="duotone" className="text-primary/30 mb-4" />
-            <span className="text-primary/40 font-semibold text-lg">Image du Groupe Électrogène</span>
+          {/* Product Image — background layer */}
+          <div className="absolute bottom-0 right-0 w-[70%] h-[75%] z-0">
+            <Image
+              src="/SuperSaleSection/daewookettensaegedcs6524_4-standard.png"
+              alt="Tronçonneuse Daewoo DCS6524"
+              fill
+              className="object-contain object-bottom-right"
+            />
           </div>
 
           {/* CTA Button */}
@@ -72,26 +77,30 @@ export function SuperSaleSection() {
         {/* Right Side: Dual Vertical Cards */}
         <div className="lg:col-span-4 grid grid-cols-2 gap-4 lg:gap-6 min-h-115">
           
-          {/* Vertical Card 1 */}
-          <div className="bg-linear-to-b from-[#e8f1f2] to-[#c7e5e9] rounded-[3rem] p-2 relative flex flex-col justify-center items-center overflow-hidden shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)]">
-            {/* Inner Border Outline mimicking the image UI */}
-            <div className="absolute inset-2.5 border-[1.5px] border-white/70 rounded-[2.5rem] z-20 pointer-events-none"></div>
-            
-            <div className="relative z-10 flex flex-col items-center">
-              <ImageIcon size={42} weight="duotone" className="text-primary/40 mb-3" />
-              <span className="text-xs font-semibold text-primary/50 text-center px-4">Installation Industrielle</span>
+          {/* Vertical Card 1 — left half of the continuous image */}
+          <div className="rounded-[3rem] relative overflow-hidden shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)]">
+            <div className="absolute top-0 bottom-0 left-0 w-[calc(200%+1rem)] lg:w-[calc(200%+1.5rem)]">
+              <Image
+                src="/SuperSaleSection/ChatGPT Image Apr 17, 2026, 02_23_44 PM.png"
+                alt="Équipements industriels"
+                fill
+                className="object-cover"
+              />
             </div>
+            <div className="absolute inset-2.5 border-[1.5px] border-white/20 rounded-[2.5rem] z-20 pointer-events-none"></div>
           </div>
 
-          {/* Vertical Card 2 */}
-          <div className="bg-linear-to-b from-[#e8f1f2] to-[#d8eeef] rounded-[3rem] p-2 relative flex flex-col justify-center items-center overflow-hidden shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)]">
-            {/* Inner Border Outline mimicking the image UI */}
-            <div className="absolute inset-2.5 border-[1.5px] border-white/70 rounded-[2.5rem] z-20 pointer-events-none"></div>
-            
-            <div className="relative z-10 flex flex-col items-center">
-              <ImageIcon size={42} weight="duotone" className="text-primary/40 mb-3" />
-              <span className="text-xs font-semibold text-primary/50 text-center px-4">Atelier Pro</span>
+          {/* Vertical Card 2 — right half of the continuous image */}
+          <div className="rounded-[3rem] relative overflow-hidden shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)]">
+            <div className="absolute top-0 bottom-0 right-0 w-[calc(200%+1rem)] lg:w-[calc(200%+1.5rem)]">
+              <Image
+                src="/SuperSaleSection/ChatGPT Image Apr 17, 2026, 02_23_44 PM.png"
+                alt=""
+                fill
+                className="object-cover"
+              />
             </div>
+            <div className="absolute inset-2.5 border-[1.5px] border-white/20 rounded-[2.5rem] z-20 pointer-events-none"></div>
           </div>
 
         </div>
