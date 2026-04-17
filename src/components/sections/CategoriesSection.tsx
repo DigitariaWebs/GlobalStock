@@ -1,4 +1,5 @@
-import { ArrowRight, Image as ImageIcon } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import Image from "next/image";
 import Link from "next/link";
 
 export function CategoriesSection() {
@@ -7,8 +8,14 @@ export function CategoriesSection() {
       <div className="mx-auto max-w-300 grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 text-[#2d3748]">
         
         {/* Groupes Électrogènes Card (Spans 2 columns on desktop) */}
-        <div className="lg:col-span-2 rounded-[2.5rem] bg-[#f8f9fa] p-8 lg:p-10 flex flex-col sm:flex-row items-center justify-between relative overflow-hidden min-h-85">
-          <div className="flex flex-col items-start w-full sm:w-1/2 z-10">
+        <div className="lg:col-span-2 rounded-[2.5rem] bg-[#f8f9fa] p-8 lg:p-10 flex items-center relative overflow-hidden min-h-85">
+          {/* Image — background layer */}
+          <div className="absolute right-0 bottom-0 w-[50%] h-[90%] z-0">
+            <Image src="/CategoriesSection/GroupeElectrogene.png" alt="Groupe Électrogène" fill className="object-contain object-right-bottom" />
+          </div>
+
+          {/* Text — foreground */}
+          <div className="flex flex-col items-start relative z-10">
             <span className="bg-white px-3.5 py-1 rounded-full text-[11px] font-bold text-primary shadow-sm mb-4">
               500+ Modèles
             </span>
@@ -29,15 +36,16 @@ export function CategoriesSection() {
               Voir tout <ArrowRight size={14} weight="bold" />
             </Link>
           </div>
-
-          <div className="w-full sm:w-1/2 h-48 sm:h-[85%] mt-8 sm:mt-0 flex flex-col items-center justify-center bg-black/5 rounded-[1.5rem] border border-black/5">
-            <ImageIcon size={32} weight="duotone" className="text-black/20 mb-2" />
-            <span className="text-black/30 font-medium text-sm">Image Groupe Électrogène</span>
-          </div>
         </div>
 
         {/* Machines & Outillage Pro Card (Tall, spans 2 rows) */}
         <div className="lg:col-span-1 lg:row-span-2 rounded-[2.5rem] bg-[#f0f4f5] p-8 lg:p-10 flex flex-col relative overflow-hidden">
+          {/* Image — background layer */}
+          <div className="absolute bottom-0 left-0 right-0 h-[50%] z-0">
+            <Image src="/CategoriesSection/MachinesOutillagePro.png" alt="Machines & Outillage Pro" fill className="object-contain object-bottom" />
+          </div>
+
+          {/* Text — foreground */}
           <div className="flex flex-col items-start z-10 shrink-0">
             <span className="bg-white px-3.5 py-1 rounded-full text-[11px] font-bold text-primary shadow-sm mb-4">
               300+ Références
@@ -59,21 +67,22 @@ export function CategoriesSection() {
               Voir tout <ArrowRight size={14} weight="bold" />
             </Link>
           </div>
-
-          <div className="w-full flex-1 mt-8 min-h-60 flex flex-col items-center justify-center bg-black/5 rounded-[1.5rem] border border-black/5">
-            <ImageIcon size={32} weight="duotone" className="text-black/20 mb-2" />
-            <span className="text-black/30 font-medium text-sm">Image Outillage Pro</span>
-          </div>
         </div>
 
         {/* Solutions Solaires Card */}
-        <div className="lg:col-span-1 rounded-[2.5rem] bg-[#fdf3eb] p-8 lg:p-10 flex flex-col sm:flex-row items-center justify-between relative overflow-hidden min-h-80">
-          <div className="flex flex-col items-start w-full sm:w-1/2 z-10">
+        <div className="lg:col-span-1 rounded-[2.5rem] bg-[#fdf3eb] p-8 lg:p-10 flex items-center relative overflow-hidden min-h-80">
+          {/* Image — background layer */}
+          <div className="absolute right-0 bottom-0 w-[50%] h-[90%] z-0">
+            <Image src="/CategoriesSection/SolutionsSolaires.png" alt="Solutions Solaires" fill className="object-contain object-bottom-right" />
+          </div>
+
+          {/* Text — foreground */}
+          <div className="flex flex-col items-start relative z-10">
             <span className="bg-white px-3.5 py-1 rounded-full text-[11px] font-bold text-primary shadow-sm mb-4">
               200+ Produits
             </span>
 
-            <h3 className="text-3xl font-bold mb-4 text-[#1a202c]">Solutions Solaires</h3>
+            <h3 className="text-3xl font-bold mb-4 text-[#1a202c]">Solaires</h3>
 
             <ul className="text-[13px] text-[#71717a] flex flex-col gap-2 mb-8">
               <li>Panneaux solaires</li>
@@ -88,11 +97,6 @@ export function CategoriesSection() {
             >
               Voir tout <ArrowRight size={14} weight="bold" />
             </Link>
-          </div>
-
-          <div className="w-full sm:w-[45%] h-44 sm:h-[85%] mt-8 sm:mt-0 flex flex-col items-center justify-center bg-black/5 rounded-[1.5rem] border border-black/5">
-            <ImageIcon size={28} weight="duotone" className="text-black/20 mb-2" />
-            <span className="text-black/30 font-medium text-xs text-center px-3">Image Solaire</span>
           </div>
         </div>
 

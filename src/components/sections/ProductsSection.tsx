@@ -1,4 +1,5 @@
 import { Heart, ShoppingCart, Image as ImageIcon } from "@phosphor-icons/react/dist/ssr";
+import Image from "next/image";
 
 const categories = [
   "Tous",
@@ -11,45 +12,57 @@ const categories = [
 const products = [
   {
     id: 1,
-    name: "Groupe Électrogène 9.5 kVA Mono",
+    name: "GE Diesel K9500 – 9,5 kVA Supersilencieux Monophasé",
     price: "1 990.00 €",
-    discount: "-10%",
-    isFavorite: false,
+    oldPrice: "2 490.00 €",
+    discount: "-20%",
+    isFavorite: true,
+    image: "/ProductsSection/ge-9-5kva-supersilencieux-mono.png",
   },
   {
     id: 2,
-    name: "Groupe Électrogène 12 kVA Tri",
+    name: "GE Diesel 12 kVA Triphasé Supersilencieux AVR 230V/400V",
     price: "2 490.00 €",
-    discount: "-8%",
-    isFavorite: true,
+    oldPrice: "2 990.00 €",
+    discount: "-17%",
+    isFavorite: false,
+    image: "/ProductsSection/ge-12kva-triphase-supersilencieux.png",
   },
   {
     id: 3,
-    name: "Groupe Électrogène Inverter 4300W",
-    price: "899.00 €",
-    discount: "-12%",
+    name: "GE Diesel 16 kVA Triphasé Silencieux",
+    price: "3 990.00 €",
+    oldPrice: "4 490.00 €",
+    discount: "-11%",
     isFavorite: false,
+    image: "/ProductsSection/ge-16kva-triphase-silencieux.png",
   },
   {
     id: 4,
-    name: "Nettoyeur Haute Pression Diesel",
-    price: "1 990.00 €",
-    discount: "-10%",
-    isFavorite: true,
+    name: "GE Diesel 10 kVA DUALPOWER 380V/220V Mobile",
+    price: "1 590.00 €",
+    oldPrice: "1 990.00 €",
+    discount: "-20%",
+    isFavorite: false,
+    image: "/ProductsSection/ge-10kva-dualpower-mobile.png",
   },
   {
     id: 5,
-    name: "Panneau Solaire 400W",
-    price: "145.00 €",
-    discount: "-15%",
-    isFavorite: false,
+    name: "GE Inverter KRAFTPOWER 4300W",
+    price: "899.00 €",
+    oldPrice: "1 199.00 €",
+    discount: "-25%",
+    isFavorite: true,
+    image: "/ProductsSection/ge-inverter-kraftpower-4300w.png",
   },
   {
     id: 6,
-    name: "Batterie Lithium 200Ah",
-    price: "320.00 €",
-    discount: "-10%",
+    name: "GE Diesel 22 kVA Triphasé Silencieux BI-CYLINDRE",
+    price: "5 490.00 €",
+    oldPrice: "5 990.00 €",
+    discount: "-8%",
     isFavorite: false,
+    image: "/ProductsSection/ge-22kva-triphase-silencieux-bicylindre.png",
   },
 ];
 
@@ -98,13 +111,20 @@ export function ProductsSection() {
                   )}
                 </button>
 
-                {/* Placeholder Image */}
-                <div className="flex flex-col items-center gap-3 text-primary/30">
-                  <ImageIcon size={52} weight="duotone" />
-                  <span className="text-sm font-medium text-center px-4">
-                     Placeholder<br/>{product.name}
-                  </span>
-                </div>
+                {product.image ? (
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    width={320}
+                    height={240}
+                    className="object-contain w-full h-full"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center gap-3 text-primary/30">
+                    <ImageIcon size={52} weight="duotone" />
+                    <span className="text-sm font-medium text-center px-4">{product.name}</span>
+                  </div>
+                )}
 
               </div>
 

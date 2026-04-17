@@ -2,51 +2,55 @@ import {
   CaretLeft,
   CaretRight,
   Heart,
-  Image as ImageIcon,
   ShoppingBag,
   Star,
 } from "@phosphor-icons/react/dist/ssr";
+import Image from "next/image";
 
 const bestSellers = [
   {
     id: 1,
-    name: "GE Honda 5500W Monophasé",
-    currentPrice: "1 290.00 €",
-    oldPrice: "1 490.00 €",
-    discount: "-13% OFF",
+    name: "GE Diesel K9500 – 9,5 kVA Supersilencieux",
+    currentPrice: "1 990.00 €",
+    oldPrice: "2 490.00 €",
+    discount: "Promotion !",
     rating: "4.9",
     delivery: "Expédié sous 5j",
     liked: true,
+    image: "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png",
   },
   {
     id: 2,
-    name: "Nettoyeur HP 200 bar Diesel",
-    currentPrice: "1 590.00 €",
-    oldPrice: "1 790.00 €",
-    discount: "-11% OFF",
+    name: "GE Diesel 12 kVA Triphasé Supersilencieux",
+    currentPrice: "2 490.00 €",
+    oldPrice: "2 990.00 €",
+    discount: "Promotion !",
     rating: "5.0",
     delivery: "Expédié sous 5j",
     liked: false,
+    image: "/BestSellingSection/kraft-18-kva-3phase-standard.png",
   },
   {
     id: 3,
-    name: "Panneau Solaire 400W Monocristallin",
-    currentPrice: "145.00 €",
-    oldPrice: "175.00 €",
-    discount: "-17% OFF",
+    name: "GE Diesel 16 kVA Triphasé Silencieux",
+    currentPrice: "3 990.00 €",
+    oldPrice: "4 490.00 €",
+    discount: "Épuisé",
     rating: "4.8",
     delivery: "Expédié sous 5j",
     liked: false,
+    image: "/BestSellingSection/sans-titre-high.png",
   },
   {
     id: 4,
-    name: "Onduleur Hybride Solaire 5kW",
-    currentPrice: "890.00 €",
-    oldPrice: "990.00 €",
-    discount: "-10% OFF",
+    name: "Nettoyeur HP Diesel HPW-3200D – 320 Bars",
+    currentPrice: "1 990.00 €",
+    oldPrice: "2 490.00 €",
+    discount: "Promotion !",
     rating: "4.9",
     delivery: "Expédié sous 5j",
     liked: false,
+    image: "/BestSellingSection/thumb_page_15544536691-1-2-high.png",
   },
 ];
 
@@ -88,11 +92,13 @@ export function BestSellingSection() {
                   </button>
                 </div>
 
-                {/* Placeholder Image */}
-                <div className="flex flex-col items-center gap-2 text-primary/20">
-                  <ImageIcon size={64} weight="duotone" />
-                  <span className="text-xs font-semibold">Image Produit</span>
-                </div>
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  width={260}
+                  height={200}
+                  className="object-contain w-full h-full"
+                />
               </div>
 
               {/* Product Details */}
