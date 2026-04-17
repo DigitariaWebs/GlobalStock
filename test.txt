@@ -1,0 +1,60 @@
+import Image from "next/image";
+
+export default function Home() {
+  return (
+    <section className="relative min-h-screen w-full bg-white">
+
+      {/* SVG clip path — rectangular notch top-left + circular bite bottom-right */}
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <clipPath id="hero-clip" clipPathUnits="objectBoundingBox">
+            <path d="
+              M 0.04,0
+              L 0.15,0
+              Q 0.17,0 0.17,0.03
+              L 0.17,0.057
+              Q 0.17,0.086 0.189,0.086
+              L 0.226,0.086
+              Q 0.245,0.086 0.245,0.057
+              L 0.245,0.029
+              Q 0.245,0 0.264,0
+              L 0.962,0
+              Q 1,0 1,0.057
+              L 1,0.786
+              A 0.142,0.214 0 0 0 0.858,1
+              L 0.04,1
+              Q 0,1 0,0.943
+              L 0,0.057
+              Q 0,0 0.04,0
+              Z
+            " />
+          </clipPath>
+        </defs>
+      </svg>
+
+      {/* Clipped image with padding — white bg peeks through the bites */}
+      <div className="absolute inset-0 p-8">
+        <div className="relative w-full h-full" style={{ clipPath: "url(#hero-clip)" }}>
+          <Image
+            src="/test.png"
+            alt="Beautiful interior space"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
+      </div>
+
+      {/* Centered title */}
+      <div className="relative z-10 flex flex-col items-center justify-start pt-32 min-h-screen text-white">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight text-center">
+          Discover <span className="font-medium">Your Perfect</span>
+          <br />
+          Space
+        </h1>
+      </div>
+
+    </section>
+  );
+}
