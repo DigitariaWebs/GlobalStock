@@ -51,7 +51,7 @@
   --radius: 0.5rem;
 
   /* Base */
-  --background: oklch(1 0 0);                      /* #FFFFFF — white */
+  --background: oklch(0.95 0.012 248);              /* light blue-gray — matches secondary */
   --foreground: oklch(0.22 0.05 250);               /* #1a2d42 — near-navy for body text */
 
   /* Cards & popovers */
