@@ -12,12 +12,12 @@ export default function Home() {
     <main>
       <HeroSection />
       <FeaturesSection />
-      <BestSellingSection />
-      <InspirationsSection />
       <CategoriesSection />
+      <BestSellingSection />
+      <ProductsSection />
+      <InspirationsSection />
       <SuperSaleSection />
       <TestimonialsSection />
-      <ProductsSection />
     </main>
   );
 }

@@ -7,6 +7,10 @@ import { useState, useRef, useEffect } from "react";
 
 
 
+
+
+
+
 const testimonials = [
   {
     id: 1,
@@ -67,12 +71,12 @@ export function TestimonialsSection() {
     <section className="px-6 py-12 lg:px-10 lg:py-24 bg-gradient-to-b from-white to-[#f8f9fa] overflow-hidden">
       <div className="mx-auto max-w-[1200px]">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-20">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 sm:mb-12 z-20 relative">
           <div>
             <h2 className="text-[32px] md:text-[40px] font-bold text-[#1a202c] leading-[1.2] tracking-tight max-w-[500px]">
               Ce Que Disent Nos Partenaires
             </h2>
-            <p className="text-[15px] sm:text-[16px] text-[#71717a] mt-4">
+            <p className="text-[15px] sm:text-[16px] text-[#71717a] mt-2">
               Découvrez les retours d'expérience de professionnels qui nous font
               confiance.
             </p>
@@ -99,7 +103,7 @@ export function TestimonialsSection() {
         <div className="relative w-full -mx-6 px-6 lg:-mx-10 lg:px-10">
           <div
             ref={scrollContainerRef}
-            className="flex gap-8 sm:gap-12 overflow-x-auto pb-12 pt-10 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory"
+            className="flex gap-8 sm:gap-12 overflow-x-auto pb-16 sm:pb-20 pt-10 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory"
           >
             {testimonials.map((item, index) => {
               const isActive = index === activeIndex;
@@ -107,11 +111,11 @@ export function TestimonialsSection() {
                 <div
                   key={item.id}
                   onClick={() => setActiveIndex(index)}
-                  className="flex items-end relative h-auto sm:h-[340px] w-[340px] sm:w-[700px] shrink-0 group cursor-pointer snap-center"
+                  className="flex items-end relative h-auto sm:h-[360px] w-[340px] sm:w-[700px] shrink-0 group cursor-pointer snap-center"
                 >
                   {/* Background Card */}
                   <div
-                    className={`relative w-full h-auto sm:h-[280px] rounded-[2.5rem] p-10 sm:p-12 sm:pl-[300px] flex flex-col justify-center mt-[100px] sm:mt-0 transition-all duration-500 ease-out ${
+                    className={`relative w-full h-auto sm:h-[280px] rounded-[2.5rem] p-8 sm:p-10 sm:pl-[280px] flex flex-col justify-center mt-[100px] sm:mt-0 transition-all duration-500 ease-out ${
                       isActive
                         ? "bg-[#114b56] text-white shadow-[0_20px_40px_-15px_rgba(17,75,86,0.3)] scale-100"
                         : "bg-white text-[#1a202c] shadow-[0_8px_30px_-10px_rgba(0,0,0,0.05)] border border-[#f0f4f5] scale-95 opacity-60 hover:opacity-100"
@@ -119,7 +123,7 @@ export function TestimonialsSection() {
                   >
                     {/* Protruding Image */}
                     <div
-                      className={`absolute -top-[80px] sm:-bottom-6 sm:-top-6 left-8 w-[160px] h-[160px] sm:w-[240px] sm:h-auto rounded-[2rem] flex flex-col items-center justify-center border-4 border-white sm:border-[6px] shadow-xl overflow-hidden transition-all duration-500 ease-out z-20 ${
+                      className={`absolute -top-[80px] sm:-bottom-6 sm:-top-6 left-6 sm:left-8 w-[160px] h-[160px] sm:w-[210px] sm:h-auto rounded-[2rem] flex flex-col items-center justify-center border-4 border-white sm:border-[6px] shadow-xl overflow-hidden transition-all duration-500 ease-out z-20 ${
                         isActive
                           ? "opacity-100 border-white/10 sm:border-white scale-100"
                           : "opacity-60 border-white bg-gray-50 grayscale-[50%] group-hover:grayscale-0 group-hover:opacity-100 scale-95"
@@ -127,9 +131,9 @@ export function TestimonialsSection() {
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-[#c7e5e9] to-[#e8f1f2]"></div>
                       <UserFocus
-                        size={56}
+                        size={48}
                         weight="duotone"
-                        className="text-[#196a76]/40 mb-3 relative z-10"
+                        className="text-[#196a76]/40 mb-2 relative z-10"
                       />
                       <span className="text-[10px] font-bold text-[#196a76]/50 uppercase tracking-widest text-center px-4 relative z-10">
                         Portrait Client {item.id}
@@ -137,48 +141,49 @@ export function TestimonialsSection() {
                     </div>
 
                     {/* Content */}
-                    <div
-                      className={`mt-[70px] sm:mt-0 relative z-10 transition-opacity duration-300`}
-                    >
+                    <div className="mt-[20px] sm:mt-0 relative z-10 flex flex-col justify-center h-full">
+                      {/* Decorative Quotes watermark */}
                       <Quotes
-                        size={48}
+                        size={80}
                         weight="fill"
-                        className={`absolute -top-6 -left-6 sm:-left-8 transition-colors ${isActive ? "text-white/10" : "text-[#196a76]/5"}`}
+                        className={`absolute -top-4 right-0 sm:right-4 z-0 transition-colors ${isActive ? "text-white/5" : "text-[#196a76]/5"}`}
                       />
 
-                      {/* Rating Stars */}
-                      <div className="flex gap-1 mb-5">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={16}
-                            weight="fill"
-                            className={
-                              i < item.rating
-                                ? "text-[#f2a74c]"
-                                : "text-gray-300"
-                            }
-                          />
-                        ))}
-                      </div>
+                      <div className="relative z-10">
+                        {/* Rating Stars */}
+                        <div className="flex gap-1 mb-3">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={16}
+                              weight="fill"
+                              className={
+                                i < item.rating
+                                  ? "text-[#f2a74c]"
+                                  : "text-gray-300"
+                              }
+                            />
+                          ))}
+                        </div>
 
-                      <p
-                        className={`text-[15px] sm:text-[16px] leading-[1.8] mb-8 font-medium ${isActive ? "text-white/90" : "text-[#4a5568]"}`}
-                      >
-                        "{item.text}"
-                      </p>
-
-                      <div>
-                        <h4
-                          className={`text-[18px] sm:text-[20px] font-bold mb-1.5 ${isActive ? "text-white" : "text-[#1a202c]"}`}
-                        >
-                          {item.name}
-                        </h4>
                         <p
-                          className={`text-[12px] font-bold tracking-wider uppercase ${isActive ? "text-[#f2a74c]/90" : "text-[#196a76]"}`}
+                          className={`text-[14px] sm:text-[15px] leading-[1.6] mb-4 sm:mb-6 font-medium line-clamp-4 ${isActive ? "text-white/90" : "text-[#4a5568]"}`}
                         >
-                          {item.role}
+                          "{item.text}"
                         </p>
+
+                        <div>
+                          <h4
+                            className={`text-[16px] sm:text-[18px] font-bold leading-none mb-1 ${isActive ? "text-white" : "text-[#1a202c]"}`}
+                          >
+                            {item.name}
+                          </h4>
+                          <p
+                            className={`text-[12px] font-bold tracking-wider uppercase ${isActive ? "text-[#f2a74c]/90" : "text-[#196a76]"}`}
+                          >
+                            {item.role}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
