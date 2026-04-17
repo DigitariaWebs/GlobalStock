@@ -53,10 +53,10 @@ const bestSellers = [
 export function BestSellingSection() {
   return (
     <section className="bg-white px-6 py-12 lg:px-10 lg:py-16">
-      <div className="mx-auto max-w-[1200px]">
+      <div className="mx-auto max-w-300">
         {/* Header */}
         <div className="mb-10">
-          <h2 className="text-[28px] md:text-[32px] font-bold text-[#1a202c] leading-tight max-w-[250px]">
+          <h2 className="text-[28px] md:text-[32px] font-bold text-[#1a202c] leading-tight max-w-62.5">
             Nos Meilleures Ventes
           </h2>
         </div>
@@ -66,7 +66,7 @@ export function BestSellingSection() {
           {bestSellers.map((product) => (
             <div key={product.id} className="flex flex-col group cursor-pointer">
               {/* Image Container */}
-              <div className="relative bg-[#f4f5f7] rounded-[1.5rem] h-[260px] p-4 flex flex-col items-center justify-center transition-transform group-hover:scale-[1.02]">
+              <div className="relative bg-[#f4f5f7] rounded-[1.5rem] h-65 p-4 flex flex-col items-center justify-center transition-transform group-hover:scale-[1.02]">
                 {/* Top Left Badge */}
                 <div className="absolute top-4 left-4">
                   <span className="bg-primary text-white text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wide">
@@ -121,7 +121,7 @@ export function BestSellingSection() {
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5 opacity-80">
-                    <div className="w-[3px] h-[3px] rounded-full bg-primary"></div>
+                    <div className="w-0.75 h-0.75 rounded-full bg-primary"></div>
                     <span className="text-[11px] font-medium text-primary">
                       {product.delivery}
                     </span>
@@ -137,7 +137,7 @@ export function BestSellingSection() {
           {/* Centered Pagination Dots */}
           <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
             {/* Active Dot */}
-            <div className="w-[18px] h-[18px] rounded-full border-2 border-[#1a202c] flex items-center justify-center">
+            <div className="w-4.5 h-4.5 rounded-full border-2 border-[#1a202c] flex items-center justify-center">
               <div className="w-2 h-2 rounded-full bg-[#1a202c]"></div>
             </div>
             {/* Inactive Dots */}

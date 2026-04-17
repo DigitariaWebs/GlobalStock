@@ -17,7 +17,7 @@ const features = [
 export function FeaturesSection() {
   return (
     <section className=" px-6 py-12 lg:px-10 lg:py-20 mt-10">
-      <div className="mx-auto max-w-[1200px] flex flex-col gap-8">
+      <div className="mx-auto max-w-300 flex flex-col gap-8">
         {/* Feature cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {features.map(({ icon: Icon, label }) => (
@@ -55,7 +55,7 @@ export function FeaturesSection() {
         {/* Bottom: image + text */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {/* Image */}
-          <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#e8f1f2] to-[#c7e5e9] h-[400px] w-full flex items-center justify-center">
+          <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-[#e8f1f2] to-[#c7e5e9] h-100 w-full flex items-center justify-center">
             <span className="text-xl font-medium text-primary/60 tracking-wider">
               IMAGE PLACEHOLDER
             </span>
@@ -70,7 +70,7 @@ export function FeaturesSection() {
 
             {/* Price hotspot */}
             <div className="absolute top-[65%] left-[55%] flex items-center gap-2">
-              <div className="w-10 h-[1px] bg-primary/60"></div>
+              <div className="w-10 h-px bg-primary/60"></div>
               <div className="rounded-full bg-white/60 border border-primary/20 backdrop-blur-md px-4 py-1.5 text-sm font-semibold text-primary shadow-sm">
                 9.5 kVA
               </div>

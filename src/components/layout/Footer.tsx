@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FacebookLogo, InstagramLogo, LinkedinLogo, TwitterLogo, PaperPlaneRight } from "@phosphor-icons/react/dist/ssr";
+import { FacebookLogo, InstagramLogo, LinkedinLogo, TwitterLogo } from "@phosphor-icons/react/dist/ssr";
 import { Phone, EnvelopeSimple, WhatsappLogo, Clock } from "@phosphor-icons/react/dist/ssr";
 
 export function Footer() {
   return (
     <footer className="bg-primary text-white pt-20 pb-10">
-      <div className="mx-auto max-w-[1200px] px-6 lg:px-10">
+      <div className="mx-auto max-w-300 px-6 lg:px-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
           
           {/* Brand Info */}

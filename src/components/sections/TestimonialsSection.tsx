@@ -69,17 +69,18 @@ export function TestimonialsSection() {
 
   return (
     <section className="px-6 py-12 lg:px-10 lg:py-24 bg-white overflow-hidden">
-      <div className="mx-auto max-w-[1200px]">
+      <div className="mx-auto max-w-300">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 sm:mb-12 z-20 relative">
           <div>
-            <h2 className="text-[32px] md:text-[40px] font-bold text-[#1a202c] leading-[1.2] tracking-tight max-w-[500px]">
+            <h2 className="text-[32px] md:text-[40px] font-bold text-[#1a202c] leading-[1.2] tracking-tight max-w-125">
               Ce Que Disent Nos Partenaires
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#71717a] mt-2">
-              Découvrez les retours d'expérience de professionnels qui nous font
+              Découvrez les retours d&apos;expérience de professionnels qui nous font
               confiance.
             </p>
+
           </div>
 
           {/* Navigation Arrows */}
@@ -111,11 +112,11 @@ export function TestimonialsSection() {
                 <div
                   key={item.id}
                   onClick={() => setActiveIndex(index)}
-                  className="flex items-end relative h-auto sm:h-[360px] w-[340px] sm:w-[700px] shrink-0 group cursor-pointer snap-center"
+                  className="flex items-end relative h-auto sm:h-90 w-85 sm:w-175 shrink-0 group cursor-pointer snap-center"
                 >
                   {/* Background Card */}
                   <div
-                    className={`relative w-full h-auto sm:h-[280px] rounded-[2.5rem] p-8 sm:p-10 sm:pl-[280px] flex flex-col justify-center mt-[100px] sm:mt-0 transition-all duration-500 ease-out ${
+                    className={`relative w-full h-auto sm:h-70 rounded-[2.5rem] p-8 sm:p-10 sm:pl-70 flex flex-col justify-center mt-25 sm:mt-0 transition-all duration-500 ease-out ${
                       isActive
                         ? "bg-primary text-white shadow-[0_20px_40px_-15px_rgba(17,75,86,0.3)] scale-100"
                         : "bg-white text-[#1a202c] shadow-[0_8px_30px_-10px_rgba(0,0,0,0.05)] border border-[#f0f4f5] scale-95 opacity-60 hover:opacity-100"
@@ -123,13 +124,13 @@ export function TestimonialsSection() {
                   >
                     {/* Protruding Image */}
                     <div
-                      className={`absolute -top-[80px] sm:-bottom-6 sm:-top-6 left-6 sm:left-8 w-[160px] h-[160px] sm:w-[210px] sm:h-auto rounded-[2rem] flex flex-col items-center justify-center border-4 border-white sm:border-[6px] shadow-xl overflow-hidden transition-all duration-500 ease-out z-20 ${
+                      className={`absolute -top-20 sm:-bottom-6 sm:-top-6 left-6 sm:left-8 w-40 h-40 sm:w-52.5 sm:h-auto rounded-[2rem] flex flex-col items-center justify-center border-4 border-white sm:border-[6px] shadow-xl overflow-hidden transition-all duration-500 ease-out z-20 ${
                         isActive
                           ? "opacity-100 border-white/10 sm:border-white scale-100"
-                          : "opacity-60 border-white bg-gray-50 grayscale-[50%] group-hover:grayscale-0 group-hover:opacity-100 scale-95"
+                          : "opacity-60 border-white bg-gray-50 grayscale-50 group-hover:grayscale-0 group-hover:opacity-100 scale-95"
                       }`}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-br from-[#c7e5e9] to-[#e8f1f2]"></div>
+                      <div className="absolute inset-0 bg-linear-to-br from-[#c7e5e9] to-[#e8f1f2]"></div>
                       <UserFocus
                         size={48}
                         weight="duotone"
@@ -141,7 +142,7 @@ export function TestimonialsSection() {
                     </div>
 
                     {/* Content */}
-                    <div className="mt-[20px] sm:mt-0 relative z-10 flex flex-col justify-center h-full">
+                    <div className="mt-5 sm:mt-0 relative z-10 flex flex-col justify-center h-full">
                       {/* Decorative Quotes watermark */}
                       <Quotes
                         size={80}
@@ -169,7 +170,7 @@ export function TestimonialsSection() {
                         <p
                           className={`text-[14px] sm:text-[15px] leading-[1.6] mb-4 sm:mb-6 font-medium line-clamp-4 ${isActive ? "text-white/90" : "text-[#4a5568]"}`}
                         >
-                          "{item.text}"
+                          &quot;{item.text}&quot;
                         </p>
 
                         <div>

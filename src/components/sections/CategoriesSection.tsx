@@ -4,10 +4,10 @@ import Link from "next/link";
 export function CategoriesSection() {
   return (
     <section className="bg-white px-6 py-12 lg:px-10 lg:py-16">
-      <div className="mx-auto max-w-[1200px] grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 text-[#2d3748]">
+      <div className="mx-auto max-w-300 grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 text-[#2d3748]">
         
         {/* Groupes Électrogènes Card (Spans 2 columns on desktop) */}
-        <div className="lg:col-span-2 rounded-[2.5rem] bg-[#f8f9fa] p-8 lg:p-10 flex flex-col sm:flex-row items-center justify-between relative overflow-hidden min-h-[340px]">
+        <div className="lg:col-span-2 rounded-[2.5rem] bg-[#f8f9fa] p-8 lg:p-10 flex flex-col sm:flex-row items-center justify-between relative overflow-hidden min-h-85">
           <div className="flex flex-col items-start w-full sm:w-1/2 z-10">
             <span className="bg-white px-3.5 py-1 rounded-full text-[11px] font-bold text-primary shadow-sm mb-4">
               500+ Modèles
@@ -49,7 +49,7 @@ export function CategoriesSection() {
               <li>Nettoyeurs HP</li>
               <li>Compresseurs</li>
               <li>Pompes à eau</li>
-              <li>Équipement d'atelier</li>
+              <li>Équipement d&apos;atelier</li>
             </ul>
 
             <Link
@@ -60,14 +60,14 @@ export function CategoriesSection() {
             </Link>
           </div>
 
-          <div className="w-full flex-1 mt-8 min-h-[240px] flex flex-col items-center justify-center bg-black/5 rounded-[1.5rem] border border-black/5">
+          <div className="w-full flex-1 mt-8 min-h-60 flex flex-col items-center justify-center bg-black/5 rounded-[1.5rem] border border-black/5">
             <ImageIcon size={32} weight="duotone" className="text-black/20 mb-2" />
             <span className="text-black/30 font-medium text-sm">Image Outillage Pro</span>
           </div>
         </div>
 
         {/* Solutions Solaires Card */}
-        <div className="lg:col-span-1 rounded-[2.5rem] bg-[#fdf3eb] p-8 lg:p-10 flex flex-col sm:flex-row items-center justify-between relative overflow-hidden min-h-[320px]">
+        <div className="lg:col-span-1 rounded-[2.5rem] bg-[#fdf3eb] p-8 lg:p-10 flex flex-col sm:flex-row items-center justify-between relative overflow-hidden min-h-80">
           <div className="flex flex-col items-start w-full sm:w-1/2 z-10">
             <span className="bg-white px-3.5 py-1 rounded-full text-[11px] font-bold text-primary shadow-sm mb-4">
               200+ Produits
@@ -97,7 +97,7 @@ export function CategoriesSection() {
         </div>
 
         {/* Achat en Gros Card */}
-        <div className="lg:col-span-1 rounded-[2.5rem] bg-gradient-to-b from-primary/80 to-primary p-8 lg:p-10 flex flex-col items-center justify-center gap-4 relative overflow-hidden text-center min-h-[320px]">
+        <div className="lg:col-span-1 rounded-[2.5rem] bg-linear-to-b from-primary/80 to-primary p-8 lg:p-10 flex flex-col items-center justify-center gap-4 relative overflow-hidden text-center min-h-80">
           <span className="bg-[#f2a74c] px-5 py-2 rounded-full text-[12px] font-bold text-white uppercase tracking-wider">
             Achat en Gros
           </span>

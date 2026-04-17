@@ -56,7 +56,7 @@ const products = [
 export function ProductsSection() {
   return (
     <section className="bg-white px-6 py-12 lg:px-10 lg:py-16">
-      <div className="mx-auto max-w-[1200px]">
+      <div className="mx-auto max-w-300">
         
         {/* Navigation Tabs */}
         <div className="flex items-center gap-6 md:gap-10 mb-10 overflow-x-auto pb-2 scrollbar-hide">
@@ -82,7 +82,7 @@ export function ProductsSection() {
               className="flex flex-col rounded-[2rem] overflow-hidden bg-white shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)]"
             >
               {/* Image Area */}
-              <div className="relative bg-[#f8f9fa] h-[280px] w-full flex items-center justify-center p-6">
+              <div className="relative bg-[#f8f9fa] h-70 w-full flex items-center justify-center p-6">
                 
                 {/* Discount Badge */}
                 <div className="absolute top-5 left-5 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold shadow-sm">
