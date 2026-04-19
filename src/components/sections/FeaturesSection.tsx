@@ -58,7 +58,7 @@ export function FeaturesSection() {
           {/* Image */}
           <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-[#e8f1f2] to-[#c7e5e9] h-100 w-full">
             <Image
-              src="/FeaturesSection/ChatGPT Image Apr 17, 2026, 09_35_36 PM.png"
+              src="/FeaturesSection/FeatureImage.png"
               alt="Groupe Électrogène 9.5 kVA"
               fill
               className="object-cover"

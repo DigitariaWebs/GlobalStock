@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export function SuperSaleSection() {
   return (
-    <section className="px-6 py-12 lg:px-10 lg:py-16">
+    <section id="promotions" className="px-6 py-12 lg:px-10 lg:py-16">
       <div className="mx-auto max-w-300 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
         
         {/* Left Side: Sale Card */}
