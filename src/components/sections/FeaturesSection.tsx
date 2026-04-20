@@ -17,7 +17,7 @@ const features = [
 
 export function FeaturesSection() {
   return (
-    <section className=" px-6 py-12 lg:px-10 lg:py-20 mt-10">
+    <section className=" px-6 py-12 lg:px-10 lg:py-20">
       <div className="mx-auto max-w-300 flex flex-col gap-8">
         {/* Feature cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">

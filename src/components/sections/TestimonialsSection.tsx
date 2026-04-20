@@ -5,40 +5,62 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 
-
-
-
-
-
-
-
 const testimonials = [
   {
     id: 1,
-    name: "Sophie Martin",
-    role: "Directrice des Achats",
-    text: "La qualité du matériel est exceptionnelle. Les contraintes de notre dernier chantier industriel étaient énormes, et leurs équipements ont parfaitement tenu la charge. Un service client irréprochable qui comprend les urgences.",
-    isActive: true,
+    name: "Patrick Hotton",
+    role: "Achat vérifié · 31 déc. 2025",
+    text: "Comment forme à mes attentes",
     rating: 5,
-    image: "/TestimonialsSection/SophieMartin.png",
+    image: "https://primary.jwwb.nl/public/v/e/r/temp-bcgxbkflntsrxiueoqvk/daewookettensaegedcs6524_4-standard.jpg",
   },
   {
     id: 2,
-    name: "Marc Leblanc",
-    role: "Chef de Chantier BTP",
-    text: "Nous avons renouvelé tout notre outillage professionnel chez eux. Rien à redire : c'est robuste, la livraison a été rapide, et le support technique répond toujours présent. Je recommande fortement pour les gros projets.",
-    isActive: false,
-    rating: 5,
-    image: "/TestimonialsSection/MarcLeblanc.png",
+    name: "Client",
+    role: "Achat vérifié · 26 déc. 2025",
+    text: "Je comptais beaucoup sur cette tronconneuse malheureusement elle n a jamais démarré. Néanmoins le vendeur m a appelé en me disant que celle ci fonctionnait parfaitement. Aïs je respecte la procédure de mise en route ? Oui mais pas pour le vendeur",
+    rating: 2,
+    image: "https://primary.jwwb.nl/public/v/e/r/temp-bcgxbkflntsrxiueoqvk/daewookettensaegedcs6524_4-standard.jpg",
   },
   {
     id: 3,
-    name: "Lucie Dubois",
-    role: "Architecte d'Intérieur",
-    text: "Une sélection impressionnante et un accompagnement de A à Z. Les solutions solaires proposées nous ont permis de décrocher un marché très exigeant sur l'aspect écologique. Bravo à l'équipe !",
-    isActive: false,
+    name: "Sylvain",
+    role: "Achat vérifié · 9 sept. 2017",
+    text: "Après deux chars, c'est un cheval de travail. Je suis content de m'être éloigné de l'électricité, je n'ai qu'à m'inquiéter pour la conduite d'eau. La pression est suffisamment forte pour nettoyer complètement les éléments que je devais faire.",
+    rating: 5,
+    image: "https://primary.jwwb.nl/public/v/e/r/temp-bcgxbkflntsrxiueoqvk/washer-ford-234-b-copie-high.jpg",
+  },
+  {
+    id: 4,
+    name: "OR",
+    role: "Achat vérifié · 15 déc. 2025",
+    text: "Les batteries s'intègrent facilement dans une installation existante via l'app Growatt et Home Assistant. Très bonne impression générale — le chauffage intégré fonctionne même par grand froid. Pour le prix, je compte en racheter.",
+    rating: 5,
+    image: "https://primary.jwwb.nl/public/v/e/r/temp-bcgxbkflntsrxiueoqvk/hd9682f0f690b44bd86b9f259548cb917e-high.png",
+  },
+  {
+    id: 5,
+    name: "Z***r",
+    role: "Achat vérifié · 16 jan. 2026",
+    text: "En tant que professionnel, ce produit représente un très haut niveau de qualité. Design soigné et moderne, service excellent avec une communication rapide et fiable. Très fortement recommandé.",
+    rating: 5,
+    image: "https://primary.jwwb.nl/public/v/e/r/temp-bcgxbkflntsrxiueoqvk/2-high.png",
+  },
+  {
+    id: 6,
+    name: "Phil From Florida",
+    role: "Achat vérifié · 28 jan. 2025",
+    text: "Livré en parfait état, emballé avec soin jusqu'aux roues. Solide, fluide et conforme à la description. Les raccords Zerk pour graissage sont un vrai plus. Expérience globale au-delà de mes attentes.",
+    rating: 5,
+    image: "https://primary.jwwb.nl/public/v/e/r/temp-bcgxbkflntsrxiueoqvk/pte15q-8-jpg-1-high.webp",
+  },
+  {
+    id: 7,
+    name: "Terry",
+    role: "Achat vérifié · 17 déc. 2023",
+    text: "Facile à utiliser et à nettoyer, fait très bien le travail. Il faut laisser les bacs ouverts pour sécher car le petit rebord rend difficile l'élimination des dernières traces. 9/10",
     rating: 4,
-    image: "/TestimonialsSection/LucieDubois.png",
+    image: "/CategoriesSection/MachinesOutillagePro.png",
   },
 ];
 
@@ -120,7 +142,7 @@ export function TestimonialsSection() {
                 >
                   {/* Background Card */}
                   <div
-                    className={`relative w-full h-auto sm:h-80 rounded-[2.5rem] p-8 sm:p-10 sm:pl-66 flex flex-col justify-center mt-25 sm:mt-0 transition-all duration-500 ease-out ${
+                    className={`relative w-full h-auto sm:h-80 rounded-[2.5rem] p-8 sm:p-10 sm:pl-72 flex flex-col justify-center mt-25 sm:mt-0 transition-all duration-500 ease-out ${
                       isActive
                         ? "bg-primary text-white shadow-[0_20px_40px_-15px_rgba(17,75,86,0.3)] scale-100"
                         : "bg-white text-[#1a202c] shadow-[0_8px_30px_-10px_rgba(0,0,0,0.05)] border border-[#f0f4f5] scale-95 opacity-60 hover:opacity-100"
@@ -128,7 +150,7 @@ export function TestimonialsSection() {
                   >
                     {/* Protruding Image */}
                     <div
-                      className={`absolute -top-20 sm:-bottom-6 sm:-top-6 left-6 sm:left-8 w-40 h-40 sm:w-55 sm:h-80 rounded-[2rem] border-4 border-white sm:border-[6px] shadow-xl overflow-hidden transition-all duration-500 ease-out z-20 ${
+                      className={`absolute -top-20 sm:-bottom-6 sm:-top-6 left-6 sm:left-8 w-44 h-44 sm:w-60 sm:h-80 rounded-[2rem] border-4 border-white sm:border-[6px] shadow-xl overflow-hidden transition-all duration-500 ease-out z-20 bg-white ${
                         isActive
                           ? "opacity-100 border-white/10 sm:border-white scale-100"
                           : "opacity-60 border-white grayscale-50 group-hover:grayscale-0 group-hover:opacity-100 scale-95"
@@ -137,9 +159,9 @@ export function TestimonialsSection() {
                       <Image
                         src={item.image}
                         alt={item.name}
-                        width={220}
+                        width={280}
                         height={320}
-                        className="object-cover w-full h-full"
+                        className="object-contain w-full h-full p-3"
                       />
                     </div>
 
