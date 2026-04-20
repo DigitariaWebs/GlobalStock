@@ -95,51 +95,39 @@ export function HeroSection() {
         </p>
         <div className="flex w-fit animate-[marquee_40s_linear_infinite] hover:[animation-play-state:paused]">
           {[
-            "/companies/Picsart_26-04-19_21-13-04-673.png",
-            "/companies/Picsart_26-04-19_21-13-53-972.png",
-            "/companies/Picsart_26-04-19_21-14-59-187.png",
-            "/companies/Picsart_26-04-19_21-15-57-197.png",
-            "/companies/Picsart_26-04-19_21-17-14-980.png",
-            "/companies/Picsart_26-04-19_21-18-09-708.png",
-            "/companies/Picsart_26-04-19_21-19-08-655.png",
-            "/companies/Picsart_26-04-19_21-20-09-148.png",
-            "/companies/Picsart_26-04-19_21-28-59-754.png",
-            "/companies/Picsart_26-04-19_21-31-22-610.png",
-            "/companies/Picsart_26-04-19_21-32-30-716.png",
-            "/companies/Picsart_26-04-19_21-35-36-472.png",
-          ].map((src, i) => (
+            { src: "/Companies/Edf.png", name: "EDF" },
+            { src: "/Companies/Engie.png", name: "Engie" },
+            { src: "/Companies/Eiffage.png", name: "Eiffage" },
+            { src: "/Companies/TotalEnergies.png", name: "TotalEnergies" },
+            { src: "/Companies/SchneiderElectric.png", name: "Schneider Electric" },
+            { src: "/Companies/VinciConstruction.png", name: "Vinci Construction" },
+          ].map((company, i) => (
             <div
               key={`set1-${i}`}
-              className="flex items-center justify-center w-48 px-6 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 shrink-0"
+              className="flex items-center justify-center w-56 px-4 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 shrink-0"
             >
               <img
-                src={src}
-                alt={`Company partner ${i + 1}`}
+                src={company.src}
+                alt={company.name}
                 className="max-h-12 w-auto object-contain"
               />
             </div>
           ))}
           {[
-            "/companies/Picsart_26-04-19_21-13-04-673.png",
-            "/companies/Picsart_26-04-19_21-13-53-972.png",
-            "/companies/Picsart_26-04-19_21-14-59-187.png",
-            "/companies/Picsart_26-04-19_21-15-57-197.png",
-            "/companies/Picsart_26-04-19_21-17-14-980.png",
-            "/companies/Picsart_26-04-19_21-18-09-708.png",
-            "/companies/Picsart_26-04-19_21-19-08-655.png",
-            "/companies/Picsart_26-04-19_21-20-09-148.png",
-            "/companies/Picsart_26-04-19_21-28-59-754.png",
-            "/companies/Picsart_26-04-19_21-31-22-610.png",
-            "/companies/Picsart_26-04-19_21-32-30-716.png",
-            "/companies/Picsart_26-04-19_21-35-36-472.png",
-          ].map((src, i) => (
+            { src: "/Companies/Edf.png", name: "EDF" },
+            { src: "/Companies/Engie.png", name: "Engie" },
+            { src: "/Companies/Eiffage.png", name: "Eiffage" },
+            { src: "/Companies/TotalEnergies.png", name: "TotalEnergies" },
+            { src: "/Companies/SchneiderElectric.png", name: "Schneider Electric" },
+            { src: "/Companies/VinciConstruction.png", name: "Vinci Construction" },
+          ].map((company, i) => (
             <div
               key={`set2-${i}`}
-              className="flex items-center justify-center w-48 px-6 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 shrink-0"
+              className="flex items-center justify-center w-56 px-4 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 shrink-0"
             >
               <img
-                src={src}
-                alt={`Company partner ${i + 1}`}
+                src={company.src}
+                alt={company.name}
                 className="max-h-12 w-auto object-contain"
               />
             </div>
