@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Heart,
   ShoppingBag,
@@ -7,55 +9,18 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
+import { useCart } from "@/context/CartContext";
 
 const bestSellers = [
-  {
-    id: 1,
-    name: "GE Diesel K9500 – 9,5 kVA Supersilencieux",
-    currentPrice: "1 990.00 €",
-    oldPrice: "2 490.00 €",
-    discount: "Promotion !",
-    rating: "4.9",
-    delivery: "Expédié sous 5j",
-    liked: true,
-    image: "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png",
-  },
-  {
-    id: 2,
-    name: "GE Diesel 12 kVA Triphasé Supersilencieux",
-    currentPrice: "2 490.00 €",
-    oldPrice: "2 990.00 €",
-    discount: "Promotion !",
-    rating: "5.0",
-    delivery: "Expédié sous 5j",
-    liked: false,
-    image: "/BestSellingSection/kraft-18-kva-3phase-standard.png",
-  },
-  {
-    id: 3,
-    name: "GE Diesel 16 kVA Triphasé Silencieux",
-    currentPrice: "3 990.00 €",
-    oldPrice: "4 490.00 €",
-    discount: "Épuisé",
-    rating: "4.8",
-    delivery: "Expédié sous 5j",
-    liked: false,
-    image: "/BestSellingSection/sans-titre-high.png",
-  },
-  {
-    id: 4,
-    name: "Nettoyeur HP Diesel HPW-3200D – 320 Bars",
-    currentPrice: "1 990.00 €",
-    oldPrice: "2 490.00 €",
-    discount: "Promotion !",
-    rating: "4.9",
-    delivery: "Expédié sous 5j",
-    liked: false,
-    image: "/BestSellingSection/thumb_page_15544536691-1-2-high.png",
-  },
+  { id: "bs-1", name: "GE Diesel K9500 – 9,5 kVA Supersilencieux",       price: 1990, oldPrice: 2490, discount: "Promotion !", rating: "4.9", delivery: "Expédié sous 5j", image: "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png" },
+  { id: "bs-2", name: "GE Diesel 12 kVA Triphasé Supersilencieux",        price: 2490, oldPrice: 2990, discount: "Promotion !", rating: "5.0", delivery: "Expédié sous 5j", image: "/BestSellingSection/kraft-18-kva-3phase-standard.png" },
+  { id: "bs-3", name: "GE Diesel 16 kVA Triphasé Silencieux",             price: 3990, oldPrice: 4490, discount: "Épuisé",      rating: "4.8", delivery: "Expédié sous 5j", image: "/BestSellingSection/sans-titre-high.png" },
+  { id: "bs-4", name: "Nettoyeur HP Diesel HPW-3200D – 320 Bars",         price: 1990, oldPrice: 2490, discount: "Promotion !", rating: "4.9", delivery: "Expédié sous 5j", image: "/BestSellingSection/thumb_page_15544536691-1-2-high.png" },
 ];
 
 export function BestSellingSection() {
+  const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useCart();
+
   return (
     <section className="bg-white px-6 py-12 lg:px-10 lg:py-16">
       <div className="mx-auto max-w-300">
@@ -68,7 +33,9 @@ export function BestSellingSection() {
 
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {bestSellers.map((product) => (
+          {bestSellers.map((product) => {
+            const fav = isInWishlist(product.id);
+            return (
             <div key={product.id} className="group flex flex-col">
               {/* Image Container */}
               <div className="relative bg-[#f4f5f7] rounded-[1.5rem] h-65 p-4 flex flex-col items-center justify-center overflow-hidden">
@@ -88,14 +55,16 @@ export function BestSellingSection() {
 
                 {/* Top Right Icons — z above link */}
                 <div className="absolute top-4 right-4 z-3 flex flex-col gap-2">
-                  <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm hover:shadow-md transition-shadow">
-                    {product.liked ? (
-                      <Heart size={16} weight="fill" className="text-red-400" />
-                    ) : (
-                      <Heart size={16} weight="regular" className="text-[#a1a1aa]" />
-                    )}
+                  <button
+                    onClick={() => fav ? removeFromWishlist(product.id) : addToWishlist({ id: product.id, name: product.name, price: product.price, oldPrice: product.oldPrice, image: product.image })}
+                    className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <Heart size={16} weight={fav ? "fill" : "regular"} className={fav ? "text-red-400" : "text-[#a1a1aa]"} />
                   </button>
-                  <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm hover:shadow-md transition-shadow">
+                  <button
+                    onClick={() => addToCart({ id: product.id, name: product.name, price: product.price, image: product.image })}
+                    className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"
+                  >
                     <ShoppingBag size={16} weight="fill" className="text-[#1a202c]" />
                   </button>
                 </div>
@@ -134,10 +103,10 @@ export function BestSellingSection() {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <span className="text-[14px] font-bold text-[#1a202c]">
-                      {product.currentPrice}
+                      {product.price.toLocaleString("fr-FR")} €
                     </span>
                     <span className="text-[12px] font-medium text-[#a1a1aa] line-through">
-                      {product.oldPrice}
+                      {product.oldPrice.toLocaleString("fr-FR")} €
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5 opacity-80">
@@ -149,7 +118,8 @@ export function BestSellingSection() {
                 </div>
               </Link>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Footer Navigation */}

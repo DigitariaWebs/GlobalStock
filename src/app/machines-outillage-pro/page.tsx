@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/context/CartContext";
 import { Heart, ShoppingCart, Image as ImageIcon, House, Lightning, Buildings, Factory, Gear, SquaresFour, CaretRight, FunnelSimple, X, ArrowsClockwise, CheckCircle, Drop, Broom, Wind, Wrench, Waves, HardHat, Plant, Package, ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
@@ -172,7 +173,7 @@ function MachinesOutillageProPage() {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [sort, setSort] = useState<SortKey>("popularity");
-  const [favorites, setFavorites] = useState<Set<number>>(new Set([1, 5]));
+  const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useCart();
   const [page, setPage] = useState(1);
   const PAGE_SIZE = 15;
   const gridRef = useRef<HTMLElement>(null);
@@ -284,11 +285,12 @@ function MachinesOutillageProPage() {
     setMaxPrice("");
   };
 
-  const toggleFavorite = (id: number) => {
-    const next = new Set(favorites);
-    if (next.has(id)) next.delete(id);
-    else next.add(id);
-    setFavorites(next);
+  const toggleFavorite = (p: Product) => {
+    if (isInWishlist(String(p.id))) {
+      removeFromWishlist(String(p.id));
+    } else {
+      addToWishlist({ id: String(p.id), name: p.name, price: p.price, oldPrice: p.oldPrice, image: p.image });
+    }
   };
 
   return (
@@ -665,7 +667,7 @@ function MachinesOutillageProPage() {
                       p.oldPrice > p.price
                         ? Math.round((1 - p.price / p.oldPrice) * 100)
                         : 0;
-                    const fav = favorites.has(p.id);
+                    const fav = isInWishlist(String(p.id));
                     return (
                       <article
                         key={p.id}
@@ -691,7 +693,7 @@ function MachinesOutillageProPage() {
                           )}
 
                           <button
-                            onClick={() => toggleFavorite(p.id)}
+                            onClick={() => toggleFavorite(p)}
                             aria-label={fav ? "Retirer des favoris" : "Ajouter aux favoris"}
                             className="absolute top-5 right-5 z-3 w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm transition-transform hover:scale-105 hover:shadow-md"
                           >
@@ -776,6 +778,7 @@ function MachinesOutillageProPage() {
                           <button
                             aria-label="Ajouter au panier"
                             disabled={!p.inStock}
+                            onClick={() => addToCart({ id: String(p.id), name: p.name, price: p.price, image: p.image })}
                             className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-primary shrink-0 transition-transform hover:scale-105 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             <ShoppingCart size={20} weight="fill" />
