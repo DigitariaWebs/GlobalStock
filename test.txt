@@ -1,60 +1,850 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Heart,
+  ShoppingBag,
+  Star,
+  Funnel,
+  SortAscending,
+  Lightning,
+  Wrench,
+  Factory,
+  House,
+  Wind,
+  Gear,
+  CaretDown,
+  CheckCircle,
+  Truck,
+  ShieldCheck,
+  Headset,
+  MagnifyingGlass,
+  X,
+  type Icon,
+} from "@phosphor-icons/react";
 
-export default function Home() {
+// ─── Types ───────────────────────────────────────────────────────────────────
+
+type Subcategory = {
+  id: string;
+  label: string;
+  count: number;
+  icon: Icon;
+  description: string;
+};
+
+type Product = {
+  id: number;
+  name: string;
+  category: string;
+  power: string;
+  currentPrice: string;
+  oldPrice: string;
+  badge: string;
+  badgeVariant: "orange" | "primary" | "dark" | "green" | "blue";
+  rating: string;
+  reviews: number;
+  delivery: string;
+  brand: string;
+  image: string;
+  inStock: boolean;
+  isFeatured?: boolean;
+};
+
+// ─── Data ────────────────────────────────────────────────────────────────────
+
+const subcategories: Subcategory[] = [
+  {
+    id: "all",
+    label: "Tous",
+    count: 500,
+    icon: Lightning,
+    description: "Toute la gamme",
+  },
+  {
+    id: "domestiques",
+    label: "Domestiques",
+    count: 120,
+    icon: House,
+    description: "Usage résidentiel",
+  },
+  {
+    id: "inverters",
+    label: "Inverters",
+    count: 85,
+    icon: Wind,
+    description: "Ultra-silencieux",
+  },
+  {
+    id: "chantier",
+    label: "De Chantier",
+    count: 95,
+    icon: Wrench,
+    description: "Robustesse terrain",
+  },
+  {
+    id: "industriels",
+    label: "Industriels",
+    count: 110,
+    icon: Factory,
+    description: "Puissance triphasée",
+  },
+  {
+    id: "pieces",
+    label: "Pièces",
+    count: 90,
+    icon: Gear,
+    description: "Accessoires & SAV",
+  },
+];
+
+const brands = ["Tous", "Kraft", "Honda", "Yamaha", "Pramac", "Cummins", "Briggs"];
+
+const powerRanges = [
+  { id: "all", label: "Toutes puissances" },
+  { id: "0-3", label: "Jusqu'à 3 kVA" },
+  { id: "3-7", label: "3 – 7 kVA" },
+  { id: "7-15", label: "7 – 15 kVA" },
+  { id: "15-30", label: "15 – 30 kVA" },
+  { id: "30+", label: "30 kVA et plus" },
+];
+
+const sortOptions = [
+  { id: "popular", label: "Popularité" },
+  { id: "price-asc", label: "Prix croissant" },
+  { id: "price-desc", label: "Prix décroissant" },
+  { id: "newest", label: "Nouveautés" },
+];
+
+const badgeClasses: Record<string, string> = {
+  orange: "bg-[#f2a74c] text-white",
+  primary: "bg-primary text-white",
+  dark: "bg-[#1e293b] text-white",
+  green: "bg-emerald-600 text-white",
+  blue: "bg-[#4A7BAA] text-white",
+};
+
+const products: Product[] = [
+  {
+    id: 1,
+    name: "GE Diesel K9500 Supersilencieux",
+    category: "domestiques",
+    power: "9,5 kVA",
+    currentPrice: "1 990 €",
+    oldPrice: "2 490 €",
+    badge: "-20%",
+    badgeVariant: "orange",
+    rating: "4.9",
+    reviews: 142,
+    delivery: "Sous 5j",
+    brand: "Kraft",
+    image: "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png",
+    inStock: true,
+    isFeatured: true,
+  },
+  {
+    id: 2,
+    name: "GE Diesel 12 kVA Triphasé Silencieux",
+    category: "industriels",
+    power: "12 kVA",
+    currentPrice: "2 490 €",
+    oldPrice: "2 990 €",
+    badge: "Promo",
+    badgeVariant: "primary",
+    rating: "5.0",
+    reviews: 98,
+    delivery: "Sous 5j",
+    brand: "Kraft",
+    image: "/BestSellingSection/kraft-18-kva-3phase-standard.png",
+    inStock: true,
+  },
+  {
+    id: 3,
+    name: "GE Diesel 16 kVA Triphasé Pro",
+    category: "chantier",
+    power: "16 kVA",
+    currentPrice: "3 990 €",
+    oldPrice: "4 490 €",
+    badge: "Pro",
+    badgeVariant: "dark",
+    rating: "4.8",
+    reviews: 67,
+    delivery: "Sous 7j",
+    brand: "Pramac",
+    image: "/BestSellingSection/sans-titre-high.png",
+    inStock: true,
+  },
+  {
+    id: 4,
+    name: "GE Inverter 3,5 kVA Ultra-Silencieux",
+    category: "inverters",
+    power: "3,5 kVA",
+    currentPrice: "890 €",
+    oldPrice: "1 090 €",
+    badge: "Bestseller",
+    badgeVariant: "orange",
+    rating: "4.9",
+    reviews: 203,
+    delivery: "Sous 3j",
+    brand: "Honda",
+    image: "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png",
+    inStock: true,
+  },
+  {
+    id: 5,
+    name: "GE Diesel 25 kVA Industriel",
+    category: "industriels",
+    power: "25 kVA",
+    currentPrice: "5 490 €",
+    oldPrice: "6 200 €",
+    badge: "Nouveau",
+    badgeVariant: "green",
+    rating: "4.7",
+    reviews: 41,
+    delivery: "Sous 10j",
+    brand: "Cummins",
+    image: "/BestSellingSection/kraft-18-kva-3phase-standard.png",
+    inStock: true,
+  },
+  {
+    id: 6,
+    name: "GE Essence 6,5 kVA Domestique",
+    category: "domestiques",
+    power: "6,5 kVA",
+    currentPrice: "790 €",
+    oldPrice: "990 €",
+    badge: "-20%",
+    badgeVariant: "orange",
+    rating: "4.6",
+    reviews: 88,
+    delivery: "Sous 5j",
+    brand: "Yamaha",
+    image: "/BestSellingSection/sans-titre-high.png",
+    inStock: true,
+  },
+  {
+    id: 7,
+    name: "Kit Démarrage Automatique GE",
+    category: "pieces",
+    power: "—",
+    currentPrice: "149 €",
+    oldPrice: "199 €",
+    badge: "Accessoire",
+    badgeVariant: "blue",
+    rating: "4.8",
+    reviews: 156,
+    delivery: "Sous 2j",
+    brand: "Kraft",
+    image: "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png",
+    inStock: true,
+  },
+  {
+    id: 8,
+    name: "GE Chantier 10 kVA Robuste",
+    category: "chantier",
+    power: "10 kVA",
+    currentPrice: "1 690 €",
+    oldPrice: "1 990 €",
+    badge: "Promo",
+    badgeVariant: "primary",
+    rating: "4.7",
+    reviews: 72,
+    delivery: "Sous 7j",
+    brand: "Pramac",
+    image: "/BestSellingSection/kraft-18-kva-3phase-standard.png",
+    inStock: false,
+  },
+];
+
+const features: { icon: Icon; title: string; desc: string; stat: string }[] = [
+  {
+    icon: Truck,
+    title: "Livraison Rapide",
+    desc: "Expédition sous 5 jours ouvrés vers toute la France",
+    stat: "5j",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Garantie 2 Ans",
+    desc: "Pièces & main d'œuvre sur toute la gamme",
+    stat: "2 ans",
+  },
+  {
+    icon: Headset,
+    title: "Conseil Expert",
+    desc: "Notre équipe technique vous guide 7j/7",
+    stat: "7j/7",
+  },
+  {
+    icon: CheckCircle,
+    title: "SAV Certifié",
+    desc: "Réseau de techniciens agréés partout en France",
+    stat: "100%",
+  },
+];
+
+// ─── Hooks ───────────────────────────────────────────────────────────────────
+
+function useOutsideClick(ref: React.RefObject<HTMLElement | null>, handler: () => void) {
+  useEffect(() => {
+    const listener = (e: MouseEvent) => {
+      if (!ref.current || ref.current.contains(e.target as Node)) return;
+      handler();
+    };
+    document.addEventListener("mousedown", listener);
+    return () => document.removeEventListener("mousedown", listener);
+  }, [ref, handler]);
+}
+
+// ─── Components ──────────────────────────────────────────────────────────────
+
+function ProductCard({
+  product,
+  liked,
+  onToggleLike,
+}: {
+  product: Product;
+  liked: boolean;
+  onToggleLike: (id: number) => void;
+}) {
   return (
-    <section className="relative min-h-screen w-full bg-white">
+    <div className="flex flex-col group cursor-pointer">
+      {/* Image */}
+      <div className="relative bg-[#f4f5f7] rounded-[1.5rem] h-64 p-5 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:shadow-black/8 group-hover:-translate-y-1">
+        {/* Out of stock overlay */}
+        {!product.inStock && (
+          <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px] rounded-[1.5rem] z-10 flex items-center justify-center">
+            <span className="bg-[#1e293b] text-white text-[11px] font-bold px-3.5 py-2 rounded-full tracking-wide shadow-lg">
+              Rupture de stock
+            </span>
+          </div>
+        )}
 
-      {/* SVG clip path — rectangular notch top-left + circular bite bottom-right */}
-      <svg width="0" height="0" className="absolute">
-        <defs>
-          <clipPath id="hero-clip" clipPathUnits="objectBoundingBox">
-            <path d="
-              M 0.04,0
-              L 0.15,0
-              Q 0.17,0 0.17,0.03
-              L 0.17,0.057
-              Q 0.17,0.086 0.189,0.086
-              L 0.226,0.086
-              Q 0.245,0.086 0.245,0.057
-              L 0.245,0.029
-              Q 0.245,0 0.264,0
-              L 0.962,0
-              Q 1,0 1,0.057
-              L 1,0.786
-              A 0.142,0.214 0 0 0 0.858,1
-              L 0.04,1
-              Q 0,1 0,0.943
-              L 0,0.057
-              Q 0,0 0.04,0
-              Z
-            " />
-          </clipPath>
-        </defs>
-      </svg>
+        {/* Badge */}
+        <div className="absolute top-4 left-4 z-20">
+          <span className={`${badgeClasses[product.badgeVariant]} text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wide shadow-sm`}>
+            {product.badge}
+          </span>
+        </div>
 
-      {/* Clipped image with padding — white bg peeks through the bites */}
-      <div className="absolute inset-0 p-8">
-        <div className="relative w-full h-full" style={{ clipPath: "url(#hero-clip)" }}>
-          <Image
-            src="/test.png"
-            alt="Beautiful interior space"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
+        {/* Power tag */}
+        {product.power !== "—" && (
+          <div className="absolute bottom-4 left-4 z-20">
+            <span className="bg-white text-primary text-[10px] font-bold px-2.5 py-1 rounded-full border border-primary/12 flex items-center gap-1 shadow-sm">
+              <Lightning size={9} weight="fill" className="text-[#f2a74c]" />
+              {product.power}
+            </span>
+          </div>
+        )}
+
+        {/* Actions */}
+        <div className="absolute top-4 right-4 flex flex-col gap-2 z-20">
+          <button
+            onClick={() => onToggleLike(product.id)}
+            className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-200 hover:scale-110 cursor-pointer"
+            aria-label={liked ? "Retirer des favoris" : "Ajouter aux favoris"}
+          >
+            <Heart
+              size={15}
+              weight={liked ? "fill" : "regular"}
+              className={liked ? "text-red-400" : "text-[#94a3b8]"}
+            />
+          </button>
+          <button
+            className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-200 hover:scale-110 cursor-pointer"
+            aria-label="Ajouter au panier"
+          >
+            <ShoppingBag size={15} weight="fill" className="text-[#1a202c]" />
+          </button>
+        </div>
+
+        <Image
+          src={product.image}
+          alt={product.name}
+          width={220}
+          height={180}
+          className="object-contain w-full h-full transition-transform duration-300 group-hover:scale-105"
+        />
+      </div>
+
+      {/* Details */}
+      <div className="mt-4 px-1">
+        {/* Brand + Reviews */}
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-[11px] font-semibold text-[#64748b] bg-[#f1f5f9] px-2.5 py-0.5 rounded-full">
+            {product.brand}
+          </span>
+          <div className="flex items-center gap-1">
+            <Star size={11} weight="fill" className="text-[#f2a74c]" />
+            <span className="text-[11px] font-bold text-[#1a202c]">{product.rating}</span>
+            <span className="text-[11px] text-[#94a3b8]">({product.reviews})</span>
+          </div>
+        </div>
+
+        {/* Name */}
+        <h3 className="text-[14px] font-bold text-[#1a202c] leading-snug mb-3 line-clamp-2">
+          {product.name}
+        </h3>
+
+        {/* Price + Delivery */}
+        <div className="flex items-end justify-between">
+          <div className="flex items-baseline gap-2">
+            <span className="text-[16px] font-bold text-[#1a202c] tabular-nums">
+              {product.currentPrice}
+            </span>
+            <span className="text-[12px] text-[#94a3b8] line-through tabular-nums">
+              {product.oldPrice}
+            </span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            <span className="text-[11px] font-medium text-[#64748b]">{product.delivery}</span>
+          </div>
         </div>
       </div>
+    </div>
+  );
+}
 
-      {/* Centered title */}
-      <div className="relative z-10 flex flex-col items-center justify-start pt-32 min-h-screen text-white">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight text-center">
-          Discover <span className="font-medium">Your Perfect</span>
-          <br />
-          Space
-        </h1>
-      </div>
+// ─── Page ────────────────────────────────────────────────────────────────────
 
-    </section>
+export default function GroupesElectrogenes() {
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [activeBrand, setActiveBrand] = useState("Tous");
+  const [activePower, setActivePower] = useState("all");
+  const [activeSort, setActiveSort] = useState("popular");
+  const [likedProducts, setLikedProducts] = useState<Set<number>>(new Set());
+  const [showSortDropdown, setShowSortDropdown] = useState(false);
+  const [showPowerDropdown, setShowPowerDropdown] = useState(false);
+
+  const sortRef = useRef<HTMLDivElement>(null);
+  const powerRef = useRef<HTMLDivElement>(null);
+
+  useOutsideClick(sortRef, () => setShowSortDropdown(false));
+  useOutsideClick(powerRef, () => setShowPowerDropdown(false));
+
+  const toggleLike = (id: number) => {
+    setLikedProducts((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  const filtered = products.filter((p) => {
+    const catMatch = activeCategory === "all" || p.category === activeCategory;
+    const brandMatch = activeBrand === "Tous" || p.brand === activeBrand;
+    return catMatch && brandMatch;
+  });
+
+  const activeSortLabel = sortOptions.find((s) => s.id === activeSort)?.label ?? "Popularité";
+  const activePowerLabel = powerRanges.find((r) => r.id === activePower)?.label ?? "Toutes puissances";
+  const activeSubcategoryData = subcategories.find((s) => s.id === activeCategory);
+
+  return (
+    <main className="bg-[#f8fafc] min-h-screen">
+
+      {/* ── Hero ─────────────────────────────────────────────────────── */}
+      <section className="bg-primary relative overflow-hidden">
+        {/* Grid pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.035]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, transparent, transparent 48px, white 48px, white 49px), repeating-linear-gradient(90deg, transparent, transparent 48px, white 48px, white 49px)",
+          }}
+        />
+        {/* Radial glow */}
+        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[#4A7BAA]/20 rounded-full blur-3xl -translate-y-1/2" />
+        {/* Bottom fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0f2442]/60 to-transparent" />
+
+        {/* Generator image */}
+        <div className="absolute right-0 top-0 bottom-0 w-[55%] pointer-events-none">
+          <Image
+            src="/CategoriesSection/GroupeElectrogene.png"
+            alt=""
+            fill
+            aria-hidden="true"
+            className="object-contain object-right-bottom opacity-20"
+          />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-300 px-6 py-16 lg:px-10 lg:py-24">
+          {/* Breadcrumb */}
+          <nav aria-label="Fil d'Ariane" className="flex items-center gap-2 text-[12px] mb-8">
+            <Link href="/" className="text-white/40 hover:text-white/70 transition-colors">
+              Accueil
+            </Link>
+            <span className="text-white/25">/</span>
+            <span className="text-white/70 font-medium">Groupes Électrogènes</span>
+          </nav>
+
+          <div className="max-w-xl">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-[#f2a74c]/15 border border-[#f2a74c]/30 text-[#f2a74c] text-[11px] font-bold px-4 py-2 rounded-full mb-6 uppercase tracking-widest">
+              <Lightning size={11} weight="fill" />
+              500+ Modèles disponibles
+            </div>
+
+            <h1 className="text-[42px] lg:text-[56px] font-bold text-white leading-[1.1] mb-5 tracking-tight">
+              Groupes<br />
+              <span className="text-[#f2a74c]">Électrogènes</span>
+            </h1>
+
+            <p className="text-[15px] text-white/55 leading-relaxed mb-10 max-w-md">
+              Du groupe domestique silencieux à l'unité industrielle triphasée — trouvez la puissance adaptée à votre besoin.
+            </p>
+
+            {/* Stats row */}
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+              {[
+                { value: "500+", label: "Références" },
+                { value: "2 ans", label: "Garantie" },
+                { value: "J+5", label: "Livraison" },
+                { value: "24/7", label: "Support" },
+              ].map((stat, i) => (
+                <div key={stat.label} className="flex items-center gap-4">
+                  {i > 0 && <div className="w-px h-8 bg-white/10" />}
+                  <div className="flex flex-col">
+                    <span className="text-[22px] font-bold text-white leading-none tabular-nums">
+                      {stat.value}
+                    </span>
+                    <span className="text-[11px] text-white/40 uppercase tracking-wider mt-1">
+                      {stat.label}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Subcategory Cards ─────────────────────────────────────────── */}
+      <section className="bg-white border-b border-[#e2e8f0] px-6 py-8 lg:px-10 lg:py-10">
+        <div className="mx-auto max-w-300">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            {subcategories.map((sub) => {
+              const Icon = sub.icon;
+              const isActive = activeCategory === sub.id;
+              return (
+                <button
+                  key={sub.id}
+                  onClick={() => setActiveCategory(sub.id)}
+                  className={`flex flex-col items-center gap-2 p-4 lg:p-5 rounded-[1.25rem] border-2 transition-all duration-200 cursor-pointer group ${
+                    isActive
+                      ? "border-primary bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]"
+                      : "border-[#e2e8f0] bg-white text-[#1e293b] hover:border-primary/25 hover:bg-[#f8fafc] hover:shadow-md hover:shadow-black/5"
+                  }`}
+                >
+                  <div
+                    className={`w-11 h-11 rounded-xl flex items-center justify-center transition-colors ${
+                      isActive
+                        ? "bg-white/15"
+                        : "bg-[#f1f5f9] group-hover:bg-primary/8"
+                    }`}
+                  >
+                    <Icon
+                      size={20}
+                      weight="bold"
+                      className={isActive ? "text-white" : "text-primary"}
+                    />
+                  </div>
+                  <div className="text-center">
+                    <div className="text-[12px] font-bold leading-tight mb-0.5">
+                      {sub.label}
+                    </div>
+                    <div
+                      className={`text-[10px] font-medium ${
+                        isActive ? "text-white/60" : "text-[#94a3b8]"
+                      }`}
+                    >
+                      {sub.count} réf.
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Filters + Products ─────────────────────────────────────────── */}
+      <section className="px-6 py-10 lg:px-10 lg:py-14">
+        <div className="mx-auto max-w-300">
+
+          {/* Filter Bar */}
+          <div className="bg-white rounded-[1.25rem] px-5 py-4 mb-8 border border-[#e2e8f0] shadow-sm">
+            <div className="flex flex-col lg:flex-row lg:items-center gap-4">
+
+              {/* Brand pills */}
+              <div className="flex items-center gap-2 flex-wrap flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <Funnel size={13} weight="bold" className="text-[#94a3b8]" />
+                  <span className="text-[11px] font-semibold text-[#94a3b8] uppercase tracking-wider">
+                    Marque
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {brands.map((b) => (
+                    <button
+                      key={b}
+                      onClick={() => setActiveBrand(b)}
+                      className={`text-[12px] font-semibold px-3.5 py-1.5 rounded-full border transition-all duration-150 cursor-pointer ${
+                        activeBrand === b
+                          ? "bg-primary text-white border-primary shadow-sm"
+                          : "bg-white text-[#475569] border-[#e2e8f0] hover:border-primary/40 hover:text-primary"
+                      }`}
+                    >
+                      {b}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div className="hidden lg:block w-px h-7 bg-[#e2e8f0] shrink-0" />
+
+              {/* Dropdowns */}
+              <div className="flex items-center gap-2.5 shrink-0">
+                {/* Power */}
+                <div ref={powerRef} className="relative">
+                  <button
+                    onClick={() => {
+                      setShowPowerDropdown(!showPowerDropdown);
+                      setShowSortDropdown(false);
+                    }}
+                    className="flex items-center gap-2 text-[12px] font-semibold text-[#1e293b] bg-[#f8fafc] border border-[#e2e8f0] px-4 py-2 rounded-full hover:border-primary/40 transition-all duration-150 cursor-pointer whitespace-nowrap"
+                  >
+                    <Lightning size={12} weight="fill" className="text-[#f2a74c]" />
+                    {activePowerLabel}
+                    <CaretDown
+                      size={10}
+                      weight="bold"
+                      className={`text-[#94a3b8] transition-transform duration-200 ${showPowerDropdown ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {showPowerDropdown && (
+                    <div className="absolute top-[calc(100%+6px)] left-0 bg-white rounded-xl shadow-xl border border-[#e2e8f0] z-50 min-w-52 overflow-hidden py-1">
+                      {powerRanges.map((r) => (
+                        <button
+                          key={r.id}
+                          onClick={() => {
+                            setActivePower(r.id);
+                            setShowPowerDropdown(false);
+                          }}
+                          className={`w-full text-left px-4 py-2.5 text-[13px] transition-colors cursor-pointer ${
+                            activePower === r.id
+                              ? "bg-primary/5 text-primary font-semibold"
+                              : "text-[#1e293b] hover:bg-[#f8fafc]"
+                          }`}
+                        >
+                          {r.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Sort */}
+                <div ref={sortRef} className="relative">
+                  <button
+                    onClick={() => {
+                      setShowSortDropdown(!showSortDropdown);
+                      setShowPowerDropdown(false);
+                    }}
+                    className="flex items-center gap-2 text-[12px] font-semibold text-[#1e293b] bg-[#f8fafc] border border-[#e2e8f0] px-4 py-2 rounded-full hover:border-primary/40 transition-all duration-150 cursor-pointer whitespace-nowrap"
+                  >
+                    <SortAscending size={12} weight="bold" className="text-[#64748b]" />
+                    {activeSortLabel}
+                    <CaretDown
+                      size={10}
+                      weight="bold"
+                      className={`text-[#94a3b8] transition-transform duration-200 ${showSortDropdown ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {showSortDropdown && (
+                    <div className="absolute top-[calc(100%+6px)] right-0 bg-white rounded-xl shadow-xl border border-[#e2e8f0] z-50 min-w-44 overflow-hidden py-1">
+                      {sortOptions.map((s) => (
+                        <button
+                          key={s.id}
+                          onClick={() => {
+                            setActiveSort(s.id);
+                            setShowSortDropdown(false);
+                          }}
+                          className={`w-full text-left px-4 py-2.5 text-[13px] transition-colors cursor-pointer ${
+                            activeSort === s.id
+                              ? "bg-primary/5 text-primary font-semibold"
+                              : "text-[#1e293b] hover:bg-[#f8fafc]"
+                          }`}
+                        >
+                          {s.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Results header */}
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-[20px] font-bold text-[#1e293b]">
+                {activeSubcategoryData?.label ?? "Tous les groupes"}
+              </h2>
+              <p className="text-[13px] text-[#64748b] mt-0.5">
+                {filtered.length} produit{filtered.length !== 1 ? "s" : ""}
+                {activeSubcategoryData?.description ? ` — ${activeSubcategoryData.description}` : ""}
+              </p>
+            </div>
+            {(activeBrand !== "Tous" || activeCategory !== "all") && (
+              <button
+                onClick={() => {
+                  setActiveCategory("all");
+                  setActiveBrand("Tous");
+                  setActivePower("all");
+                }}
+                className="flex items-center gap-1.5 text-[12px] font-semibold text-[#64748b] hover:text-[#1e293b] transition-colors cursor-pointer"
+              >
+                <X size={13} weight="bold" />
+                Réinitialiser
+              </button>
+            )}
+          </div>
+
+          {/* Product Grid */}
+          {filtered.length === 0 ? (
+            <div className="bg-white rounded-[1.5rem] border border-[#e2e8f0] p-20 text-center">
+              <div className="w-16 h-16 rounded-2xl bg-[#f1f5f9] flex items-center justify-center mx-auto mb-5">
+                <MagnifyingGlass size={28} weight="thin" className="text-[#94a3b8]" />
+              </div>
+              <p className="text-[16px] font-bold text-[#334155] mb-2">Aucun produit trouvé</p>
+              <p className="text-[13px] text-[#94a3b8] mb-6">Essayez d'autres filtres ou explorez toute la gamme</p>
+              <button
+                onClick={() => {
+                  setActiveCategory("all");
+                  setActiveBrand("Tous");
+                }}
+                className="inline-flex items-center gap-2 bg-primary text-white text-[13px] font-bold px-5 py-2.5 rounded-full hover:bg-primary/90 transition-colors cursor-pointer"
+              >
+                Voir tous les produits <ArrowRight size={13} weight="bold" />
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
+              {filtered.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  liked={likedProducts.has(product.id)}
+                  onToggleLike={toggleLike}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Pagination */}
+          {filtered.length > 0 && (
+            <div className="mt-12 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-5 rounded-full border-2 border-[#1e293b] flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-[#1e293b]" />
+                </div>
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#cbd5e1]" />
+                ))}
+              </div>
+              <div className="flex items-center gap-2.5">
+                <button className="w-11 h-10 rounded-full flex items-center justify-center text-[#94a3b8] border border-[#e2e8f0] bg-white hover:text-primary hover:border-primary/40 transition-all duration-150 cursor-pointer shadow-sm">
+                  <ArrowRight size={16} weight="bold" className="rotate-180" />
+                </button>
+                <button className="w-11 h-10 rounded-full bg-primary flex items-center justify-center text-white hover:bg-primary/90 transition-colors cursor-pointer shadow-md shadow-primary/25">
+                  <ArrowRight size={16} weight="bold" />
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ── Trust Features ───────────────────────────────────────────── */}
+      <section className="bg-white border-y border-[#e2e8f0] px-6 py-12 lg:px-10 lg:py-16">
+        <div className="mx-auto max-w-300">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((f) => {
+              const Icon = f.icon;
+              return (
+                <div key={f.title} className="flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl bg-primary/6 flex items-center justify-center shrink-0">
+                      <Icon size={20} weight="bold" className="text-primary" />
+                    </div>
+                    <span className="text-[22px] font-bold text-[#1e293b] tabular-nums">{f.stat}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-[14px] font-bold text-[#1e293b] mb-1">{f.title}</h3>
+                    <p className="text-[13px] text-[#64748b] leading-relaxed">{f.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA Banner ───────────────────────────────────────────────── */}
+      <section className="px-6 py-12 lg:px-10 lg:py-16">
+        <div className="mx-auto max-w-300">
+          <div className="bg-primary rounded-[2rem] p-10 lg:p-14 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 relative overflow-hidden">
+            {/* BG decoration */}
+            <div className="absolute -right-16 -top-16 w-80 h-80 bg-white/4 rounded-full" />
+            <div className="absolute right-32 -bottom-20 w-56 h-56 bg-[#f2a74c]/8 rounded-full" />
+            <div
+              className="absolute inset-0 opacity-[0.025]"
+              style={{
+                backgroundImage:
+                  "repeating-linear-gradient(45deg, white 0, white 1px, transparent 0, transparent 50%)",
+                backgroundSize: "20px 20px",
+              }}
+            />
+
+            <div className="relative z-10">
+              <span className="text-[#f2a74c] text-[11px] font-bold uppercase tracking-widest mb-3 block">
+                Projets industriels & achat en gros
+              </span>
+              <h2 className="text-[28px] lg:text-[32px] font-bold text-white mb-3 leading-tight">
+                Besoin d'un devis personnalisé ?
+              </h2>
+              <p className="text-[14px] text-white/55 leading-relaxed max-w-md">
+                Notre équipe commerciale vous propose des tarifs négociés, un accompagnement sur mesure et des solutions clé en main.
+              </p>
+            </div>
+
+            <div className="relative z-10 flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 shrink-0">
+              <Link
+                href="/achat-en-gros"
+                className="flex items-center justify-center gap-2 bg-[#f2a74c] text-white text-[13px] font-bold px-7 py-3.5 rounded-full hover:bg-[#e09640] transition-colors shadow-lg cursor-pointer"
+              >
+                Demander un devis
+                <ArrowRight size={14} weight="bold" />
+              </Link>
+              <Link
+                href="/contact"
+                className="flex items-center justify-center gap-2 bg-white/10 text-white text-[13px] font-bold px-7 py-3.5 rounded-full border border-white/15 hover:bg-white/18 transition-colors cursor-pointer"
+              >
+                Nous contacter
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
   );
 }

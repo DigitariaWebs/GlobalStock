@@ -30,7 +30,7 @@ export function HeroSection() {
           className="object-cover"
         />
         {/* Gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-black/10" />
 
         {/* Overlay content */}
         <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-10">
@@ -93,7 +93,7 @@ export function HeroSection() {
         <p className="text-center text-sm font-semibold text-gray-500 mb-6 uppercase tracking-wider">
           Ils nous font confiance
         </p>
-        <div className="flex w-fit animate-[marquee_40s_linear_infinite] hover:[animation-play-state:paused]">
+        <div className="flex w-fit animate-[marquee_40s_linear_infinite] hover:paused">
           {[
             { src: "/Companies/Edf.png", name: "EDF" },
             { src: "/Companies/Engie.png", name: "Engie" },

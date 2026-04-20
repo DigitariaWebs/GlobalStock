@@ -1,12 +1,21 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { CaretDown, Heart, MagnifyingGlass, ShoppingCart, User, X } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+
+
+
+
+
+
+
+
+
 
 type NavChild = { label: string; href: string };
 type NavItem = { label: string; href: string; children?: NavChild[] };
@@ -17,35 +26,62 @@ const navItems: NavItem[] = [
     label: "Groupes Électrogènes",
     href: "/groupes-electrogenes",
     children: [
-      { label: "Domestiques", href: "/groupes-electrogenes/domestiques" },
-      { label: "Inverters", href: "/groupes-electrogenes/inverters" },
-      { label: "De chantier", href: "/groupes-electrogenes/chantier" },
-      { label: "Industriels", href: "/groupes-electrogenes/industriels" },
-      { label: "Pièces & accessoires", href: "/groupes-electrogenes/pieces" },
+      { label: "Domestiques", href: "/groupes-electrogenes?type=Domestiques" },
+      { label: "Inverters", href: "/groupes-electrogenes?type=Inverters" },
+      { label: "De chantier", href: "/groupes-electrogenes?type=De chantier" },
+      { label: "Industriels", href: "/groupes-electrogenes?type=Industriels" },
+      {
+        label: "Pièces & accessoires",
+        href: "/groupes-electrogenes?type=Pi%C3%A8ces%20%26%20accessoires",
+      },
     ],
   },
   {
     label: "Solaire",
     href: "/solaire",
     children: [
-      { label: "Panneaux solaires", href: "/solaire/panneaux" },
-      { label: "Onduleurs", href: "/solaire/onduleurs" },
-      { label: "Batteries solaires", href: "/solaire/batteries" },
-      { label: "Pompes à chaleur", href: "/solaire/pompes-a-chaleur" },
+      { label: "Panneaux solaires", href: "/solaire?type=Panneaux%20solaires" },
+      { label: "Onduleurs", href: "/solaire?type=Onduleurs" },
+      {
+        label: "Batteries solaires",
+        href: "/solaire?type=Batteries%20solaires",
+      },
+      {
+        label: "Pompes à chaleur",
+        href: "/solaire?type=Pompes%20%C3%A0%20chaleur",
+      },
     ],
   },
   {
     label: "Machines & Outillage Pro",
     href: "/machines-outillage-pro",
     children: [
-      { label: "Nettoyeurs haute pression", href: "/machines-outillage-pro/nettoyeurs" },
-      { label: "Balayeuses & Autolaveuses", href: "/machines-outillage-pro/balayeuses" },
-      { label: "Compresseurs", href: "/machines-outillage-pro/compresseurs" },
-      { label: "Équipement d'atelier", href: "/machines-outillage-pro/atelier" },
-      { label: "Pompes à eau", href: "/machines-outillage-pro/pompes-eau" },
-      { label: "Chantiers", href: "/machines-outillage-pro/chantiers" },
-      { label: "Jardin", href: "/machines-outillage-pro/jardin" },
-      { label: "Manutention", href: "/machines-outillage-pro/manutention" },
+      {
+        label: "Nettoyeurs haute pression",
+        href: "/machines-outillage-pro?type=Nettoyeurs%20haute%20pression",
+      },
+      {
+        label: "Balayeuses & Autolaveuses",
+        href: "/machines-outillage-pro?type=Balayeuses%20%26%20Autolaveuses",
+      },
+      {
+        label: "Compresseurs",
+        href: "/machines-outillage-pro?type=Compresseurs",
+      },
+      {
+        label: "Équipement d'atelier",
+        href: "/machines-outillage-pro?type=%C3%89quipement%20d'atelier",
+      },
+      {
+        label: "Pompes à eau",
+        href: "/machines-outillage-pro?type=Pompes%20%C3%A0%20eau",
+      },
+      { label: "Chantiers", href: "/machines-outillage-pro?type=Chantiers" },
+      { label: "Jardin", href: "/machines-outillage-pro?type=Jardin" },
+      {
+        label: "Manutention",
+        href: "/machines-outillage-pro?type=Manutention",
+      },
     ],
   },
   { label: "Achat en gros", href: "/achat-en-gros" },
