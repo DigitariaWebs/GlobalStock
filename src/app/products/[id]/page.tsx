@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/context/CartContext";
 import {
   CaretRight,
   Heart,
@@ -111,11 +112,14 @@ export default function ProductPage({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id } = use(params);
   const product = MOCK_PRODUCT;
+  const { addToCart, addToWishlist, removeFromWishlist, isInWishlist, isInCart } = useCart();
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity]           = useState(1);
   const [activeTab, setActiveTab]         = useState<Tab>("Description");
-  const [isFavorite, setIsFavorite]       = useState(false);
+
+  const inWishlist = isInWishlist(product.id);
+  const inCart = isInCart(product.id);
 
   const discount = Math.round(
     ((product.oldPrice - product.price) / product.oldPrice) * 100,
@@ -247,22 +251,42 @@ export default function ProductPage({
                 </button>
               </div>
 
-              <Button className="h-11 flex-1 gap-2 text-sm font-semibold">
+              <Button
+                className="h-11 flex-1 gap-2 text-sm font-semibold"
+                onClick={() =>
+                  addToCart({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.images[0],
+                  })
+                }
+              >
                 <ShoppingCart size={16} />
-                Ajouter au panier
+                {inCart ? "Dans le panier" : "Ajouter au panier"}
               </Button>
 
               <button
-                onClick={() => setIsFavorite((f) => !f)}
-                aria-label={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
+                onClick={() =>
+                  inWishlist
+                    ? removeFromWishlist(product.id)
+                    : addToWishlist({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        oldPrice: product.oldPrice,
+                        image: product.images[0],
+                      })
+                }
+                aria-label={inWishlist ? "Retirer des favoris" : "Ajouter aux favoris"}
                 className={cn(
                   "flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border transition-all",
-                  isFavorite
+                  inWishlist
                     ? "border-rose-200 bg-rose-50 text-rose-500"
                     : "border-border text-foreground/40 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-500",
                 )}
               >
-                <Heart size={17} weight={isFavorite ? "fill" : "regular"} />
+                <Heart size={17} weight={inWishlist ? "fill" : "regular"} />
               </button>
             </div>
 

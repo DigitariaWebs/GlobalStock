@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/context/CartContext";
 import { CaretDown, Heart, MagnifyingGlass, ShoppingCart, User, X } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
@@ -90,6 +91,7 @@ const navItems: NavItem[] = [
 
 export function Header() {
   const pathname = usePathname();
+  const { cartCount, wishlistCount, setCartOpen } = useCart();
   const [searchOpen, setSearchOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -230,19 +232,30 @@ export function Header() {
             <MagnifyingGlass size={20} />
           </Button>
 
-          <Button variant="ghost" size="icon" aria-label="Favoris" className="text-foreground/75 hover:bg-secondary hover:text-primary" asChild>
+          <Button variant="ghost" size="icon" aria-label="Favoris" className="relative text-foreground/75 hover:bg-secondary hover:text-primary" asChild>
             <Link href="/wishlist">
               <Heart size={20} />
+              {wishlistCount > 0 && (
+                <span className="absolute right-1 top-1 flex size-3.5 items-center justify-center rounded-full bg-primary text-[9px] font-bold text-white">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
           </Button>
 
-          <Button variant="ghost" size="icon" aria-label="Panier" className="relative text-foreground/75 hover:bg-secondary hover:text-primary" asChild>
-            <Link href="/cart">
-              <ShoppingCart size={20} />
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Panier"
+            className="relative text-foreground/75 hover:bg-secondary hover:text-primary"
+            onClick={() => setCartOpen(true)}
+          >
+            <ShoppingCart size={20} />
+            {cartCount > 0 && (
               <span className="absolute right-1 top-1 flex size-3.5 items-center justify-center rounded-full bg-destructive text-[9px] font-bold text-white">
-                0
+                {cartCount}
               </span>
-            </Link>
+            )}
           </Button>
 
           <Link href="/account" aria-label="Mon compte" className="ml-1 flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground transition-opacity hover:opacity-90">
