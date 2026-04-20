@@ -142,18 +142,21 @@ export function Header() {
             {navItems.map((item) =>
               item.children ? (
                 <div key={item.label} className="group relative">
-                  <button
+                  <Link
+                    href={item.href}
                     className={cn(
-                      "relative inline-flex items-center gap-1 pb-1 text-sm font-medium text-foreground/75 transition-colors hover:text-primary focus:outline-none",
+                      "inline-flex items-center gap-1 text-sm font-medium text-foreground/75 transition-colors hover:text-primary focus:outline-none",
                       isActive(item) && "text-primary",
                     )}
                   >
-                    {item.label}
+                    <span className="relative pb-1">
+                      {item.label}
+                      {isActive(item) && (
+                        <span className="absolute bottom-0 left-0 right-0 h-0.75 rounded-full bg-primary" />
+                      )}
+                    </span>
                     <CaretDown size={14} className="transition-transform duration-200 group-hover:rotate-180" />
-                    {isActive(item) && (
-                      <span className="absolute bottom-0 left-[5%] right-[5%] h-1 rounded-full bg-primary" />
-                    )}
-                  </button>
+                  </Link>
 
                   <div className="invisible absolute left-0 top-full z-50 min-w-52 translate-y-1 rounded-md border border-border bg-background py-1 opacity-0 shadow-md transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                     {item.children.map((child) => (

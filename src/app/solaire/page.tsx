@@ -6,8 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { Heart, ShoppingCart, Image as ImageIcon, House, Lightning, Buildings, Factory, Gear, SquaresFour, CaretRight, FunnelSimple, X, ArrowsClockwise, CheckCircle, Sun, Plug, BatteryFull, Thermometer } from "@phosphor-icons/react/dist/ssr";
+import { Heart, ShoppingCart, Image as ImageIcon, House, Lightning, Buildings, Factory, Gear, SquaresFour, CaretRight, FunnelSimple, X, ArrowsClockwise, CheckCircle, Sun, Plug, BatteryFull, Thermometer, ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 
@@ -664,40 +665,40 @@ function SolairePage() {
                     return (
                       <article
                         key={p.id}
-                        className="flex flex-col rounded-[2rem] overflow-hidden bg-white shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] border border-transparent hover:border-border transition-colors"
+                        className="group flex flex-col rounded-[2rem] overflow-hidden bg-white shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] border border-transparent hover:border-primary/20 transition-all duration-200 hover:shadow-[0_8px_32px_-8px_rgba(30,58,95,0.15)]"
                       >
                         <div className="relative bg-[#f4f5f7] h-70 w-full flex items-center justify-center p-6">
+                          <Link
+                            href={`/products/${p.id}`}
+                            className="absolute inset-0 z-1"
+                            aria-label={`Voir ${p.name}`}
+                          />
+
                           {discount > 0 && (
-                            <div className="absolute top-5 left-5 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold shadow-sm">
+                            <div className="pointer-events-none absolute top-5 left-5 z-2 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold shadow-sm">
                               -{discount}%
                             </div>
                           )}
 
                           {!p.inStock && (
-                            <div className="absolute top-5 left-5 mt-11 px-2.5 h-6 rounded-full bg-[#1a202c] text-white text-[10px] font-bold flex items-center">
+                            <div className="pointer-events-none absolute top-5 left-5 z-2 mt-11 px-2.5 h-6 rounded-full bg-[#1a202c] text-white text-[10px] font-bold flex items-center">
                               Épuisé
                             </div>
                           )}
 
                           <button
                             onClick={() => toggleFavorite(p.id)}
-                            aria-label={
-                              fav
-                                ? "Retirer des favoris"
-                                : "Ajouter aux favoris"
-                            }
-                            className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm transition-transform hover:scale-105 hover:shadow-md"
+                            aria-label={fav ? "Retirer des favoris" : "Ajouter aux favoris"}
+                            className="absolute top-5 right-5 z-3 w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm transition-transform hover:scale-105 hover:shadow-md"
                           >
                             <Heart
                               size={18}
                               weight={fav ? "fill" : "regular"}
-                              className={
-                                fav ? "text-red-500" : "text-[#a1a1aa]"
-                              }
+                              className={fav ? "text-red-500" : "text-[#a1a1aa]"}
                             />
                           </button>
 
-                          <div className="absolute bottom-4 left-5 right-5 flex flex-wrap gap-1.5">
+                          <div className="pointer-events-none absolute bottom-4 left-5 right-5 z-2 flex flex-wrap gap-1.5">
                             {p.power > 0 && (
                               <span className="text-[10px] font-bold px-2 py-1 rounded-full bg-white text-primary shadow-sm">
                                 {p.power} kVA
@@ -721,20 +722,32 @@ function SolairePage() {
                               alt={p.name}
                               width={320}
                               height={240}
-                              className="object-contain w-full h-full"
+                              className="pointer-events-none object-contain w-full h-full transition-transform duration-300 group-hover:scale-105"
                             />
                           ) : (
-                            <div className="flex flex-col items-center gap-3 text-primary/30">
+                            <div className="pointer-events-none flex flex-col items-center gap-3 text-primary/30">
                               <ImageIcon size={52} weight="duotone" />
                               <span className="text-sm font-medium text-center px-4">
                                 {p.name}
                               </span>
                             </div>
                           )}
+
+                          <div className="pointer-events-none absolute inset-0 z-2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span className="flex items-center gap-1.5 rounded-full bg-white/90 px-4 py-2 text-[13px] font-semibold text-primary shadow-md backdrop-blur-sm">
+                              <ArrowSquareOut size={14} />
+                              Voir le produit
+                            </span>
+                          </div>
                         </div>
 
                         <div className="bg-primary p-6 flex items-center justify-between gap-3">
-                          <div className="flex flex-col gap-1 min-w-0 pr-2">
+                          <Link
+                            href={`/products/${p.id}`}
+                            className="flex flex-col gap-1 min-w-0 pr-2 flex-1"
+                            tabIndex={-1}
+                            aria-hidden="true"
+                          >
                             <p className="text-[10px] font-semibold uppercase tracking-wider text-white/60">
                               {p.brand} · {p.type}
                             </p>
@@ -754,7 +767,7 @@ function SolairePage() {
                                 </span>
                               )}
                             </div>
-                          </div>
+                          </Link>
 
                           <button
                             aria-label="Ajouter au panier"

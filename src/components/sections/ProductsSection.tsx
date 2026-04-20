@@ -1,5 +1,6 @@
-import { Heart, ShoppingCart, Image as ImageIcon } from "@phosphor-icons/react/dist/ssr";
+import { Heart, ShoppingCart, Image as ImageIcon, ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
+import Link from "next/link";
 
 const categories = [
   "Tous",
@@ -92,18 +93,24 @@ export function ProductsSection() {
           {products.map((product) => (
             <div
               key={product.id}
-              className="flex flex-col rounded-[2rem] overflow-hidden bg-white shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)]"
+              className="group flex flex-col rounded-[2rem] overflow-hidden bg-white shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] border border-transparent hover:border-primary/20 transition-all duration-200 hover:shadow-[0_8px_32px_-8px_rgba(30,58,95,0.15)]"
             >
               {/* Image Area */}
               <div className="relative bg-[#f8f9fa] h-70 w-full flex items-center justify-center p-6">
-                
+                {/* Full-area nav link — sibling of buttons */}
+                <Link
+                  href={`/products/${product.id}`}
+                  className="absolute inset-0 z-1"
+                  aria-label={`Voir ${product.name}`}
+                />
+
                 {/* Discount Badge */}
-                <div className="absolute top-5 left-5 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold shadow-sm">
+                <div className="pointer-events-none absolute top-5 left-5 z-2 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold shadow-sm">
                   {product.discount}
                 </div>
 
-                {/* Favorite Button */}
-                <button className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm transition-transform hover:scale-105 hover:shadow-md">
+                {/* Favorite Button — z above link */}
+                <button className="absolute top-5 right-5 z-3 w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm transition-transform hover:scale-105 hover:shadow-md">
                   {product.isFavorite ? (
                     <Heart size={18} weight="fill" className="text-red-500" />
                   ) : (
@@ -117,27 +124,39 @@ export function ProductsSection() {
                     alt={product.name}
                     width={320}
                     height={240}
-                    className="object-contain w-full h-full"
+                    className="pointer-events-none object-contain w-full h-full transition-transform duration-300 group-hover:scale-105"
                   />
                 ) : (
-                  <div className="flex flex-col items-center gap-3 text-primary/30">
+                  <div className="pointer-events-none flex flex-col items-center gap-3 text-primary/30">
                     <ImageIcon size={52} weight="duotone" />
                     <span className="text-sm font-medium text-center px-4">{product.name}</span>
                   </div>
                 )}
 
+                {/* Hover pill */}
+                <div className="pointer-events-none absolute inset-0 z-2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <span className="flex items-center gap-1.5 rounded-full bg-white/90 px-4 py-2 text-[13px] font-semibold text-primary shadow-md backdrop-blur-sm">
+                    <ArrowSquareOut size={14} />
+                    Voir le produit
+                  </span>
+                </div>
               </div>
 
               {/* Bottom Info Area */}
               <div className="bg-primary p-6 lg:p-7 flex items-center justify-between">
-                <div className="flex flex-col gap-1.5 shrink min-w-0 pr-4">
+                <Link
+                  href={`/products/${product.id}`}
+                  className="flex flex-col gap-1.5 shrink min-w-0 pr-4 flex-1"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                >
                   <h4 className="text-[15px] font-medium text-white truncate">
                     {product.name}
                   </h4>
                   <span className="text-sm text-white/80">
                     {product.price}
                   </span>
-                </div>
+                </Link>
 
                 <button className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-primary shrink-0 transition-transform hover:scale-105 shadow-sm">
                   <ShoppingCart size={20} weight="fill" />

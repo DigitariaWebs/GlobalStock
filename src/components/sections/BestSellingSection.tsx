@@ -3,8 +3,10 @@ import {
   ShoppingBag,
   Star,
   ArrowRight,
+  ArrowSquareOut,
 } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
+import Link from "next/link";
 
 const bestSellers = [
   {
@@ -67,18 +69,25 @@ export function BestSellingSection() {
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {bestSellers.map((product) => (
-            <div key={product.id} className="flex flex-col group cursor-pointer">
+            <div key={product.id} className="group flex flex-col">
               {/* Image Container */}
-              <div className="relative bg-[#f4f5f7] rounded-[1.5rem] h-65 p-4 flex flex-col items-center justify-center transition-transform group-hover:scale-[1.02]">
+              <div className="relative bg-[#f4f5f7] rounded-[1.5rem] h-65 p-4 flex flex-col items-center justify-center overflow-hidden">
+                {/* Full-area nav link — sibling of buttons */}
+                <Link
+                  href={`/products/${product.id}`}
+                  className="absolute inset-0 z-1"
+                  aria-label={`Voir ${product.name}`}
+                />
+
                 {/* Top Left Badge */}
-                <div className="absolute top-4 left-4">
+                <div className="pointer-events-none absolute top-4 left-4 z-2">
                   <span className="bg-primary text-white text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wide">
                     {product.discount}
                   </span>
                 </div>
 
-                {/* Top Right Icons */}
-                <div className="absolute top-4 right-4 flex flex-col gap-2">
+                {/* Top Right Icons — z above link */}
+                <div className="absolute top-4 right-4 z-3 flex flex-col gap-2">
                   <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm hover:shadow-md transition-shadow">
                     {product.liked ? (
                       <Heart size={16} weight="fill" className="text-red-400" />
@@ -96,13 +105,20 @@ export function BestSellingSection() {
                   alt={product.name}
                   width={260}
                   height={200}
-                  className="object-contain w-full h-full"
+                  className="pointer-events-none object-contain w-full h-full transition-transform duration-300 group-hover:scale-[1.06]"
                 />
+
+                {/* Hover pill */}
+                <div className="pointer-events-none absolute inset-0 z-2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <span className="flex items-center gap-1.5 rounded-full bg-white/90 px-4 py-2 text-[13px] font-semibold text-primary shadow-md backdrop-blur-sm">
+                    <ArrowSquareOut size={13} />
+                    Voir le produit
+                  </span>
+                </div>
               </div>
 
               {/* Product Details */}
-              <div className="mt-5 px-1">
-                {/* Title & Rating */}
+              <Link href={`/products/${product.id}`} className="mt-5 px-1 block" tabIndex={-1} aria-hidden="true">
                 <div className="flex justify-between items-center mb-1.5">
                   <h3 className="text-[15px] font-bold text-[#1a202c] truncate pr-2">
                     {product.name}
@@ -115,7 +131,6 @@ export function BestSellingSection() {
                   </div>
                 </div>
 
-                {/* Price & Delivery */}
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <span className="text-[14px] font-bold text-[#1a202c]">
@@ -132,7 +147,7 @@ export function BestSellingSection() {
                     </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
           ))}
         </div>
