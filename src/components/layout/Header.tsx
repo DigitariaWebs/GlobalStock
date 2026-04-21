@@ -3,10 +3,18 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
-import { CaretDown, Heart, MagnifyingGlass, ShoppingCart, User, X } from "@phosphor-icons/react/dist/ssr";
+import { useAuth } from "@/context/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { CaretDown, Heart, MagnifyingGlass, ShoppingCart, User, X, Gauge, SignOut, UserCircle } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 
@@ -91,9 +99,23 @@ const navItems: NavItem[] = [
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const { cartCount, wishlistCount, setCartOpen } = useCart();
+  const { user, logout } = useAuth();
   const [searchOpen, setSearchOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleLogout = () => {
+    logout();
+    router.push("/");
+  };
+
+  const initials = user?.name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
 
   const isActive = (item: NavItem) => {
     if (item.href === "/") return pathname === "/";
@@ -258,9 +280,55 @@ export function Header() {
             )}
           </Button>
 
-          <Link href="/account" aria-label="Mon compte" className="ml-1 flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground transition-opacity hover:opacity-90">
-            <User size={16} />
-          </Link>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className="ml-1 flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold transition-opacity hover:opacity-90 focus:outline-none"
+                  aria-label="Mon compte"
+                >
+                  {initials}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-52">
+                <div className="px-3 py-2">
+                  <p className="text-sm font-medium truncate">{user.name}</p>
+                  <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+                </div>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/account/profile" className="flex items-center gap-2 cursor-pointer">
+                    <UserCircle size={15} />
+                    Mon Profil
+                  </Link>
+                </DropdownMenuItem>
+                {user.role === "admin" && (
+                  <DropdownMenuItem asChild>
+                    <Link href="/account/admin" className="flex items-center gap-2 cursor-pointer">
+                      <Gauge size={15} />
+                      Tableau de Bord Admin
+                    </Link>
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 text-destructive focus:text-destructive cursor-pointer"
+                >
+                  <SignOut size={15} />
+                  Déconnexion
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link
+              href="/login"
+              aria-label="Mon compte"
+              className="ml-1 flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground transition-opacity hover:opacity-90"
+            >
+              <User size={16} />
+            </Link>
+          )}
         </div>
 
       </div>
