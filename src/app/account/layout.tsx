@@ -4,6 +4,9 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { ReactNode } from "react";
+import { Rubik } from "next/font/google";
+
+const rubik = Rubik({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] });
 
 export default function AccountLayout({ children }: { children: ReactNode }) {
   const { user } = useAuth();
@@ -27,5 +30,5 @@ export default function AccountLayout({ children }: { children: ReactNode }) {
 
   if (!user) return null;
 
-  return <>{children}</>;
+  return <div className={rubik.className}>{children}</div>;
 }

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 
-type Category = "Groupes Électrogènes" | "Machines & Outillage Pro Pro" | "Solaire";
+type Category = "Groupes Électrogènes" | "Machines & Outillage Pro" | "Solaire";
 
 interface Product {
   id: string;
