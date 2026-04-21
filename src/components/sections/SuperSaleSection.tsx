@@ -66,7 +66,7 @@ export function SuperSaleSection() {
           {/* CTA Button */}
           <div className="absolute bottom-10 right-10 z-30">
             <Link
-              href="/shop/sale"
+              href="/products/tronconneuse-daewoo-dcs6524"
               className="bg-primary text-white px-8 py-3 rounded-full text-[14px] font-semibold shadow-md hover:bg-primary/90 transition-colors"
             >
               Acheter

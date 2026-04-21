@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function CategoriesSection() {
   return (
-    <section className="bg-white px-6 py-12 lg:px-10 lg:py-16">
+    <section id="categories" className="bg-white px-6 py-12 lg:px-10 lg:py-16">
       <div className="mx-auto max-w-300 grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 text-[#2d3748]">
         
         {/* Groupes Électrogènes Card (Spans 2 columns on desktop) */}

@@ -9,6 +9,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 
 const bestSellers = [
@@ -16,13 +17,23 @@ const bestSellers = [
   { id: "bs-2", name: "GE Diesel 12 kVA Triphasé Supersilencieux",        price: 2490, oldPrice: 2990, discount: "Promotion !", rating: "5.0", delivery: "Expédié sous 5j", image: "/BestSellingSection/kraft-18-kva-3phase-standard.png" },
   { id: "bs-3", name: "GE Diesel 16 kVA Triphasé Silencieux",             price: 3990, oldPrice: 4490, discount: "Épuisé",      rating: "4.8", delivery: "Expédié sous 5j", image: "/BestSellingSection/sans-titre-high.png" },
   { id: "bs-4", name: "Nettoyeur HP Diesel HPW-3200D – 320 Bars",         price: 1990, oldPrice: 2490, discount: "Promotion !", rating: "4.9", delivery: "Expédié sous 5j", image: "/BestSellingSection/thumb_page_15544536691-1-2-high.png" },
+  { id: "bs-5", name: "GE Diesel 8 kVA Monophasé Open Frame",             price: 1290, oldPrice: 1590, discount: "Promotion !", rating: "4.7", delivery: "Expédié sous 5j", image: "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png" },
+  { id: "bs-6", name: "GE Diesel 20 kVA Triphasé Supersilencieux",        price: 4990, oldPrice: 5990, discount: "Nouveau",     rating: "4.9", delivery: "Expédié sous 7j", image: "/BestSellingSection/kraft-18-kva-3phase-standard.png" },
+  { id: "bs-7", name: "Tronçonneuse Daewoo DCS6524 – Lame 60 cm",        price: 299,  oldPrice: 399,  discount: "Promotion !", rating: "4.6", delivery: "Expédié sous 3j", image: "/SuperSaleSection/daewookettensaegedcs6524_4-standard.png" },
+  { id: "bs-8", name: "Compresseur 100 L – 3 CV Silent Pro",              price: 890,  oldPrice: 1090, discount: "Promotion !", rating: "4.8", delivery: "Expédié sous 5j", image: "/BestSellingSection/thumb_page_15544536691-1-2-high.png" },
 ];
+
+const PAGE_SIZE = 4;
+const TOTAL_PAGES = Math.ceil(bestSellers.length / PAGE_SIZE);
 
 export function BestSellingSection() {
   const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useCart();
+  const [page, setPage] = useState(0);
+
+  const visible = bestSellers.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
 
   return (
-    <section className="bg-white px-6 py-12 lg:px-10 lg:py-16">
+    <section className=" px-6 py-12 lg:px-10 lg:py-16">
       <div className="mx-auto max-w-300">
         {/* Header */}
         <div className="mb-10">
@@ -33,7 +44,7 @@ export function BestSellingSection() {
 
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {bestSellers.map((product) => {
+          {visible.map((product) => {
             const fav = isInWishlist(product.id);
             return (
             <div key={product.id} className="group flex flex-col">
@@ -126,22 +137,31 @@ export function BestSellingSection() {
         <div className="mt-12 flex items-center justify-between border-t border-transparent relative">
           {/* Centered Pagination Dots */}
           <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
-            {/* Active Dot */}
-            <div className="w-4.5 h-4.5 rounded-full border-2 border-[#1a202c] flex items-center justify-center">
-              <div className="w-2 h-2 rounded-full bg-[#1a202c]"></div>
-            </div>
-            {/* Inactive Dots */}
-            <div className="w-1.5 h-1.5 rounded-full bg-[#1a202c]"></div>
-            <div className="w-1.5 h-1.5 rounded-full bg-[#1a202c]"></div>
-            <div className="w-1.5 h-1.5 rounded-full bg-[#1a202c]"></div>
+            {Array.from({ length: TOTAL_PAGES }).map((_, i) =>
+              i === page ? (
+                <button key={i} onClick={() => setPage(i)} className="w-4.5 h-4.5 rounded-full border-2 border-[#1a202c] flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-[#1a202c]" />
+                </button>
+              ) : (
+                <button key={i} onClick={() => setPage(i)} className="w-1.5 h-1.5 rounded-full bg-[#1a202c]/30 hover:bg-[#1a202c] transition-colors" />
+              )
+            )}
           </div>
 
           {/* Right Navigation Arrows */}
           <div className="ml-auto flex items-center gap-3">
-            <button className="w-14 h-9 rounded-full flex items-center justify-center text-[#a1a1aa] border border-[#e4e4e7] bg-white hover:text-primary hover:border-primary transition-colors shadow-sm">
+            <button
+              onClick={() => setPage((p) => Math.max(0, p - 1))}
+              disabled={page === 0}
+              className="w-14 h-9 rounded-full flex items-center justify-center text-[#a1a1aa] border border-[#e4e4e7] bg-white hover:text-primary hover:border-primary transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
+            >
               <ArrowRight size={18} weight="bold" className="rotate-180" />
             </button>
-            <button className="w-14 h-9 rounded-full bg-primary flex items-center justify-center text-white shadow-md hover:bg-primary/90 transition-colors">
+            <button
+              onClick={() => setPage((p) => Math.min(TOTAL_PAGES - 1, p + 1))}
+              disabled={page === TOTAL_PAGES - 1}
+              className="w-14 h-9 rounded-full bg-primary flex items-center justify-center text-white shadow-md hover:bg-primary/90 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            >
               <ArrowRight size={18} weight="bold" />
             </button>
           </div>

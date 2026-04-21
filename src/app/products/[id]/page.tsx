@@ -101,6 +101,71 @@ const MOCK_PRODUCT = {
   ],
 };
 
+const CHAINSAW_PRODUCT = {
+  id: "tronconneuse-daewoo-dcs6524",
+  name: "Tronçonneuse Daewoo DCS6524 — Lame 60 cm",
+  brand: "Daewoo",
+  category: "Machines & Outillage Pro",
+  categoryHref: "/machines-outillage-pro",
+  type: "Tronçonneuses",
+  sku: "DW-DCS6524",
+  price: 299,
+  oldPrice: 399,
+  inStock: true,
+  stockCount: 8,
+  rating: 4.6,
+  reviewCount: 38,
+  images: [
+    "/SuperSaleSection/daewookettensaegedcs6524_4-standard.png",
+    "/SuperSaleSection/daewookettensaegedcs6524_4-standard.png",
+    "/SuperSaleSection/daewookettensaegedcs6524_4-standard.png",
+    "/SuperSaleSection/daewookettensaegedcs6524_4-standard.png",
+  ],
+  keySpecs: [
+    { icon: Lightning,  label: "Puissance",   value: "2 400 W"  },
+    { icon: Gauge,      label: "Lame",         value: "60 cm"    },
+    { icon: Drop,       label: "Carburant",    value: "Essence"  },
+    { icon: Wrench,     label: "Cylindrée",    value: "58 cc"    },
+  ],
+  description: `La tronçonneuse Daewoo DCS6524 est une machine thermique puissante et fiable, équipée d'une lame de 60 cm idéale pour l'abattage et le débitage de bois de grande section. Dotée d'un moteur 2 temps de 58 cc, elle offre un rapport puissance/poids exceptionnel pour les travaux forestiers intensifs.
+
+Son système de lubrification automatique de chaîne, son frein de chaîne de sécurité intégré et sa poignée anti-vibrations ergonomique garantissent confort et sécurité lors de longues sessions de travail.`,
+  features: [
+    "Moteur 2 temps 58 cc — puissance maximale",
+    "Lame guide-chaîne Oregon 60 cm",
+    "Frein de chaîne de sécurité automatique",
+    "Lubrification automatique de chaîne",
+    "Système anti-vibrations — confort prolongé",
+    "Démarrage facile par starter automatique",
+    "Filtre à air facilement accessible",
+  ],
+  fullSpecs: [
+    ["Puissance moteur",       "2 400 W"],
+    ["Cylindrée",              "58 cc"],
+    ["Longueur de lame",       "60 cm"],
+    ["Pas de chaîne",          "3/8\""],
+    ["Jauge de chaîne",        "1,5 mm"],
+    ["Vitesse de chaîne",      "22 m/s"],
+    ["Contenance réservoir",   "0,55 L"],
+    ["Contenance huile",       "0,29 L"],
+    ["Niveau sonore",          "103 dB(A)"],
+    ["Niveau vibrations",      "< 6,1 m/s²"],
+    ["Poids (sans chaîne)",    "6,8 kg"],
+    ["Garantie",               "2 ans pièces & main d'œuvre"],
+    ["Normes",                 "CE"],
+  ],
+  documents: [
+    { name: "Manuel d'utilisation",        size: "1,8 MB", type: "PDF" },
+    { name: "Fiche technique complète",    size: "650 KB", type: "PDF" },
+    { name: "Certificat de conformité CE", size: "380 KB", type: "PDF" },
+  ],
+};
+
+const PRODUCTS: Record<string, typeof MOCK_PRODUCT> = {
+  [MOCK_PRODUCT.id]: MOCK_PRODUCT,
+  [CHAINSAW_PRODUCT.id]: CHAINSAW_PRODUCT,
+};
+
 const TABS = ["Description", "Spécifications", "Documents"] as const;
 type Tab = (typeof TABS)[number];
 
@@ -109,9 +174,8 @@ export default function ProductPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id } = use(params);
-  const product = MOCK_PRODUCT;
+  const product = PRODUCTS[id] ?? MOCK_PRODUCT;
   const { addToCart, addToWishlist, removeFromWishlist, isInWishlist, isInCart } = useCart();
 
   const [selectedImage, setSelectedImage] = useState(0);

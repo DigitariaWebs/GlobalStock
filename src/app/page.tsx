@@ -11,9 +11,8 @@ export default function Home() {
   return (
     <main>
       <HeroSection />
-      <FeaturesSection />
-      <CategoriesSection />
       <BestSellingSection />
+      <CategoriesSection />
       <ProductsSection />
       <AchatEnGrosSection />
       <SuperSaleSection />
