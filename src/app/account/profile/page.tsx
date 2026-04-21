@@ -207,18 +207,38 @@ export default function ProfilePage() {
               </div>
 
               {/* Identity card */}
-              <div className="overflow-hidden rounded-[30px] border border-gray-100 bg-white shadow-sm">
-                <div className="h-28 bg-linear-to-br from-[#0f2236] via-[#1E3A5F] to-[#2a5080]" />
-                <div className="flex flex-col gap-4 px-6 pb-6 sm:flex-row sm:items-end sm:justify-between">
-                  <div className="flex flex-col items-center -mt-10 sm:flex-row sm:items-end sm:gap-5">
-                    <div className="flex size-20 items-center justify-center rounded-full border-4 border-white bg-[#1E3A5F] text-2xl font-bold text-white shadow-md">
+              <div className="relative overflow-hidden rounded-[30px] border border-gray-100 bg-linear-to-br from-[#0f2236] via-[#1E3A5F] to-[#2a5080] p-6 shadow-sm sm:p-8">
+                {/* Decorative glow */}
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  style={{ background: "radial-gradient(ellipse 50% 60% at 90% 50%, rgba(122,179,217,0.18) 0%, transparent 70%)" }}
+                />
+
+                <div className="relative flex flex-col items-center gap-5 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:gap-5 sm:text-left">
+                    <div className="flex size-20 items-center justify-center rounded-full border-4 border-white/15 bg-white/10 backdrop-blur-sm text-2xl font-bold text-white">
                       {initials}
                     </div>
-                    <div className="mt-3 text-center sm:mt-0 sm:pb-2 sm:text-left">
-                      <p className="text-lg font-bold text-gray-900">{user?.name}</p>
-                      <p className="text-xs text-gray-500">{user?.email}</p>
+                    <div>
+                      <p className="text-xl font-bold text-white">{user?.name}</p>
+                      <p className="mt-1 text-sm text-white/60">{user?.email}</p>
+                      <div className="mt-2.5 flex flex-wrap justify-center gap-2 sm:justify-start">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white/80 backdrop-blur-sm">
+                          Client vérifié
+                        </span>
+                        {user?.joinDate && (
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold text-white/70 backdrop-blur-sm">
+                            Depuis {new Date(user.joinDate).getFullYear()}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
+
+                  <button className="hidden sm:inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/15">
+                    <PencilSimple size={13} />
+                    Modifier
+                  </button>
                 </div>
               </div>
 

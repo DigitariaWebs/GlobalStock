@@ -296,17 +296,18 @@ export function Header() {
                   <p className="text-xs text-muted-foreground truncate">{user.email}</p>
                 </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/account/profile" className="flex items-center gap-2 cursor-pointer">
-                    <UserCircle size={15} />
-                    Mon Profil
-                  </Link>
-                </DropdownMenuItem>
-                {user.role === "admin" && (
+                {user.role === "admin" ? (
                   <DropdownMenuItem asChild>
                     <Link href="/account/admin" className="flex items-center gap-2 cursor-pointer">
                       <Gauge size={15} />
-                      Tableau de Bord Admin
+                      Tableau de Bord
+                    </Link>
+                  </DropdownMenuItem>
+                ) : (
+                  <DropdownMenuItem asChild>
+                    <Link href="/account/profile" className="flex items-center gap-2 cursor-pointer">
+                      <UserCircle size={15} />
+                      Mon Profil
                     </Link>
                   </DropdownMenuItem>
                 )}
