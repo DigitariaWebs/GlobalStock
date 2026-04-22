@@ -59,13 +59,13 @@ export function BestSellingSection() {
                 {/* Top Right Icons — z above link */}
                 <div className="absolute top-4 right-4 z-3 flex flex-col gap-2">
                   <button
-                    onClick={() => fav ? removeFromWishlist(product.id) : addToWishlist({ id: product.id, name: product.name, price: product.price, oldPrice: product.oldPrice, image: product.image })}
+                    onClick={() => fav ? removeFromWishlist(product.id) : addToWishlist({ id: product.id, name: product.name, price: product.price, oldPrice: product.oldPrice, image: product.images[0] })}
                     className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"
                   >
                     <Heart size={16} weight={fav ? "fill" : "regular"} className={fav ? "text-red-400" : "text-[#a1a1aa]"} />
                   </button>
                   <button
-                    onClick={() => addToCart({ id: product.id, name: product.name, price: product.price, image: product.image })}
+                    onClick={() => addToCart({ id: product.id, name: product.name, price: product.price, image: product.images[0] })}
                     className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"
                   >
                     <ShoppingBag size={16} weight="fill" className="text-[#1a202c]" />
@@ -73,7 +73,7 @@ export function BestSellingSection() {
                 </div>
 
                 <Image
-                  src={product.image}
+                  src={product.images[0]}
                   alt={product.name}
                   width={260}
                   height={200}

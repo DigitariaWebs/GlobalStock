@@ -111,7 +111,7 @@ const PRODUCTS: Product[] = getProductsByCategory("Solaire").map((p, index) => (
   fuel: p.fuel ?? "—",
   noise: p.noise ?? "—",
   inStock: p.inStock,
-  image: p.image,
+  image: p.images[0],
   popularity: p.popularity ?? 50 - index,
 }));
 

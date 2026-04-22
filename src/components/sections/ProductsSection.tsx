@@ -88,7 +88,7 @@ export function ProductsSection() {
                   )}
 
                   <button
-                    onClick={() => fav ? removeFromWishlist(p.id) : addToWishlist({ id: p.id, name: p.name, price: p.price, oldPrice: p.oldPrice, image: p.image })}
+                    onClick={() => fav ? removeFromWishlist(p.id) : addToWishlist({ id: p.id, name: p.name, price: p.price, oldPrice: p.oldPrice, image: p.images[0] })}
                     aria-label={fav ? "Retirer des favoris" : "Ajouter aux favoris"}
                     className="absolute top-5 right-5 z-3 w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm transition-transform hover:scale-105 hover:shadow-md"
                   >
@@ -106,8 +106,8 @@ export function ProductsSection() {
                     </div>
                   )}
 
-                  {p.image ? (
-                    <Image src={p.image} alt={p.name} width={320} height={240} className="pointer-events-none object-contain w-full h-full transition-transform duration-300 group-hover:scale-105" />
+                  {p.images[0] ? (
+                    <Image src={p.images[0]} alt={p.name} width={320} height={240} className="pointer-events-none object-contain w-full h-full transition-transform duration-300 group-hover:scale-105" />
                   ) : (
                     <div className="pointer-events-none flex flex-col items-center gap-3 text-primary/30">
                       <ImageIcon size={52} weight="duotone" />
@@ -143,7 +143,7 @@ export function ProductsSection() {
                   <button
                     aria-label="Ajouter au panier"
                     disabled={!p.inStock}
-                    onClick={() => addToCart({ id: p.id, name: p.name, price: p.price, image: p.image })}
+                    onClick={() => addToCart({ id: p.id, name: p.name, price: p.price, image: p.images[0] })}
                     className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-primary shrink-0 transition-transform hover:scale-105 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <ShoppingCart size={20} weight="fill" />

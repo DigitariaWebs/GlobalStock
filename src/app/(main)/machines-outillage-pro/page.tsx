@@ -119,7 +119,7 @@ const PRODUCTS: Product[] = getProductsByCategory("Machines & Outillage Pro").ma
   fuel: p.fuel ?? "—",
   noise: p.noise ?? "—",
   inStock: p.inStock,
-  image: p.image,
+  image: p.images[0],
   popularity: p.popularity ?? 50 - index,
 }));
 

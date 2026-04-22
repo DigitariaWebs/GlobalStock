@@ -32,7 +32,7 @@ import { use, useState } from "react";
 const DEFAULT_PRODUCT_ID = "ge-9500-mono-silence";
 
 function normalizeProductForPage(raw: CatalogProduct) {
-  const images = raw.images && raw.images.length > 0 ? raw.images : [raw.image];
+  const images = raw.images;
   const keySpecs =
     raw.keySpecs && raw.keySpecs.length > 0
       ? raw.keySpecs
