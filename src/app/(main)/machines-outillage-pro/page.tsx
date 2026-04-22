@@ -7,6 +7,7 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
+import { getProductsByCategory } from "@/data/products";
 import { Heart, ShoppingCart, Image as ImageIcon, House, Lightning, Buildings, Factory, Gear, SquaresFour, CaretRight, FunnelSimple, X, ArrowsClockwise, CheckCircle, Drop, Broom, Wind, Wrench, Waves, HardHat, Plant, Package, ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
@@ -63,14 +64,22 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 
 
 
-type MachineType = any;
+type MachineType =
+  | "Nettoyeurs haute pression"
+  | "Balayeuses & Autolaveuses"
+  | "Compresseurs"
+  | "Equipement atelier"
+  | "Pompes à eau"
+  | "Chantiers"
+  | "Jardin"
+  | "Manutention";
 
 type Phase = "Monophasé" | "Triphasé" | "—";
 type Fuel = "Diesel" | "Essence" | "—";
 type Noise = "Standard" | "Silencieux" | "Supersilencieux" | "—";
 
 type Product = {
-  id: number;
+  id: string;
   name: string;
   type: MachineType;
   brand: string;
@@ -92,25 +101,27 @@ const TYPES: { label: "Tous" | MachineType; icon: any; hint: string; }[] = [
   { label: "Balayeuses & Autolaveuses", icon: Broom, hint: "Balayeuses & Autolaveuses" },
   { label: "Compresseurs", icon: Wind, hint: "Compresseurs" },
   { label: "Equipement atelier", icon: Wrench, hint: "Equipement atelier" },
-  { label: "Pompes a eau", icon: Waves, hint: "Pompes a eau" },
+  { label: "Pompes à eau", icon: Waves, hint: "Pompes à eau" },
   { label: "Chantiers", icon: HardHat, hint: "Chantiers" },
   { label: "Jardin", icon: Plant, hint: "Jardin" },
   { label: "Manutention", icon: Package, hint: "Manutention" }
 ];
 
-const IMAGES = {
-  mono95: "/ProductsSection/ge-9-5kva-supersilencieux-mono.png",
-  tri12: "/ProductsSection/ge-12kva-triphase-supersilencieux.png",
-  tri16: "/ProductsSection/ge-16kva-triphase-silencieux.png",
-  tri22: "/ProductsSection/ge-22kva-triphase-silencieux-bicylindre.png",
-  mobile10: "/ProductsSection/ge-10kva-dualpower-mobile.png",
-  inv43: "/ProductsSection/ge-inverter-kraftpower-4300w.png",
-  monoKraft: "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png",
-  triKraft18: "/BestSellingSection/kraft-18-kva-3phase-standard.png",
-  plain: "/BestSellingSection/sans-titre-high.png",
-};
-
-const PRODUCTS: Product[] = [];
+const PRODUCTS: Product[] = getProductsByCategory("Machines & Outillage Pro").map((p, index) => ({
+  id: p.id,
+  name: p.name,
+  type: p.type as MachineType,
+  brand: p.brand,
+  price: p.price,
+  oldPrice: p.oldPrice,
+  power: p.power ?? 0,
+  phase: p.phase ?? "—",
+  fuel: p.fuel ?? "—",
+  noise: p.noise ?? "—",
+  inStock: p.inStock,
+  image: p.image,
+  popularity: p.popularity ?? 50 - index,
+}));
 
 const POWER_RANGES = [
   { label: "Toutes puissances", value: "all", min: -1, max: 10000 },
@@ -124,7 +135,7 @@ const POWER_RANGES = [
 const PHASES: Phase[] = ["Monophasé", "Triphasé"];
 const FUELS: Fuel[] = ["Diesel", "Essence"];
 const NOISES: Noise[] = ["Standard", "Silencieux", "Supersilencieux"];
-const BRANDS = ["Kraft", "Kraftpower", "ITC", "Honda"];
+const BRANDS = ["Kraft", "Kraftpower", "ITC", "Honda", "Daewoo"];
 
 type SortKey =
   | "popularity"
@@ -144,13 +155,9 @@ function formatPrice(n: number) {
 function MachinesOutillageProPage() {
   const searchParams = useSearchParams();
   const paramType = searchParams.get("type") as MachineType | null;
-  const validTypes: MachineType[] = [
-    "Domestiques",
-    "Inverters",
-    "De chantier",
-    "Industriels",
-    "Pièces & accessoires",
-  ];
+  const validTypes: MachineType[] = TYPES.filter((t) => t.label !== "Tous").map(
+    (t) => t.label as MachineType,
+  );
   const [activeType, setActiveType] = useState<"Tous" | MachineType>(
     paramType && validTypes.includes(paramType) ? paramType : "Tous",
   );
@@ -286,10 +293,10 @@ function MachinesOutillageProPage() {
   };
 
   const toggleFavorite = (p: Product) => {
-    if (isInWishlist(String(p.id))) {
-      removeFromWishlist(String(p.id));
+    if (isInWishlist(p.id)) {
+      removeFromWishlist(p.id);
     } else {
-      addToWishlist({ id: String(p.id), name: p.name, price: p.price, oldPrice: p.oldPrice, image: p.image });
+      addToWishlist({ id: p.id, name: p.name, price: p.price, oldPrice: p.oldPrice, image: p.image });
     }
   };
 
@@ -667,7 +674,7 @@ function MachinesOutillageProPage() {
                       p.oldPrice > p.price
                         ? Math.round((1 - p.price / p.oldPrice) * 100)
                         : 0;
-                    const fav = isInWishlist(String(p.id));
+                    const fav = isInWishlist(p.id);
                     return (
                       <article
                         key={p.id}
@@ -778,7 +785,7 @@ function MachinesOutillageProPage() {
                           <button
                             aria-label="Ajouter au panier"
                             disabled={!p.inStock}
-                            onClick={() => addToCart({ id: String(p.id), name: p.name, price: p.price, image: p.image })}
+                            onClick={() => addToCart({ id: p.id, name: p.name, price: p.price, image: p.image })}
                             className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-primary shrink-0 transition-transform hover:scale-105 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             <ShoppingCart size={20} weight="fill" />

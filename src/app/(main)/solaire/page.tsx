@@ -7,6 +7,7 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
+import { getProductsByCategory } from "@/data/products";
 import { Heart, ShoppingCart, Image as ImageIcon, House, Lightning, Buildings, Factory, Gear, SquaresFour, CaretRight, FunnelSimple, X, ArrowsClockwise, CheckCircle, Sun, Plug, BatteryFull, Thermometer, ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
@@ -63,14 +64,18 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 
 
 
-type SolaireType = any;
+type SolaireType =
+  | "Panneaux solaires"
+  | "Onduleurs"
+  | "Batteries solaires"
+  | "Pompes a chaleur";
 
 type Phase = "Monophasé" | "Triphasé" | "—";
 type Fuel = "Diesel" | "Essence" | "—";
 type Noise = "Standard" | "Silencieux" | "Supersilencieux" | "—";
 
 type Product = {
-  id: number;
+  id: string;
   name: string;
   type: SolaireType;
   brand: string;
@@ -94,19 +99,21 @@ const TYPES: { label: "Tous" | SolaireType; icon: any; hint: string; }[] = [
   { label: "Pompes a chaleur", icon: Thermometer, hint: "Pompes a chaleur" }
 ];
 
-const IMAGES = {
-  mono95: "/ProductsSection/ge-9-5kva-supersilencieux-mono.png",
-  tri12: "/ProductsSection/ge-12kva-triphase-supersilencieux.png",
-  tri16: "/ProductsSection/ge-16kva-triphase-silencieux.png",
-  tri22: "/ProductsSection/ge-22kva-triphase-silencieux-bicylindre.png",
-  mobile10: "/ProductsSection/ge-10kva-dualpower-mobile.png",
-  inv43: "/ProductsSection/ge-inverter-kraftpower-4300w.png",
-  monoKraft: "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png",
-  triKraft18: "/BestSellingSection/kraft-18-kva-3phase-standard.png",
-  plain: "/BestSellingSection/sans-titre-high.png",
-};
-
-const PRODUCTS: Product[] = [];
+const PRODUCTS: Product[] = getProductsByCategory("Solaire").map((p, index) => ({
+  id: p.id,
+  name: p.name,
+  type: p.type as SolaireType,
+  brand: p.brand,
+  price: p.price,
+  oldPrice: p.oldPrice,
+  power: p.power ?? 0,
+  phase: p.phase ?? "—",
+  fuel: p.fuel ?? "—",
+  noise: p.noise ?? "—",
+  inStock: p.inStock,
+  image: p.image,
+  popularity: p.popularity ?? 50 - index,
+}));
 
 const POWER_RANGES = [
   { label: "Toutes puissances", value: "all", min: -1, max: 10000 },
@@ -120,7 +127,7 @@ const POWER_RANGES = [
 const PHASES: Phase[] = ["Monophasé", "Triphasé"];
 const FUELS: Fuel[] = ["Diesel", "Essence"];
 const NOISES: Noise[] = ["Standard", "Silencieux", "Supersilencieux"];
-const BRANDS = ["Kraft", "Kraftpower", "ITC", "Honda"];
+const BRANDS = ["Kraft", "Kraftpower"];
 
 type SortKey =
   | "popularity"
@@ -140,13 +147,9 @@ function formatPrice(n: number) {
 function SolairePage() {
   const searchParams = useSearchParams();
   const paramType = searchParams.get("type") as SolaireType | null;
-  const validTypes: SolaireType[] = [
-    "Domestiques",
-    "Inverters",
-    "De chantier",
-    "Industriels",
-    "Pièces & accessoires",
-  ];
+  const validTypes: SolaireType[] = TYPES.filter((t) => t.label !== "Tous").map(
+    (t) => t.label as SolaireType,
+  );
   const [activeType, setActiveType] = useState<"Tous" | SolaireType>(
     paramType && validTypes.includes(paramType) ? paramType : "Tous",
   );
@@ -282,10 +285,10 @@ function SolairePage() {
   };
 
   const toggleFavorite = (p: Product) => {
-    if (isInWishlist(String(p.id))) {
-      removeFromWishlist(String(p.id));
+    if (isInWishlist(p.id)) {
+      removeFromWishlist(p.id);
     } else {
-      addToWishlist({ id: String(p.id), name: p.name, price: p.price, oldPrice: p.oldPrice, image: p.image });
+      addToWishlist({ id: p.id, name: p.name, price: p.price, oldPrice: p.oldPrice, image: p.image });
     }
   };
 
@@ -663,7 +666,7 @@ function SolairePage() {
                       p.oldPrice > p.price
                         ? Math.round((1 - p.price / p.oldPrice) * 100)
                         : 0;
-                    const fav = isInWishlist(String(p.id));
+                    const fav = isInWishlist(p.id);
                     return (
                       <article
                         key={p.id}
@@ -774,7 +777,7 @@ function SolairePage() {
                           <button
                             aria-label="Ajouter au panier"
                             disabled={!p.inStock}
-                            onClick={() => addToCart({ id: String(p.id), name: p.name, price: p.price, image: p.image })}
+                            onClick={() => addToCart({ id: p.id, name: p.name, price: p.price, image: p.image })}
                             className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-primary shrink-0 transition-transform hover:scale-105 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             <ShoppingCart size={20} weight="fill" />

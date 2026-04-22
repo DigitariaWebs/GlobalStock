@@ -6,58 +6,19 @@ import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 
-type Category = "Groupes Électrogènes" | "Machines & Outillage Pro" | "Solaire";
+import { getProductsByCategory, getCategoryHref, type CategoryLabel } from "@/data/products";
 
-interface Product {
-  id: string;
-  name: string;
-  brand: string;
-  type: string;
-  price: number;
-  oldPrice: number;
-  image: string;
-  category: Category;
-  inStock: boolean;
-  chips?: string[];
-}
+type Category = Extract<CategoryLabel, "Groupes Électrogènes" | "Machines & Outillage Pro" | "Solaire">;
 
 function formatPrice(n: number) {
   return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", minimumFractionDigits: 2 }).format(n);
 }
 
-const products: Product[] = [
-  // Groupes Électrogènes — 6
-  { id: "ps-1", name: "GE Diesel K9500 – 9,5 kVA Supersilencieux Monophasé",    brand: "Kraft",      type: "Domestiques",  price: 1990, oldPrice: 2490, inStock: true,  image: "/ProductsSection/ge-9-5kva-supersilencieux-mono.png",         category: "Groupes Électrogènes", chips: ["9,5 kVA", "Monophasé", "Supersilencieux"] },
-  { id: "ps-2", name: "GE Diesel 12 kVA Triphasé Supersilencieux AVR 400V",      brand: "Kraft",      type: "Industriels",  price: 2490, oldPrice: 2990, inStock: true,  image: "/ProductsSection/ge-12kva-triphase-supersilencieux.png",       category: "Groupes Électrogènes", chips: ["12 kVA", "Triphasé", "Supersilencieux"] },
-  { id: "ps-3", name: "GE Diesel 16 kVA Triphasé Silencieux",                    brand: "Kraft",      type: "Industriels",  price: 3990, oldPrice: 4490, inStock: true,  image: "/ProductsSection/ge-16kva-triphase-silencieux.png",            category: "Groupes Électrogènes", chips: ["16 kVA", "Triphasé", "Silencieux"] },
-  { id: "ps-4", name: "GE Diesel 10 kVA DualPower 380V/220V Mobile",            brand: "Kraftpower", type: "De chantier",  price: 1590, oldPrice: 1990, inStock: true,  image: "/ProductsSection/ge-10kva-dualpower-mobile.png",              category: "Groupes Électrogènes", chips: ["10 kVA", "Triphasé"] },
-  { id: "ps-5", name: "GE Inverter KraftPower 4300W",                            brand: "Kraftpower", type: "Inverters",    price: 899,  oldPrice: 1199, inStock: true,  image: "/ProductsSection/ge-inverter-kraftpower-4300w.png",           category: "Groupes Électrogènes", chips: ["4,3 kVA", "Monophasé", "Silencieux"] },
-  { id: "ps-6", name: "GE Diesel 22 kVA Triphasé Silencieux Bi-Cylindre",       brand: "Kraft",      type: "Industriels",  price: 5490, oldPrice: 5990, inStock: true,  image: "/ProductsSection/ge-22kva-triphase-silencieux-bicylindre.png", category: "Groupes Électrogènes", chips: ["22 kVA", "Triphasé", "Silencieux"] },
-
-  // Machines & Outillage Pro — 6
-  { id: "ps-7",  name: "Nettoyeur Haute Pression Diesel HPW-3200D – 320 Bars",  brand: "Kraft",      type: "Nettoyeurs HP", price: 1990, oldPrice: 2490, inStock: true,  image: "/BestSellingSection/thumb_page_15544536691-1-2-high.png",     category: "Machines & Outillage Pro", chips: ["320 Bars", "Diesel"] },
-  { id: "ps-8",  name: "Tronçonneuse Daewoo DCS6524 – Lame 60 cm",             brand: "Daewoo",     type: "Tronçonneuses", price: 299,  oldPrice: 399,  inStock: true,  image: "/SuperSaleSection/daewookettensaegedcs6524_4-standard.png",  category: "Machines & Outillage Pro", chips: ["60 cm", "58 cc", "Essence"] },
-  { id: "ps-9",  name: "Nettoyeur HP Thermique 250 Bars – Chantier Pro",        brand: "Kraft",      type: "Nettoyeurs HP", price: 1490, oldPrice: 1890, inStock: true,  image: "/BestSellingSection/thumb_page_15544536691-1-2-high.png",     category: "Machines & Outillage Pro", chips: ["250 Bars", "Thermique"] },
-  { id: "ps-10", name: "Compresseur Silent Pro 100 L – 3 CV",                   brand: "Kraftpower", type: "Compresseurs",  price: 890,  oldPrice: 1090, inStock: true,  image: "/BestSellingSection/sans-titre-high.png",                    category: "Machines & Outillage Pro", chips: ["100 L", "3 CV", "Silencieux"] },
-  { id: "ps-11", name: "Pompe à Eau Thermique 4\" – 1 400 L/min",               brand: "Kraft",      type: "Pompes à eau",  price: 590,  oldPrice: 790,  inStock: true,  image: "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png",     category: "Machines & Outillage Pro", chips: ["1 400 L/min", "Essence"] },
-  { id: "ps-12", name: "Tronçonneuse Thermique 52 cc – Lame 45 cm",             brand: "Kraft",      type: "Tronçonneuses", price: 249,  oldPrice: 329,  inStock: false, image: "/SuperSaleSection/daewookettensaegedcs6524_4-standard.png",  category: "Machines & Outillage Pro", chips: ["45 cm", "52 cc"] },
-
-  // Solaire — 6
-  { id: "ps-13", name: "Panneau Solaire Monocristallin 400W – Haut Rendement",  brand: "Kraft",      type: "Panneaux",      price: 290,  oldPrice: 390,  inStock: true,  image: "/ProductsSection/ge-inverter-kraftpower-4300w.png",          category: "Solaire",  chips: ["400W", "Monocristallin"] },
-  { id: "ps-14", name: "Onduleur Solaire Hybride 5 kW – Monophasé",             brand: "Kraftpower", type: "Onduleurs",     price: 890,  oldPrice: 1190, inStock: true,  image: "/ProductsSection/ge-9-5kva-supersilencieux-mono.png",        category: "Solaire",  chips: ["5 kW", "Hybride", "Monophasé"] },
-  { id: "ps-15", name: "Kit Solaire Autonome 3 kW – Batterie Lithium 100 Ah",   brand: "Kraft",      type: "Kits complets",  price: 2490, oldPrice: 3190, inStock: true,  image: "/ProductsSection/ge-10kva-dualpower-mobile.png",             category: "Solaire",  chips: ["3 kW", "Lithium 100 Ah"] },
-  { id: "ps-16", name: "Panneau Solaire Bifacial 550W – Industriel",             brand: "Kraft",      type: "Panneaux",      price: 390,  oldPrice: 490,  inStock: true,  image: "/ProductsSection/ge-inverter-kraftpower-4300w.png",          category: "Solaire",  chips: ["550W", "Bifacial"] },
-  { id: "ps-17", name: "Batterie Solaire LiFePO4 200 Ah – 25,6V",               brand: "Kraftpower", type: "Batteries",     price: 1290, oldPrice: 1690, inStock: true,  image: "/ProductsSection/ge-12kva-triphase-supersilencieux.png",     category: "Solaire",  chips: ["200 Ah", "25,6V", "LiFePO4"] },
-  { id: "ps-18", name: "Régulateur MPPT 60A – Contrôleur de Charge Solaire",    brand: "Kraft",      type: "Régulateurs",   price: 190,  oldPrice: 259,  inStock: false, image: "/ProductsSection/ge-inverter-kraftpower-4300w.png",          category: "Solaire",  chips: ["60A", "MPPT"] },
+const CATEGORIES: Category[] = [
+  "Groupes Électrogènes",
+  "Solaire",
+  "Machines & Outillage Pro",
 ];
-
-const CATEGORIES: Category[] = ["Groupes Électrogènes", "Solaire", "Machines & Outillage Pro"];
-
-const CATEGORY_HREF: Record<Category, string> = {
-  "Groupes Électrogènes": "/groupes-electrogenes",
-  "Machines & Outillage Pro": "/machines-outillage-pro",
-  "Solaire":   "/solaire",
-};
 
 const PAGE_SIZE = 6;
 
@@ -65,7 +26,7 @@ export function ProductsSection() {
   const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useCart();
   const [active, setActive] = useState<Category>("Groupes Électrogènes");
 
-  const visible = products.filter((p) => p.category === active).slice(0, PAGE_SIZE);
+  const visible = getProductsByCategory(active).slice(0, PAGE_SIZE);
 
   return (
     <section className="bg-white px-6 py-12 lg:px-10 lg:py-16">
@@ -76,7 +37,7 @@ export function ProductsSection() {
           <h2 className="text-[28px] md:text-[32px] font-bold text-[#1a202c] leading-tight">
             Nos Produits
           </h2>
-          <Link href={CATEGORY_HREF[active]} className="flex items-center gap-1.5 text-[13px] font-bold text-primary hover:underline">
+          <Link href={getCategoryHref(active)} className="flex items-center gap-1.5 text-[13px] font-bold text-primary hover:underline">
             Voir tout <ArrowRight size={13} weight="bold" />
           </Link>
         </div>
@@ -196,7 +157,7 @@ export function ProductsSection() {
         {/* View all CTA */}
         <div className="mt-10 flex justify-center">
           <Link
-            href={CATEGORY_HREF[active]}
+            href={getCategoryHref(active)}
             className="flex items-center gap-2 bg-[#f4f5f7] hover:bg-primary hover:text-white text-[#1a202c] px-8 py-3.5 rounded-full text-[14px] font-semibold transition-all duration-200 group"
           >
             Voir tous les produits

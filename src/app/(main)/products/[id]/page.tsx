@@ -1,11 +1,9 @@
 "use client";
 
-import { use, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
+import { getProductById, type Product as CatalogProduct } from "@/data/products";
+import { cn } from "@/lib/utils";
 import {
   CaretRight,
   Heart,
@@ -27,144 +25,38 @@ import {
   ArrowLeft,
   Plug,
 } from "@phosphor-icons/react/dist/ssr";
+import Image from "next/image";
+import Link from "next/link";
+import { use, useState } from "react";
 
-// ─── Mock product data ────────────────────────────────────────────────────────
-const MOCK_PRODUCT = {
-  id: "ge-9500-mono-silence",
-  name: "Groupe Électrogène Insonorisé 9,5 kVA Monophasé Diesel",
-  brand: "Kraft",
-  category: "Groupes Électrogènes",
-  categoryHref: "/groupes-electrogenes",
-  type: "Industriels",
-  sku: "KR-GE-9500-M-INS",
-  price: 3290,
-  oldPrice: 4190,
-  inStock: true,
-  stockCount: 4,
-  rating: 4.8,
-  reviewCount: 52,
-  images: [
-    "/ProductsSection/ge-9-5kva-supersilencieux-mono.png",
-    "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png",
-    "/ProductsSection/ge-10kva-dualpower-mobile.png",
-    "/ProductsSection/ge-12kva-triphase-supersilencieux.png",
-  ],
-  keySpecs: [
-    { icon: Lightning,        label: "Puissance",  value: "9,5 kVA"   },
-    { icon: Drop,             label: "Carburant",  value: "Diesel"    },
-    { icon: Plug,             label: "Tension",    value: "230 V"     },
-    { icon: SpeakerSimpleNone,label: "Bruit",      value: "68 dB(A)"  },
-  ],
-  description: `Le groupe électrogène Kraft 9,5 kVA Insonorisé Monophasé est conçu pour les professionnels exigeant fiabilité et discrétion au quotidien. Son caisson insonorisé haute densité ramène le niveau sonore à seulement 68 dB(A) à 7 mètres, le rendant parfaitement adapté aux chantiers en zone urbaine, aux événements extérieurs et aux installations industrielles sensibles.
+const DEFAULT_PRODUCT_ID = "ge-9500-mono-silence";
 
-Équipé d'un moteur diesel robuste à injection directe et d'un alternateur brushless sans balais, il délivre un courant stable et propre pour vos équipements électroniques. Le démarrage électrique à clé assure une mise en route instantanée, même par temps froid.`,
-  features: [
-    "Caisson insonorisé haute performance — 68 dB(A) à 7 m",
-    "Alternateur brushless — courant propre (THD < 5%)",
-    "Protection disjoncteur automatique anti-surcharge",
-    "Tableau de bord : voltmètre, fréquencemètre, horamètre",
-    "Réservoir 19 L avec indicateur de niveau intégré",
-    "Compatible coffret ATS pour commutation automatique",
-    "Poignées et roues pour transport facilité",
-  ],
-  fullSpecs: [
-    ["Puissance nominale",          "9,5 kVA / 7,6 kW"],
-    ["Puissance maximale",          "10,5 kVA / 8,4 kW"],
-    ["Phase",                       "Monophasé"],
-    ["Tension de sortie",           "230 V"],
-    ["Fréquence",                   "50 Hz"],
-    ["Facteur de puissance",        "cos φ = 0,8"],
-    ["Distorsion harmonique (THD)", "< 5%"],
-    ["Type de démarrage",           "Électrique (clé) + manuel"],
-    ["Carburant",                   "Diesel"],
-    ["Cylindrée moteur",            "708 cc"],
-    ["Nombre de cylindres",         "2"],
-    ["Régime nominal",              "3 000 tr/min"],
-    ["Capacité réservoir",          "19 L"],
-    ["Autonomie (75% charge)",      "9 h"],
-    ["Niveau sonore à 7 m",         "68 dB(A)"],
-    ["Catégorie bruit",             "Supersilencieux"],
-    ["Alternateur",                 "Brushless sans balais"],
-    ["Régulateur",                  "AVR électronique"],
-    ["Protection IP",               "IP23"],
-    ["Sorties",                     "2× 230V (16A) + 1× 230V (32A)"],
-    ["Poids",                       "275 kg"],
-    ["Dimensions (L×l×H)",         "1 100 × 640 × 820 mm"],
-    ["Garantie",                    "2 ans pièces & main d'œuvre"],
-    ["Normes",                      "CE / ISO 8528"],
-  ],
-  documents: [
-    { name: "Manuel d'utilisation",        size: "2,4 MB", type: "PDF" },
-    { name: "Fiche technique complète",    size: "890 KB", type: "PDF" },
-    { name: "Certificat de conformité CE", size: "450 KB", type: "PDF" },
-    { name: "Schéma électrique",           size: "1,1 MB", type: "PDF" },
-  ],
-};
+function normalizeProductForPage(raw: CatalogProduct) {
+  const images = raw.images && raw.images.length > 0 ? raw.images : [raw.image];
+  const keySpecs =
+    raw.keySpecs && raw.keySpecs.length > 0
+      ? raw.keySpecs
+      : [
+          { icon: Lightning, label: "Catégorie", value: raw.category },
+          { icon: Drop, label: "Carburant", value: raw.fuel ?? "—" },
+          { icon: Plug, label: "Phase", value: raw.phase ?? "—" },
+          { icon: SpeakerSimpleNone, label: "Bruit", value: raw.noise ?? "—" },
+        ];
 
-const CHAINSAW_PRODUCT = {
-  id: "tronconneuse-daewoo-dcs6524",
-  name: "Tronçonneuse Daewoo DCS6524 — Lame 60 cm",
-  brand: "Daewoo",
-  category: "Machines & Outillage Pro",
-  categoryHref: "/machines-outillage-pro",
-  type: "Tronçonneuses",
-  sku: "DW-DCS6524",
-  price: 299,
-  oldPrice: 399,
-  inStock: true,
-  stockCount: 8,
-  rating: 4.6,
-  reviewCount: 38,
-  images: [
-    "/SuperSaleSection/daewookettensaegedcs6524_4-standard.png",
-    "/SuperSaleSection/daewookettensaegedcs6524_4-standard.png",
-    "/SuperSaleSection/daewookettensaegedcs6524_4-standard.png",
-    "/SuperSaleSection/daewookettensaegedcs6524_4-standard.png",
-  ],
-  keySpecs: [
-    { icon: Lightning,  label: "Puissance",   value: "2 400 W"  },
-    { icon: Gauge,      label: "Lame",         value: "60 cm"    },
-    { icon: Drop,       label: "Carburant",    value: "Essence"  },
-    { icon: Wrench,     label: "Cylindrée",    value: "58 cc"    },
-  ],
-  description: `La tronçonneuse Daewoo DCS6524 est une machine thermique puissante et fiable, équipée d'une lame de 60 cm idéale pour l'abattage et le débitage de bois de grande section. Dotée d'un moteur 2 temps de 58 cc, elle offre un rapport puissance/poids exceptionnel pour les travaux forestiers intensifs.
-
-Son système de lubrification automatique de chaîne, son frein de chaîne de sécurité intégré et sa poignée anti-vibrations ergonomique garantissent confort et sécurité lors de longues sessions de travail.`,
-  features: [
-    "Moteur 2 temps 58 cc — puissance maximale",
-    "Lame guide-chaîne Oregon 60 cm",
-    "Frein de chaîne de sécurité automatique",
-    "Lubrification automatique de chaîne",
-    "Système anti-vibrations — confort prolongé",
-    "Démarrage facile par starter automatique",
-    "Filtre à air facilement accessible",
-  ],
-  fullSpecs: [
-    ["Puissance moteur",       "2 400 W"],
-    ["Cylindrée",              "58 cc"],
-    ["Longueur de lame",       "60 cm"],
-    ["Pas de chaîne",          "3/8\""],
-    ["Jauge de chaîne",        "1,5 mm"],
-    ["Vitesse de chaîne",      "22 m/s"],
-    ["Contenance réservoir",   "0,55 L"],
-    ["Contenance huile",       "0,29 L"],
-    ["Niveau sonore",          "103 dB(A)"],
-    ["Niveau vibrations",      "< 6,1 m/s²"],
-    ["Poids (sans chaîne)",    "6,8 kg"],
-    ["Garantie",               "2 ans pièces & main d'œuvre"],
-    ["Normes",                 "CE"],
-  ],
-  documents: [
-    { name: "Manuel d'utilisation",        size: "1,8 MB", type: "PDF" },
-    { name: "Fiche technique complète",    size: "650 KB", type: "PDF" },
-    { name: "Certificat de conformité CE", size: "380 KB", type: "PDF" },
-  ],
-};
-
-const PRODUCTS: Record<string, typeof MOCK_PRODUCT> = {
-  [MOCK_PRODUCT.id]: MOCK_PRODUCT,
-  [CHAINSAW_PRODUCT.id]: CHAINSAW_PRODUCT,
-};
+  return {
+    ...raw,
+    images,
+    keySpecs,
+    sku: raw.sku ?? raw.id,
+    stockCount: raw.stockCount ?? (raw.inStock ? 10 : 0),
+    rating: raw.rating ?? 0,
+    reviewCount: raw.reviewCount ?? 0,
+    description: raw.description ?? "",
+    features: raw.features ?? [],
+    fullSpecs: raw.fullSpecs ?? [],
+    documents: raw.documents ?? [],
+  };
+}
 
 const TABS = ["Description", "Spécifications", "Documents"] as const;
 type Tab = (typeof TABS)[number];
@@ -175,12 +67,19 @@ export default function ProductPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
-  const product = PRODUCTS[id] ?? MOCK_PRODUCT;
-  const { addToCart, addToWishlist, removeFromWishlist, isInWishlist, isInCart } = useCart();
+  const rawProduct = getProductById(id) ?? getProductById(DEFAULT_PRODUCT_ID)!;
+  const product = normalizeProductForPage(rawProduct);
+  const {
+    addToCart,
+    addToWishlist,
+    removeFromWishlist,
+    isInWishlist,
+    isInCart,
+  } = useCart();
 
   const [selectedImage, setSelectedImage] = useState(0);
-  const [quantity, setQuantity]           = useState(1);
-  const [activeTab, setActiveTab]         = useState<Tab>("Description");
+  const [quantity, setQuantity] = useState(1);
+  const [activeTab, setActiveTab] = useState<Tab>("Description");
 
   const inWishlist = isInWishlist(product.id);
   const inCart = isInCart(product.id);
@@ -194,7 +93,6 @@ export default function ProductPage({
       <div className="mx-auto max-w-screen-2xl px-4 py-3 lg:py-6">
         {/* ── Main grid ──────────────────────────────────────────────── */}
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[55%_1fr] lg:gap-14">
-
           {/* Main image — fills full row height = right panel height */}
           <div className="group relative overflow-hidden rounded-2xl border border-border bg-white">
             <span className="absolute left-4 top-4 z-10 rounded-full bg-destructive px-2.5 py-1 text-xs font-bold text-white">
@@ -217,10 +115,11 @@ export default function ProductPage({
 
           {/* Product info */}
           <div className="flex flex-col gap-5">
-
             {/* Brand · Type · Ref */}
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <span className="font-semibold text-primary">{product.brand}</span>
+              <span className="font-semibold text-primary">
+                {product.brand}
+              </span>
               <span>·</span>
               <span>{product.type}</span>
               <span className="ml-auto">Réf : {product.sku}</span>
@@ -239,12 +138,20 @@ export default function ProductPage({
                     key={i}
                     size={14}
                     weight={i < Math.floor(product.rating) ? "fill" : "regular"}
-                    className={i < Math.floor(product.rating) ? "text-amber-400" : "text-muted-foreground/25"}
+                    className={
+                      i < Math.floor(product.rating)
+                        ? "text-amber-400"
+                        : "text-muted-foreground/25"
+                    }
                   />
                 ))}
               </div>
-              <span className="text-sm font-semibold text-foreground">{product.rating}</span>
-              <span className="text-sm text-muted-foreground">({product.reviewCount} avis)</span>
+              <span className="text-sm font-semibold text-foreground">
+                {product.rating}
+              </span>
+              <span className="text-sm text-muted-foreground">
+                ({product.reviewCount} avis)
+              </span>
             </div>
 
             {/* Price */}
@@ -273,8 +180,12 @@ export default function ProductPage({
                   )}
                 >
                   <Icon size={16} className="text-primary" />
-                  <span className="text-[10px] leading-none text-muted-foreground">{label}</span>
-                  <span className="text-[11px] font-bold text-foreground">{value}</span>
+                  <span className="text-[10px] leading-none text-muted-foreground">
+                    {label}
+                  </span>
+                  <span className="text-[11px] font-bold text-foreground">
+                    {value}
+                  </span>
                 </div>
               ))}
             </div>
@@ -284,14 +195,20 @@ export default function ProductPage({
               {product.inStock ? (
                 <>
                   <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-100">
-                    <Check size={10} className="text-emerald-600" weight="bold" />
+                    <Check
+                      size={10}
+                      className="text-emerald-600"
+                      weight="bold"
+                    />
                   </span>
                   <span className="text-sm text-emerald-700">
                     En stock — <strong>{product.stockCount} unités</strong>
                   </span>
                 </>
               ) : (
-                <span className="text-sm font-medium text-destructive">Rupture de stock</span>
+                <span className="text-sm font-medium text-destructive">
+                  Rupture de stock
+                </span>
               )}
             </div>
 
@@ -305,7 +222,9 @@ export default function ProductPage({
                 >
                   <Minus size={14} />
                 </button>
-                <span className="w-9 select-none text-center text-sm font-semibold">{quantity}</span>
+                <span className="w-9 select-none text-center text-sm font-semibold">
+                  {quantity}
+                </span>
                 <button
                   onClick={() => setQuantity((q) => q + 1)}
                   className="flex h-11 w-10 items-center justify-center text-foreground/50 transition-colors hover:text-primary"
@@ -342,7 +261,9 @@ export default function ProductPage({
                         image: product.images[0],
                       })
                 }
-                aria-label={inWishlist ? "Retirer des favoris" : "Ajouter aux favoris"}
+                aria-label={
+                  inWishlist ? "Retirer des favoris" : "Ajouter aux favoris"
+                }
                 className={cn(
                   "flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border transition-all",
                   inWishlist
@@ -363,11 +284,14 @@ export default function ProductPage({
             {/* Trust row */}
             <div className="flex flex-wrap justify-center gap-2 pt-1">
               {[
-                { icon: Truck,       text: "Livraison gratuite dès 500 €" },
+                { icon: Truck, text: "Livraison gratuite dès 500 €" },
                 { icon: ShieldCheck, text: "Garantie 2 ans" },
-                { icon: Package,     text: "Retour 30 jours" },
+                { icon: Package, text: "Retour 30 jours" },
               ].map(({ icon: Icon, text }) => (
-                <div key={text} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <div
+                  key={text}
+                  className="flex items-center gap-1.5 text-xs text-muted-foreground"
+                >
                   <Icon size={13} className="shrink-0 text-primary" />
                   {text}
                 </div>
@@ -390,7 +314,12 @@ export default function ProductPage({
                     : "border-border opacity-60 hover:border-primary/40 hover:opacity-100",
                 )}
               >
-                <Image src={img} alt={`Vue ${i + 1}`} fill className="object-contain p-1.5" />
+                <Image
+                  src={img}
+                  alt={`Vue ${i + 1}`}
+                  fill
+                  className="object-contain p-1.5"
+                />
               </button>
             ))}
           </div>
@@ -416,7 +345,6 @@ export default function ProductPage({
           </div>
 
           <div className="mt-6">
-
             {/* Description */}
             {activeTab === "Description" && (
               <div className="max-w-2xl">
@@ -428,8 +356,15 @@ export default function ProductPage({
                 </h3>
                 <ul className="space-y-2">
                   {product.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 text-sm text-foreground/75">
-                      <Check size={14} className="mt-0.5 shrink-0 text-primary" weight="bold" />
+                    <li
+                      key={f}
+                      className="flex items-start gap-2.5 text-sm text-foreground/75"
+                    >
+                      <Check
+                        size={14}
+                        className="mt-0.5 shrink-0 text-primary"
+                        weight="bold"
+                      />
                       {f}
                     </li>
                   ))}
@@ -441,16 +376,31 @@ export default function ProductPage({
             {activeTab === "Spécifications" && (
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                 {[
-                  product.fullSpecs.slice(0, Math.ceil(product.fullSpecs.length / 2)),
-                  product.fullSpecs.slice(Math.ceil(product.fullSpecs.length / 2)),
+                  product.fullSpecs.slice(
+                    0,
+                    Math.ceil(product.fullSpecs.length / 2),
+                  ),
+                  product.fullSpecs.slice(
+                    Math.ceil(product.fullSpecs.length / 2),
+                  ),
                 ].map((half, col) => (
-                  <div key={col} className="overflow-hidden rounded-xl border border-border">
+                  <div
+                    key={col}
+                    className="overflow-hidden rounded-xl border border-border"
+                  >
                     <table className="w-full text-sm">
                       <tbody>
                         {half.map(([k, v], i) => (
-                          <tr key={k} className={i % 2 === 0 ? "bg-muted/40" : "bg-card"}>
-                            <td className="w-1/2 px-4 py-2.5 text-foreground/60">{k}</td>
-                            <td className="px-4 py-2.5 font-medium text-foreground">{v}</td>
+                          <tr
+                            key={k}
+                            className={i % 2 === 0 ? "bg-muted/40" : "bg-card"}
+                          >
+                            <td className="w-1/2 px-4 py-2.5 text-foreground/60">
+                              {k}
+                            </td>
+                            <td className="px-4 py-2.5 font-medium text-foreground">
+                              {v}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -473,8 +423,12 @@ export default function ProductPage({
                         <Wrench size={16} className="text-primary" />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-foreground">{doc.name}</div>
-                        <div className="text-xs text-muted-foreground">{doc.type} · {doc.size}</div>
+                        <div className="text-sm font-medium text-foreground">
+                          {doc.name}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {doc.type} · {doc.size}
+                        </div>
                       </div>
                     </div>
                     <Button variant="outline" size="sm" className="gap-1.5">
@@ -499,7 +453,9 @@ export default function ProductPage({
                 Parlez à un spécialiste
               </h3>
               <p className="max-w-md text-sm leading-relaxed text-white/70">
-                Nos experts en groupes électrogènes répondent à toutes vos questions techniques, vous aident à choisir la bonne puissance et établissent un devis sur mesure.
+                Nos experts en groupes électrogènes répondent à toutes vos
+                questions techniques, vous aident à choisir la bonne puissance
+                et établissent un devis sur mesure.
               </p>
             </div>
             <div className="flex shrink-0 flex-col gap-3">
@@ -508,7 +464,10 @@ export default function ProductPage({
                   <Phone size={15} weight="fill" />
                   Appeler un expert
                 </Button>
-                <Button variant="outline" className="gap-2 border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white">
+                <Button
+                  variant="outline"
+                  className="gap-2 border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white"
+                >
                   Envoyer un message
                 </Button>
               </div>
@@ -518,7 +477,10 @@ export default function ProductPage({
                   { label: "Réponse", value: "< 2h" },
                   { label: "Devis", value: "Gratuit" },
                 ].map(({ label, value }) => (
-                  <div key={label} className="flex items-center gap-1.5 text-xs text-white/60">
+                  <div
+                    key={label}
+                    className="flex items-center gap-1.5 text-xs text-white/60"
+                  >
                     <span className="h-1 w-1 rounded-full bg-white/40" />
                     <span>{label} ·</span>
                     <span className="font-semibold text-white">{value}</span>
@@ -528,7 +490,6 @@ export default function ProductPage({
             </div>
           </div>
         </div>
-
       </div>
     </main>
   );

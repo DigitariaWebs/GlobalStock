@@ -5,30 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
-const products = [
-  {
-    id: 1,
-    title: "Palette de 4 Groupes Électrogènes Inverter KRAFTPOWER 7600W",
-    price: "5 990,00 €",
-    image: "/AchatEnGrosSection/gemini_generated_image_mbttxmbttxmbttxm-high-uth4w1.png",
-    href: "/achat-en-gros",
-  },
-  {
-    id: 2,
-    title: "Palette de 4 Groupes Électrogènes Diesel Daewoo 8,1 kVA DDAE10500DSE-3G – Dual Power Silencieux",
-    price: "5 990,00 €",
-    image: "/AchatEnGrosSection/gemini_generated_image_gsub2ogsub2ogsub-high.png",
-    href: "/achat-en-gros",
-    badge: "Épuisé",
-  },
-  {
-    id: 3,
-    title: "Palette de 4 GE Diesel Insonorisés 8.5kW – Moteur 10CV",
-    price: "4 990,00 €",
-    image: "/AchatEnGrosSection/whatsapp-image-2025-11-09-12-36-30_66ac7cba-high.png",
-    href: "/achat-en-gros",
-  },
-];
+import { ACHAT_EN_GROS_HIGHLIGHTS } from "@/data/products";
+
+const products = ACHAT_EN_GROS_HIGHLIGHTS;
 
 export function AchatEnGrosSection() {
   const [activeIndex, setActiveIndex] = useState(0);

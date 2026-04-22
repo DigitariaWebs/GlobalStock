@@ -12,16 +12,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 
-const bestSellers = [
-  { id: "bs-1", name: "GE Diesel K9500 – 9,5 kVA Supersilencieux",       price: 1990, oldPrice: 2490, discount: "Promotion !", rating: "4.9", delivery: "Expédié sous 5j", image: "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png" },
-  { id: "bs-2", name: "GE Diesel 12 kVA Triphasé Supersilencieux",        price: 2490, oldPrice: 2990, discount: "Promotion !", rating: "5.0", delivery: "Expédié sous 5j", image: "/BestSellingSection/kraft-18-kva-3phase-standard.png" },
-  { id: "bs-3", name: "GE Diesel 16 kVA Triphasé Silencieux",             price: 3990, oldPrice: 4490, discount: "Épuisé",      rating: "4.8", delivery: "Expédié sous 5j", image: "/BestSellingSection/sans-titre-high.png" },
-  { id: "bs-4", name: "Nettoyeur HP Diesel HPW-3200D – 320 Bars",         price: 1990, oldPrice: 2490, discount: "Promotion !", rating: "4.9", delivery: "Expédié sous 5j", image: "/BestSellingSection/thumb_page_15544536691-1-2-high.png" },
-  { id: "bs-5", name: "GE Diesel 8 kVA Monophasé Open Frame",             price: 1290, oldPrice: 1590, discount: "Promotion !", rating: "4.7", delivery: "Expédié sous 5j", image: "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png" },
-  { id: "bs-6", name: "GE Diesel 20 kVA Triphasé Supersilencieux",        price: 4990, oldPrice: 5990, discount: "Nouveau",     rating: "4.9", delivery: "Expédié sous 7j", image: "/BestSellingSection/kraft-18-kva-3phase-standard.png" },
-  { id: "bs-7", name: "Tronçonneuse Daewoo DCS6524 – Lame 60 cm",        price: 299,  oldPrice: 399,  discount: "Promotion !", rating: "4.6", delivery: "Expédié sous 3j", image: "/SuperSaleSection/daewookettensaegedcs6524_4-standard.png" },
-  { id: "bs-8", name: "Compresseur 100 L – 3 CV Silent Pro",              price: 890,  oldPrice: 1090, discount: "Promotion !", rating: "4.8", delivery: "Expédié sous 5j", image: "/BestSellingSection/thumb_page_15544536691-1-2-high.png" },
-];
+import { getBestSellingProducts } from "@/data/products";
+const bestSellers = getBestSellingProducts();
 
 const PAGE_SIZE = 4;
 const TOTAL_PAGES = Math.ceil(bestSellers.length / PAGE_SIZE);
@@ -60,7 +52,7 @@ export function BestSellingSection() {
                 {/* Top Left Badge */}
                 <div className="pointer-events-none absolute top-4 left-4 z-2">
                   <span className="bg-primary text-white text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wide">
-                    {product.discount}
+                    {product.badge ?? ""}
                   </span>
                 </div>
 
@@ -106,7 +98,7 @@ export function BestSellingSection() {
                   <div className="flex items-center gap-1 shrink-0">
                     <Star size={14} weight="fill" className="text-[#f2a74c]" />
                     <span className="text-[13px] font-bold text-[#1a202c]">
-                      {product.rating}
+                      {(product.rating ?? 0).toFixed(1)}
                     </span>
                   </div>
                 </div>
@@ -123,7 +115,7 @@ export function BestSellingSection() {
                   <div className="flex items-center gap-1.5 opacity-80">
                     <div className="w-0.75 h-0.75 rounded-full bg-primary"></div>
                     <span className="text-[11px] font-medium text-primary">
-                      {product.delivery}
+                      {product.delivery ?? ""}
                     </span>
                   </div>
                 </div>

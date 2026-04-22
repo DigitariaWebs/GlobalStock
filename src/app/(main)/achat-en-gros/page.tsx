@@ -5,69 +5,39 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Input } from "@/components/ui/input";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { getProductsByCategory } from "@/data/products";
 import { cn } from "@/lib/utils";
-import { Heart, ShoppingCart, Image as ImageIcon, House, Lightning, Buildings, Factory, Gear, SquaresFour, CaretRight, FunnelSimple, X, ArrowsClockwise, CheckCircle, Archive, Stack, Truck, Tag } from "@phosphor-icons/react/dist/ssr";
+import {
+  Heart,
+  ShoppingCart,
+  Image as ImageIcon,
+  House,
+  Lightning,
+  Buildings,
+  Factory,
+  Gear,
+  SquaresFour,
+  CaretRight,
+  FunnelSimple,
+  X,
+  ArrowsClockwise,
+  CheckCircle,
+  Archive,
+  Stack,
+  Truck,
+  Tag,
+} from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-type GrosType = any;
+type GrosType = "Lots mixtes" | "Palettes" | "Conteneurs" | "Destockage";
 
 type Phase = "Monophasé" | "Triphasé" | "—";
 type Fuel = "Diesel" | "Essence" | "—";
 type Noise = "Standard" | "Silencieux" | "Supersilencieux" | "—";
 
 type Product = {
-  id: number;
+  id: string;
   name: string;
   type: GrosType;
   brand: string;
@@ -82,27 +52,31 @@ type Product = {
   popularity: number;
 };
 
-const TYPES: { label: "Tous" | GrosType; icon: any; hint: string; }[] = [ 
-  { label: "Tous", icon: SquaresFour, hint: "Tout" }, 
+const TYPES: { label: "Tous" | GrosType; icon: any; hint: string }[] = [
+  { label: "Tous", icon: SquaresFour, hint: "Tout" },
   { label: "Lots mixtes", icon: Archive, hint: "Lots mixtes" },
   { label: "Palettes", icon: Stack, hint: "Palettes" },
   { label: "Conteneurs", icon: Truck, hint: "Conteneurs" },
-  { label: "Destockage", icon: Tag, hint: "Destockage" }
+  { label: "Destockage", icon: Tag, hint: "Destockage" },
 ];
 
-const IMAGES = {
-  mono95: "/ProductsSection/ge-9-5kva-supersilencieux-mono.png",
-  tri12: "/ProductsSection/ge-12kva-triphase-supersilencieux.png",
-  tri16: "/ProductsSection/ge-16kva-triphase-silencieux.png",
-  tri22: "/ProductsSection/ge-22kva-triphase-silencieux-bicylindre.png",
-  mobile10: "/ProductsSection/ge-10kva-dualpower-mobile.png",
-  inv43: "/ProductsSection/ge-inverter-kraftpower-4300w.png",
-  monoKraft: "/BestSellingSection/9-5-kva-monophase-kraft-2-high.png",
-  triKraft18: "/BestSellingSection/kraft-18-kva-3phase-standard.png",
-  plain: "/BestSellingSection/sans-titre-high.png",
-};
-
-const PRODUCTS: Product[] = [];
+const PRODUCTS: Product[] = getProductsByCategory("Achat en gros").map(
+  (p, index) => ({
+    id: p.id,
+    name: p.name,
+    type: p.type as GrosType,
+    brand: p.brand,
+    price: p.price,
+    oldPrice: p.oldPrice,
+    power: p.power ?? 0,
+    phase: p.phase ?? "—",
+    fuel: p.fuel ?? "—",
+    noise: p.noise ?? "—",
+    inStock: p.inStock,
+    image: p.image,
+    popularity: p.popularity ?? 50 - index,
+  }),
+);
 
 const POWER_RANGES = [
   { label: "Toutes puissances", value: "all", min: -1, max: 10000 },
@@ -116,7 +90,7 @@ const POWER_RANGES = [
 const PHASES: Phase[] = ["Monophasé", "Triphasé"];
 const FUELS: Fuel[] = ["Diesel", "Essence"];
 const NOISES: Noise[] = ["Standard", "Silencieux", "Supersilencieux"];
-const BRANDS = ["Kraft", "Kraftpower", "ITC", "Honda"];
+const BRANDS = ["GlobalStock"];
 
 type SortKey =
   | "popularity"
@@ -134,17 +108,6 @@ function formatPrice(n: number) {
 }
 
 function AchatengrosPage() {
-    const validTypes: GrosType[] = [
-    "Domestiques",
-    "Inverters",
-    "De chantier",
-    "Industriels",
-    "Pièces & accessoires",
-  ];
-  
-
-  
-
   const [powerRange, setPowerRange] = useState("all");
   const [phases, setPhases] = useState<Set<Phase>>(new Set());
   const [fuels, setFuels] = useState<Set<Fuel>>(new Set());
@@ -155,7 +118,7 @@ function AchatengrosPage() {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [sort, setSort] = useState<SortKey>("popularity");
-  const [favorites, setFavorites] = useState<Set<number>>(new Set([1, 5]));
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [page, setPage] = useState(1);
   const PAGE_SIZE = 15;
   const gridRef = useRef<HTMLElement>(null);
@@ -163,7 +126,6 @@ function AchatengrosPage() {
   useEffect(() => {
     setPage(1);
   }, [
-    
     powerRange,
     phases,
     fuels,
@@ -191,7 +153,6 @@ function AchatengrosPage() {
     const minP = minPrice ? Number(minPrice) : -Infinity;
     const maxP = maxPrice ? Number(maxPrice) : Infinity;
     const list = PRODUCTS.filter((p) => {
-      
       if (range.value !== "all" && (p.power < range.min || p.power > range.max))
         return false;
       if (phases.size && p.phase !== "—" && !phases.has(p.phase)) return false;
@@ -225,7 +186,6 @@ function AchatengrosPage() {
     }
     return list;
   }, [
-    
     powerRange,
     phases,
     fuels,
@@ -255,7 +215,6 @@ function AchatengrosPage() {
     (maxPrice ? 1 : 0);
 
   const resetAll = () => {
-    
     setPowerRange("all");
     setPhases(new Set());
     setFuels(new Set());
@@ -267,7 +226,7 @@ function AchatengrosPage() {
     setMaxPrice("");
   };
 
-  const toggleFavorite = (id: number) => {
+  const toggleFavorite = (id: string) => {
     const next = new Set(favorites);
     if (next.has(id)) next.delete(id);
     else next.add(id);
