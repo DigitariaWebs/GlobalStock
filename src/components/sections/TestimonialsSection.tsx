@@ -68,7 +68,7 @@ export function TestimonialsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const isUserScrolling = useRef(false);
-  const scrollTimer = useRef<ReturnType<typeof setTimeout>>();
+  const scrollTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   // Programmatic scroll when activeIndex changes via arrows/dots
   useEffect(() => {
