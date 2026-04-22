@@ -790,7 +790,7 @@ Ces groupes sont particulièrement adaptés aux chantiers en zone urbaine où le
     popularity: 89,
     isBestSeller: true,
     isSuperSale: false,
-    bestSellingRank: 6,
+    bestSellingRank: 7,
     badge: "Nouveau",
     rating: 4.9,
     reviewCount: 35,

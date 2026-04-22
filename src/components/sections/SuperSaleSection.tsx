@@ -9,14 +9,14 @@ export function SuperSaleSection() {
       <div className="mx-auto max-w-300 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
         
         {/* Left Side: Sale Card */}
-        <div className="lg:col-span-8 bg-[#f8f9fa] rounded-[2.5rem] p-10 flex flex-col relative overflow-hidden shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] min-h-115">
-          
+        <div className="lg:col-span-8 bg-[#f8f9fa] rounded-[2.5rem] p-6 sm:p-10 flex flex-col relative overflow-hidden shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] lg:min-h-115">
+
           {/* Header Row: Title & Price */}
-          <div className="flex justify-between items-start w-full relative z-20">
+          <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-start w-full relative z-20">
             <div>
-              <h2 className="text-[32px] font-medium text-[#1a202c] mb-2 tracking-tight">Tronçonneuse Daewoo DCS6524</h2>
+              <h2 className="text-[28px] lg:text-[32px] font-medium text-[#1a202c] mb-2 tracking-tight">Tronçonneuse Daewoo DCS6524</h2>
               <p className="text-[14px] text-[#a1a1aa] font-medium">Lame 60 cm — Promotion !</p>
-              
+
               {/* Event Badge */}
               <div className="mt-6 mb-4">
                 <span className="flex items-center gap-1.5 bg-white/60 backdrop-blur-md px-3 py-1.5 rounded-md text-[11px] font-bold text-[#71717a] border border-[#e4e4e7] w-fit shadow-sm">
@@ -47,14 +47,32 @@ export function SuperSaleSection() {
             </div>
 
             {/* Pricing */}
-            <div className="text-right flex flex-col items-end">
+            <div className="flex flex-col sm:items-end sm:text-right">
               <span className="text-[#a1a1aa] line-through text-[15px] font-medium mb-1">399,00 €</span>
               <span className="text-[26px] font-bold text-[#1a202c] tracking-tight">299,00 €</span>
             </div>
           </div>
 
-          {/* Product Image — background layer */}
-          <div className="absolute bottom-0 right-0 w-[70%] h-[75%] z-0">
+          {/* Mobile: inline product image + CTA */}
+          <div className="lg:hidden flex flex-col items-center mt-4 gap-4">
+            <div className="relative w-full h-56">
+              <Image
+                src="/SuperSaleSection/daewookettensaegedcs6524_4-standard.png"
+                alt="Tronçonneuse Daewoo DCS6524"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <Link
+              href="/products/tronconneuse-daewoo-dcs6524"
+              className="w-full text-center bg-primary text-white px-8 py-3 rounded-full text-[14px] font-semibold shadow-md hover:bg-primary/90 transition-colors"
+            >
+              Acheter
+            </Link>
+          </div>
+
+          {/* lg+: Product Image — background layer */}
+          <div className="hidden lg:block absolute bottom-0 right-0 w-[70%] h-[75%] z-0">
             <Image
               src="/SuperSaleSection/daewookettensaegedcs6524_4-standard.png"
               alt="Tronçonneuse Daewoo DCS6524"
@@ -63,8 +81,8 @@ export function SuperSaleSection() {
             />
           </div>
 
-          {/* CTA Button */}
-          <div className="absolute bottom-10 right-10 z-30">
+          {/* lg+: CTA Button */}
+          <div className="hidden lg:block absolute bottom-10 right-10 z-30">
             <Link
               href="/products/tronconneuse-daewoo-dcs6524"
               className="bg-primary text-white px-8 py-3 rounded-full text-[14px] font-semibold shadow-md hover:bg-primary/90 transition-colors"
@@ -74,8 +92,8 @@ export function SuperSaleSection() {
           </div>
         </div>
 
-        {/* Right Side: Dual Vertical Cards */}
-        <div className="lg:col-span-4 grid grid-cols-2 gap-4 lg:gap-6 min-h-115">
+        {/* Right Side: Dual Vertical Cards — hidden on mobile */}
+        <div className="hidden lg:grid lg:col-span-4 grid-cols-2 gap-4 lg:gap-6 min-h-115">
           
           {/* Vertical Card 1 — left half of the continuous image */}
           <div className="rounded-[3rem] relative overflow-hidden shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)]">

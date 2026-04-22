@@ -67,8 +67,12 @@ const testimonials = [
 export function TestimonialsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const isUserScrolling = useRef(false);
+  const scrollTimer = useRef<ReturnType<typeof setTimeout>>();
 
+  // Programmatic scroll when activeIndex changes via arrows/dots
   useEffect(() => {
+    if (isUserScrolling.current) return;
     if (scrollContainerRef.current) {
       const container = scrollContainerRef.current;
       const activeCard = container.children[activeIndex] as HTMLElement;
@@ -77,13 +81,35 @@ export function TestimonialsSection() {
           activeCard.offsetLeft -
           container.clientWidth / 2 +
           activeCard.clientWidth / 2;
-        container.scrollTo({
-          left: scrollLeft,
-          behavior: "smooth",
-        });
+        container.scrollTo({ left: scrollLeft, behavior: "smooth" });
       }
     }
   }, [activeIndex]);
+
+  // Detect swipe end and activate nearest card
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      isUserScrolling.current = true;
+      clearTimeout(scrollTimer.current);
+      scrollTimer.current = setTimeout(() => {
+        const firstCard = container.children[0] as HTMLElement;
+        if (!firstCard) return;
+        const cardWidth = firstCard.offsetWidth;
+        const index = Math.round(container.scrollLeft / cardWidth);
+        setActiveIndex(Math.max(0, Math.min(index, testimonials.length - 1)));
+        setTimeout(() => { isUserScrolling.current = false; }, 50);
+      }, 150);
+    };
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+      clearTimeout(scrollTimer.current);
+    };
+  }, []);
 
   const prevTestimonial = () => {
     setActiveIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
@@ -130,7 +156,7 @@ export function TestimonialsSection() {
         <div className="relative w-full -mx-6 px-6 lg:-mx-10 lg:px-10">
           <div
             ref={scrollContainerRef}
-            className="flex gap-8 sm:gap-12 overflow-x-auto pb-16 sm:pb-20 pt-10 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory"
+            className="flex gap-0 sm:gap-12 overflow-x-auto pb-6 sm:pb-20 sm:pt-10 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory"
           >
             {testimonials.map((item, index) => {
               const isActive = index === activeIndex;
@@ -138,11 +164,40 @@ export function TestimonialsSection() {
                 <div
                   key={item.id}
                   onClick={() => setActiveIndex(index)}
-                  className="flex items-end relative h-auto sm:h-90 w-85 sm:w-175 shrink-0 group cursor-pointer snap-center"
+                  className="flex items-end relative h-auto sm:h-90 w-[calc(100vw-6rem)] sm:w-175 shrink-0 group cursor-pointer snap-start"
                 >
-                  {/* Background Card */}
+                  {/* Mobile card — simple layout */}
+                  <div className={`sm:hidden w-full h-96 rounded-[1.5rem] overflow-hidden flex flex-col transition-all duration-300 ${
+                    isActive
+                      ? "bg-primary shadow-[0_8px_24px_-8px_rgba(30,58,95,0.3)]"
+                      : "bg-white border border-[#f0f4f5] shadow-sm opacity-70"
+                  }`}>
+                    {/* Product image — top */}
+                    <div className="w-full h-44 shrink-0 flex items-center justify-center bg-white">
+                      <Image src={item.image} alt={item.name} width={160} height={160} className="object-contain w-full h-full p-4" />
+                    </div>
+                    {/* Content */}
+                    <div className="p-5 flex flex-col gap-3 flex-1 min-h-0">
+                      <div className="flex gap-0.5 shrink-0">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} size={14} weight="fill"
+                            className={i < item.rating ? "text-[#f2a74c]" : "text-gray-300"} />
+                        ))}
+                      </div>
+                      <p className={`text-[13px] leading-[1.6] font-medium overflow-hidden flex-1 ${isActive ? "text-white/90" : "text-[#4a5568]"}`}
+                        style={{ display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical" }}>
+                        &quot;{item.text}&quot;
+                      </p>
+                      <div className={`border-t pt-3 shrink-0 ${isActive ? "border-white/10" : "border-[#f0f4f5]"}`}>
+                        <h4 className={`text-[14px] font-bold leading-none mb-0.5 ${isActive ? "text-white" : "text-[#1a202c]"}`}>{item.name}</h4>
+                        <p className={`text-[11px] font-bold tracking-wider uppercase ${isActive ? "text-[#f2a74c]/90" : "text-primary"}`}>{item.role}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* sm+ card — original complex layout */}
                   <div
-                    className={`relative w-full h-auto sm:h-80 rounded-[2.5rem] p-8 sm:p-10 sm:pl-72 flex flex-col justify-center mt-25 sm:mt-0 transition-all duration-500 ease-out ${
+                    className={`hidden sm:flex relative w-full h-80 rounded-[2.5rem] p-10 pl-72 flex-col justify-center transition-all duration-500 ease-out ${
                       isActive
                         ? "bg-primary text-white shadow-[0_20px_40px_-15px_rgba(17,75,86,0.3)] scale-100"
                         : "bg-white text-[#1a202c] shadow-[0_8px_30px_-10px_rgba(0,0,0,0.05)] border border-[#f0f4f5] scale-95 opacity-60 hover:opacity-100"
@@ -150,64 +205,29 @@ export function TestimonialsSection() {
                   >
                     {/* Protruding Image */}
                     <div
-                      className={`absolute -top-20 sm:-bottom-6 sm:-top-6 left-6 sm:left-8 w-44 h-44 sm:w-60 sm:h-80 rounded-[2rem] border-4 border-white sm:border-[6px] shadow-xl overflow-hidden transition-all duration-500 ease-out z-20 bg-white ${
+                      className={`absolute -bottom-6 -top-6 left-8 w-60 h-80 rounded-[2rem] border-[6px] shadow-xl overflow-hidden transition-all duration-500 ease-out z-20 bg-white ${
                         isActive
-                          ? "opacity-100 border-white/10 sm:border-white scale-100"
+                          ? "opacity-100 border-white scale-100"
                           : "opacity-60 border-white grayscale-50 group-hover:grayscale-0 group-hover:opacity-100 scale-95"
                       }`}
                     >
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={280}
-                        height={320}
-                        className="object-contain w-full h-full p-3"
-                      />
+                      <Image src={item.image} alt={item.name} width={280} height={320} className="object-contain w-full h-full p-3" />
                     </div>
 
-                    {/* Content */}
-                    <div className="mt-5 sm:mt-0 relative z-10 flex flex-col justify-center h-full">
-                      {/* Decorative Quotes watermark */}
-                      <Quotes
-                        size={80}
-                        weight="fill"
-                        className={`absolute -top-4 right-0 sm:right-4 z-0 transition-colors ${isActive ? "text-white/5" : "text-primary/5"}`}
-                      />
-
+                    <div className="relative z-10 flex flex-col justify-center h-full">
+                      <Quotes size={80} weight="fill" className={`absolute -top-4 right-4 z-0 ${isActive ? "text-white/5" : "text-primary/5"}`} />
                       <div className="relative z-10">
-                        {/* Rating Stars */}
                         <div className="flex gap-1 mb-3">
                           {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              size={16}
-                              weight="fill"
-                              className={
-                                i < item.rating
-                                  ? "text-[#f2a74c]"
-                                  : "text-gray-300"
-                              }
-                            />
+                            <Star key={i} size={16} weight="fill" className={i < item.rating ? "text-[#f2a74c]" : "text-gray-300"} />
                           ))}
                         </div>
-
-                        <p
-                          className={`text-[14px] sm:text-[15px] leading-[1.6] mb-4 sm:mb-6 font-medium line-clamp-4 ${isActive ? "text-white/90" : "text-[#4a5568]"}`}
-                        >
+                        <p className={`text-[15px] leading-[1.6] mb-6 font-medium line-clamp-4 ${isActive ? "text-white/90" : "text-[#4a5568]"}`}>
                           &quot;{item.text}&quot;
                         </p>
-
                         <div>
-                          <h4
-                            className={`text-[16px] sm:text-[18px] font-bold leading-none mb-1 ${isActive ? "text-white" : "text-[#1a202c]"}`}
-                          >
-                            {item.name}
-                          </h4>
-                          <p
-                            className={`text-[12px] font-bold tracking-wider uppercase ${isActive ? "text-[#f2a74c]/90" : "text-primary"}`}
-                          >
-                            {item.role}
-                          </p>
+                          <h4 className={`text-[18px] font-bold leading-none mb-1 ${isActive ? "text-white" : "text-[#1a202c]"}`}>{item.name}</h4>
+                          <p className={`text-[12px] font-bold tracking-wider uppercase ${isActive ? "text-[#f2a74c]/90" : "text-primary"}`}>{item.role}</p>
                         </div>
                       </div>
                     </div>

@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CaretDown, Heart, MagnifyingGlass, ShoppingCart, User, X, Gauge, SignOut, UserCircle } from "@phosphor-icons/react/dist/ssr";
+import { CaretDown, Heart, MagnifyingGlass, ShoppingCart, User, X, Gauge, SignOut, UserCircle, List, CaretRight } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -103,7 +103,10 @@ export function Header() {
   const { cartCount, wishlistCount, setCartOpen } = useCart();
   const { user, logout } = useAuth();
   const [searchOpen, setSearchOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [expandedNav, setExpandedNav] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
   const handleLogout = () => {
     logout();
@@ -130,14 +133,25 @@ export function Header() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSearchOpen(false);
+      if (e.key === "Escape") { setSearchOpen(false); setMenuOpen(false); }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [menuOpen]);
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80">
+    <header ref={headerRef} className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80">
       <div className="mx-auto flex h-20 w-full max-w-screen-2xl items-center justify-between px-3">
 
         {/* Logo */}
@@ -243,12 +257,13 @@ export function Header() {
         </div>
 
         {/* Right icons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
+          {/* Search — desktop only */}
           <Button
             variant="ghost"
             size="icon"
             aria-label="Rechercher"
-            className="text-foreground/75 hover:bg-secondary hover:text-primary"
+            className="hidden lg:flex text-foreground/75 hover:bg-secondary hover:text-primary"
             onClick={() => setSearchOpen((v) => !v)}
           >
             <MagnifyingGlass size={20} />
@@ -280,59 +295,156 @@ export function Header() {
             )}
           </Button>
 
-          {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  className="ml-1 flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold transition-opacity hover:opacity-90 focus:outline-none"
-                  aria-label="Mon compte"
-                >
-                  {initials}
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-52">
-                <div className="px-3 py-2">
-                  <p className="text-sm font-medium truncate">{user.name}</p>
-                  <p className="text-xs text-muted-foreground truncate">{user.email}</p>
-                </div>
-                <DropdownMenuSeparator />
-                {user.role === "admin" ? (
-                  <DropdownMenuItem asChild>
-                    <Link href="/account/admin" className="flex items-center gap-2 cursor-pointer">
-                      <Gauge size={15} />
-                      Tableau de Bord
-                    </Link>
+          {/* Profile — desktop only */}
+          <div className="hidden lg:block">
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="ml-1 flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold transition-opacity hover:opacity-90 focus:outline-none"
+                    aria-label="Mon compte"
+                  >
+                    {initials}
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-52">
+                  <div className="px-3 py-2">
+                    <p className="text-sm font-medium truncate">{user.name}</p>
+                    <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+                  </div>
+                  <DropdownMenuSeparator />
+                  {user.role === "admin" ? (
+                    <DropdownMenuItem asChild>
+                      <Link href="/account/admin" className="flex items-center gap-2 cursor-pointer">
+                        <Gauge size={15} />
+                        Tableau de Bord
+                      </Link>
+                    </DropdownMenuItem>
+                  ) : (
+                    <DropdownMenuItem asChild>
+                      <Link href="/account/profile" className="flex items-center gap-2 cursor-pointer">
+                        <UserCircle size={15} />
+                        Mon Profil
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 text-destructive focus:text-destructive cursor-pointer"
+                  >
+                    <SignOut size={15} />
+                    Déconnexion
                   </DropdownMenuItem>
-                ) : (
-                  <DropdownMenuItem asChild>
-                    <Link href="/account/profile" className="flex items-center gap-2 cursor-pointer">
-                      <UserCircle size={15} />
-                      Mon Profil
-                    </Link>
-                  </DropdownMenuItem>
-                )}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={handleLogout}
-                  className="flex items-center gap-2 text-destructive focus:text-destructive cursor-pointer"
-                >
-                  <SignOut size={15} />
-                  Déconnexion
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Link
-              href="/login"
-              aria-label="Mon compte"
-              className="ml-1 flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground transition-opacity hover:opacity-90"
-            >
-              <User size={16} />
-            </Link>
-          )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link
+                href="/login"
+                aria-label="Mon compte"
+                className="ml-1 flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground transition-opacity hover:opacity-90"
+              >
+                <User size={16} />
+              </Link>
+            )}
+          </div>
+
+          {/* Hamburger — mobile only */}
+          <button
+            onClick={() => setMenuOpen((v) => !v)}
+            className="lg:hidden ml-1 flex size-9 items-center justify-center rounded-full hover:bg-secondary text-foreground/75 transition-colors"
+            aria-label="Menu"
+          >
+            {menuOpen ? <X size={20} /> : <List size={22} />}
+          </button>
         </div>
 
       </div>
+
+      {/* Mobile dropdown — absolute below header, lg+ hidden */}
+      {menuOpen && (
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-background border-t border-border shadow-xl overflow-y-auto max-h-[calc(100dvh-5rem)]">
+          <nav className="py-2">
+            {navItems.map((item) => (
+              <div key={item.label}>
+                {item.children ? (
+                  <>
+                    <button
+                      onClick={() => setExpandedNav(expandedNav === item.label ? null : item.label)}
+                      className="w-full flex items-center justify-between px-5 py-3 text-[14px] font-medium text-foreground/80 hover:text-primary hover:bg-secondary/50 transition-colors"
+                    >
+                      {item.label}
+                      <CaretRight size={14} className={cn("transition-transform duration-200 text-foreground/40", expandedNav === item.label && "rotate-90")} />
+                    </button>
+                    {expandedNav === item.label && (
+                      <div className="bg-secondary/30 border-l-2 border-primary/20 mx-5 mb-1 rounded-r-lg">
+                        {item.children.map((child) => (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            onClick={() => setMenuOpen(false)}
+                            className="block px-4 py-2 text-[13px] text-foreground/65 hover:text-primary transition-colors"
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <Link
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                    className={cn(
+                      "block px-5 py-3 text-[14px] font-medium transition-colors hover:text-primary hover:bg-secondary/50",
+                      isActive(item) ? "text-primary" : "text-foreground/80"
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                )}
+              </div>
+            ))}
+          </nav>
+
+          {/* Account */}
+          <div className="border-t border-border px-5 py-4">
+            {user ? (
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="size-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold shrink-0">{initials}</div>
+                  <p className="text-sm font-medium truncate">{user.name}</p>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Link
+                    href={user.role === "admin" ? "/account/admin" : "/account/profile"}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-secondary text-foreground/75 hover:text-primary transition-colors"
+                  >
+                    {user.role === "admin" ? <Gauge size={13} /> : <UserCircle size={13} />}
+                    {user.role === "admin" ? "Dashboard" : "Profil"}
+                  </Link>
+                  <button
+                    onClick={() => { handleLogout(); setMenuOpen(false); }}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-destructive bg-destructive/10 hover:bg-destructive/20 transition-colors"
+                  >
+                    <SignOut size={13} />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center justify-center gap-2 w-full rounded-full bg-primary text-white py-2.5 text-sm font-semibold hover:bg-primary/90 transition-colors"
+              >
+                <User size={16} />
+                Se connecter
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
     </header>
   );
 }

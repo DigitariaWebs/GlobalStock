@@ -48,9 +48,9 @@ export function AchatEnGrosSection() {
         </div>
 
         {/* Right Carousel Area */}
-        <div className="w-full lg:w-[60%] flex gap-8">
+        <div className="w-full lg:w-[60%] flex flex-col lg:flex-row gap-8">
           {/* Main Active Card (Taller) */}
-          <div className="relative w-85 sm:w-100 h-130 shrink-0 rounded-[2.5rem] bg-linear-to-b from-primary/90 to-primary shadow-xl flex flex-col items-center justify-center overflow-hidden">
+          <div className="relative w-full lg:w-85 xl:w-100 h-80 sm:h-100 lg:h-130 shrink-0 rounded-[2.5rem] bg-linear-to-b from-primary/90 to-primary shadow-xl flex flex-col items-center justify-center overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={mainProduct.image}
@@ -102,7 +102,7 @@ export function AchatEnGrosSection() {
                   <div
                     key={item.id}
                     onClick={() => setActiveIndex(realIndex)}
-                    className="relative w-70 sm:w-80 h-95 shrink-0 rounded-[2rem] bg-[#f8f9fa] overflow-hidden cursor-pointer group"
+                    className="relative w-48 sm:w-70 lg:w-80 h-60 sm:h-80 lg:h-95 shrink-0 rounded-[2rem] bg-[#f8f9fa] overflow-hidden cursor-pointer group"
                   >
                     <Image
                       src={item.image}

@@ -8,7 +8,7 @@ export function CategoriesSection() {
       <div className="mx-auto max-w-300 grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 text-[#2d3748]">
         
         {/* Groupes Électrogènes Card (Spans 2 columns on desktop) */}
-        <div className="lg:col-span-2 rounded-[2.5rem] bg-[#f8f9fa] p-8 lg:p-10 flex items-center relative overflow-hidden min-h-85">
+        <div className="lg:col-span-2 rounded-[2.5rem] bg-[#f8f9fa] p-6 sm:p-8 lg:p-10 flex items-center relative overflow-hidden min-h-85">
           {/* Image — background layer */}
           <div className="absolute right-0 bottom-0 w-[50%] h-[90%] z-0">
             <Image src="/CategoriesSection/GroupeElectrogene.png" alt="Groupe Électrogène" fill className="object-contain object-bottom-right" />
@@ -39,14 +39,14 @@ export function CategoriesSection() {
         </div>
 
         {/* Machines & Outillage Pro Card (Tall, spans 2 rows) */}
-        <div className="lg:col-span-1 lg:row-span-2 rounded-[2.5rem] bg-[#f0f4f5] p-8 lg:p-10 flex flex-col relative overflow-hidden">
+        <div className="lg:col-span-1 lg:row-span-2 rounded-[2.5rem] bg-[#f0f4f5] p-6 sm:p-8 lg:p-10 flex items-center lg:flex-col lg:items-start relative overflow-hidden min-h-85 lg:min-h-0">
           {/* Image — background layer */}
-          <div className="absolute bottom-0 left-0 right-0 h-[50%] z-0">
-            <Image src="/CategoriesSection/MachinesOutillagePro.png" alt="Machines & Outillage Pro" fill className="object-contain object-bottom" />
+          <div className="absolute right-0 bottom-0 w-[50%] h-[90%] lg:w-full lg:left-0 lg:h-[50%] z-0">
+            <Image src="/CategoriesSection/MachinesOutillagePro.png" alt="Machines & Outillage Pro" fill className="object-contain object-bottom-right lg:object-bottom" />
           </div>
 
           {/* Text — foreground */}
-          <div className="flex flex-col items-start z-10 shrink-0">
+          <div className="flex flex-col items-start relative z-10 lg:shrink-0">
             <span className="bg-white px-3.5 py-1 rounded-full text-[11px] font-bold text-primary shadow-sm mb-4">
               300+ Références
             </span>
@@ -70,7 +70,7 @@ export function CategoriesSection() {
         </div>
 
         {/* Solutions Solaires Card */}
-        <div className="lg:col-span-1 rounded-[2.5rem] bg-[#fdf3eb] p-8 lg:p-10 flex items-center relative overflow-hidden min-h-80">
+        <div className="lg:col-span-1 rounded-[2.5rem] bg-[#fdf3eb] p-6 sm:p-8 lg:p-10 flex items-center relative overflow-hidden min-h-80">
           {/* Image — background layer */}
           <div className="absolute right-0 bottom-0 w-[50%] h-[90%] z-0">
             <Image src="/CategoriesSection/SolutionsSolaires.png" alt="Solutions Solaires" fill className="object-contain object-bottom-right" />
@@ -101,7 +101,7 @@ export function CategoriesSection() {
         </div>
 
         {/* Achat en Gros Card */}
-        <div className="lg:col-span-1 rounded-[2.5rem] bg-linear-to-b from-primary/80 to-primary p-8 lg:p-10 flex flex-col items-center justify-center gap-4 relative overflow-hidden text-center min-h-80">
+        <div className="lg:col-span-1 rounded-[2.5rem] bg-linear-to-b from-primary/80 to-primary p-6 sm:p-8 lg:p-10 flex flex-col items-center justify-center gap-4 relative overflow-hidden text-center min-h-80">
           <span className="bg-[#f2a74c] px-5 py-2 rounded-full text-[12px] font-bold text-white uppercase tracking-wider">
             Achat en Gros
           </span>

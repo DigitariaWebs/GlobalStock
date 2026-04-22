@@ -43,14 +43,14 @@ export function ProductsSection() {
         </div>
 
         {/* Category tabs */}
-        <div className="flex items-center gap-2 mb-10">
+        <div className="flex items-center gap-2 mb-10 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {CATEGORIES.map((cat) => {
             const isActive = active === cat;
             return (
               <button
                 key={cat}
                 onClick={() => setActive(cat)}
-                className={`flex-1 flex items-center justify-center whitespace-nowrap rounded-full px-5 py-2.5 text-[13px] font-semibold transition-all duration-200 ${
+                className={`shrink-0 flex items-center justify-center whitespace-nowrap rounded-full px-5 py-2.5 text-[13px] font-semibold transition-all duration-200 ${
                   isActive
                     ? "bg-primary text-white shadow-md shadow-primary/20"
                     : "bg-[#f4f5f7] text-[#71717a] hover:bg-[#ebebeb] hover:text-[#1a202c]"

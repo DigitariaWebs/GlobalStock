@@ -24,7 +24,7 @@ export function FeaturesSection() {
           {features.map(({ icon: Icon, label }) => (
             <div
               key={label}
-              className="flex flex-col items-center justify-center gap-3 rounded-[2rem] bg-white p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] h-36"
+              className="flex flex-col items-center justify-center gap-3 rounded-[2rem] bg-white p-6 sm:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] h-auto min-h-32 sm:h-36"
             >
               <div className="relative flex items-center justify-center">
                 {/* Abstract blob shape behind icon */}
@@ -46,7 +46,7 @@ export function FeaturesSection() {
                   className="text-primary relative z-10"
                 />
               </div>
-              <p className="text-[15px] font-semibold text-[#4a4a4a] whitespace-nowrap mt-2">
+              <p className="text-[13px] sm:text-[15px] font-semibold text-[#4a4a4a] text-center mt-2">
                 {label}
               </p>
             </div>

@@ -26,19 +26,16 @@ const COUNTRIES = ["France", "Belgique", "Luxembourg", "Allemagne", "Espagne", "
 export function TopBar() {
   return (
     <div className="w-full bg-[#1a202c] text-white overflow-hidden">
-      <div className="w-full px-8 lg:px-14 h-11 flex items-center gap-0 divide-x divide-white/10">
+      <div className="w-full px-4 lg:px-14 h-11 flex items-center gap-0 divide-x divide-white/10">
 
-        {/* Left: Shipping countries */}
-        <div className="flex items-center gap-2.5 pr-5 shrink-0">
+        {/* Left: Shipping countries — hidden on mobile (marquee covers it) */}
+        <div className="hidden sm:flex items-center gap-2.5 pr-5 shrink-0">
           <Truck size={14} weight="fill" className="text-[#f2a74c] shrink-0" />
           <span className="text-[11.5px] font-semibold text-white whitespace-nowrap">
             Livraison gratuite :
           </span>
           <span className="text-[11px] text-white/60 whitespace-nowrap hidden sm:block">
             {COUNTRIES.join(" · ")}
-          </span>
-          <span className="text-[11px] text-white/60 whitespace-nowrap sm:hidden">
-            France & Europe
           </span>
           <span
             className="text-[10px] text-[#f2a74c]/80 font-bold cursor-default relative group"
@@ -51,8 +48,8 @@ export function TopBar() {
           </span>
         </div>
 
-        {/* Right: scrolling trust signals */}
-        <div className="flex-1 min-w-0 overflow-hidden pl-5">
+        {/* Scrolling trust signals */}
+        <div className="flex-1 min-w-0 overflow-hidden sm:pl-5">
           <div className="flex w-fit animate-[marquee-trust_28s_linear_infinite] hover:[animation-play-state:paused]">
             {[...TRUST_SIGNALS, ...TRUST_SIGNALS].map((signal, i) => {
               const Icon = signal.icon;

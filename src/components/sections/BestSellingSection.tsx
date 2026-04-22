@@ -41,7 +41,7 @@ export function BestSellingSection() {
             return (
             <div key={product.id} className="group flex flex-col">
               {/* Image Container */}
-              <div className="relative bg-[#f4f5f7] rounded-[1.5rem] h-65 p-4 flex flex-col items-center justify-center overflow-hidden">
+              <div className="relative bg-[#f4f5f7] rounded-[1.5rem] h-52 sm:h-65 p-4 flex flex-col items-center justify-center overflow-hidden">
                 {/* Full-area nav link — sibling of buttons */}
                 <Link
                   href={`/products/${product.id}`}
